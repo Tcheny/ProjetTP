@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "babel": "babel-node --presets es2015",
-    "dev": "nodemon --exec \"babel-node server.js --presets es2015\""
+    "dev": "nodemon --exec \"babel-node server/server --presets es2015\""
   },
   "repository": {
     "type": "git",
