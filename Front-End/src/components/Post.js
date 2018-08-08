@@ -34,30 +34,30 @@ const StyledInput = styled.input`
 const Post = () => {
   return (
     <StyledContainer>
-    <StyledForm>
-      <div className="form-group">
-        <textarea
-          className="form-control"
-          rows="3"
-          placeholder="Ralez plus fort que jamais!">
-        </textarea>
-      </div>
-      <StyledPost>
-        <StyledUpload>
-          <Button>
-            Photo / Vidéo
-          </Button>
-          <StyledInput type="file" name="myfile" />
-        </StyledUpload>
-        <Select />
-        <Button
-          type="submit"
-          width="25%"
+      <StyledForm>
+        <div className="form-group">
+          <textarea
+            className="form-control"
+            rows="3"
+            placeholder="Ralez plus fort que jamais!">
+          </textarea>
+        </div>
+        <StyledPost>
+          <StyledUpload>
+            <Button width="10em">
+              <i class="fas fa-upload"></i> Photo / Vidéo
+            </Button>
+            <StyledInput type="file" name="myfile" />
+          </StyledUpload>
+          <Select />
+          <Button
+            type="submit"
+            width="10em"
           >
-          Envoyer
-        </Button>
-      </StyledPost>
-    </StyledForm>
+            Envoyer
+          </Button>
+        </StyledPost>
+      </StyledForm>
     </StyledContainer>
   )
 };

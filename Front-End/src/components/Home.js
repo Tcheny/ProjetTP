@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { Navbar, Header, Post } from './'
+import { Navbar, Header, Post, Rale } from './'
 
 const StyledBody = styled.div`
   width: 60%;
@@ -20,6 +20,7 @@ return (
     <StyledBody>
       <Header />
       <Post />
+      <Rale />
     </StyledBody>
   </Fragment>
   )

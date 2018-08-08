@@ -5,8 +5,7 @@ import { Button } from './';
 
 const StyledSearch = styled.div`
   display: flex;
-  width: 35%;
-  height: 38px;
+  width: 40%;
 `;
 
 const Search = () => {
@@ -18,7 +17,7 @@ const Search = () => {
         placeholder="Recherche..." />
       <Button
         type="submit"
-        width="25%"
+        width="50px"
         m="0 20px"
         >
         Ok

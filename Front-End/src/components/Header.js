@@ -34,20 +34,21 @@ const Header = () => {
       </StyledFlex>
       <StyledFlex>
         <Button 
+          width="12em"
+          bg="violet"
           type="button"
-          width="30%"
           >
           Les plus drôles
         </Button>
         <Button
+          width="12em"
           type="button"
-          width="30%"
           >
           Les plus commentés
         </Button>
         <Button
+          width="12em"
           type="button"
-          width="30%"
           >
           Les plus énervants
         </Button>
