@@ -7,8 +7,7 @@ const StyledSelect = styled.form`
 
 const Select = () => {
   return (
-    <StyledSelect >
-      <div className="form-group">
+    <StyledSelect>
         <select className="form-control">
           <option value="" hidden>Catégories</option>
           <option>Transport</option>
@@ -17,7 +16,6 @@ const Select = () => {
           <option>Famille</option>
           <option>Amis</option>
         </select>
-      </div>
     </StyledSelect>
   )
 };

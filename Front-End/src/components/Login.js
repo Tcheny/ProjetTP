@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { Fragment } from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-const StyledFrom = styled.form`
+import { Navbar, Button } from './';
+
+const StyledForm = styled.form`
     width: 50%;
-    margin : auto;
+    margin : 100px auto;
 `;
 
 const StyledContainButton = styled.div`
@@ -11,37 +14,61 @@ const StyledContainButton = styled.div`
   flex-direction: column;
 `;
 
-const StyledButton = styled.button`
-  width: 30%;
-  margin: 10px auto;
-`;
-
 const Login = () => {
   return (
-    <StyledFrom>
-      <div className="form-group row">
-        <label className="col-sm-2 col-form-label">Nom</label>
-        <div class="col-sm-10">
-          <input type="text" className="form-control" placeholder="Entrez un nom" />
+    <Fragment>
+      <Navbar>
+        <Link to='/'>
+          Accueil
+        </Link>
+      </Navbar>
+    
+      <StyledForm>
+        <div className="form-group row">
+          <label className="col-sm-2 col-form-label">Nom</label>
+          <div className="col-sm-10">
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Entrez un nom" />
+          </div>
         </div>
-      </div>
-      <div className="form-group row">
-        <label className="col-sm-2 col-form-label">Email</label>
-        <div class="col-sm-10">
-          <input type="email" className="form-control" placeholder="Entrez un e-mail" />
+        <div className="form-group row">
+          <label className="col-sm-2 col-form-label">Email</label>
+          <div className="col-sm-10">
+            <input
+              type="email"
+              className="form-control"
+              placeholder="Entrez un e-mail" />
+          </div>
         </div>
-      </div>
-      <div className="form-group row">
-        <label className="col-sm-2 col-form-label">Mot de passe</label>
-        <div class="col-sm-10">
-          <input type="password" className="form-control" placeholder="Entrez un mot de passe" />
+        <div className="form-group row">
+          <label className="col-sm-2 col-form-label">Mot de passe</label>
+          <div className="col-sm-10">
+            <input
+            type="password"
+            className="form-control"
+            placeholder="Entrez un mot de passe" />
+          </div>
         </div>
-      </div>
-      <StyledContainButton>
-        <StyledButton type="submit" className="btn btn-primary">S'inscrire</StyledButton>
-        <StyledButton type="submit" className="btn btn-primary">Se connecter</StyledButton>
-      </StyledContainButton> 
-  </StyledFrom>
+        <StyledContainButton>
+          <Button
+            type="submit"
+            width="30%"
+            m="10px auto"
+            >
+            S'inscrire
+          </Button>
+          <Button
+            type="submit"
+            width="30%"
+            m="10px auto"
+            >
+            Se connecter
+          </Button>
+        </StyledContainButton> 
+      </StyledForm>
+    </Fragment>
    )
 };
 
