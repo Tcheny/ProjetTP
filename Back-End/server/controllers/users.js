@@ -14,6 +14,18 @@ const getUsers = async () => {
   return queryResult;
 };
 
+const getOneUser = async (id) => {
+  const getOne = SQL`
+    SELECT 
+      *
+    FROM users
+    WHERE user_id = ${id}
+  `;
+
+  const getOneResult = await client.query(getOne);
+  return getOneResult;
+};
+
 const insertUsers = async userInfos => {
   const insertUser = SQL`
     INSERT INTO users (
@@ -60,7 +72,7 @@ const deleteUsers = async(id) => {
     WHERE user_id = ${id}
     RETURNING *
   `;
-  
+
   const deleteUserResult =  await client.query(deleteUser);
   return deleteUserResult;
 };
@@ -69,5 +81,6 @@ module.exports = {
   getUsers,
   insertUsers,
   editUsers,
-  deleteUsers
+  deleteUsers,
+  getOneUser
 };

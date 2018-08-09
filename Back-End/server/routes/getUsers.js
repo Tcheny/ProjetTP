@@ -1,11 +1,11 @@
 import { Router } from 'express';
 
 import queries from '../database/connexion';
-
 import { getUsers,
          insertUsers,
          editUsers,
-         deleteUsers
+         deleteUsers,
+         getOneUser
         }
         from '../controllers/users';
 
@@ -25,6 +25,21 @@ router.get('/all', async (req, res) => {
 
   return res.status(200).send(queryResult.rows);
 });
+
+router.get('/:id', async (req, res) => {
+  let getOneResult = null;
+
+  try {
+    getOneResult = await getOneUser(req.params.id)
+  } catch (error) {
+    console.log(error);
+    res
+      .status(500)
+      .send(new Error("Erreur dans One User", error));
+  }
+
+  return res.status(200).send(getOneResult.rows);
+})
 
 router.post('/add', async (req, res) => {
   let insertUsersResult = null;
