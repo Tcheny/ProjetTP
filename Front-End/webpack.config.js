@@ -1,5 +1,5 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+// const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const WebpackDasboardPlugin = require('webpack-dashboard/plugin');
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
 
@@ -22,10 +22,10 @@ module.exports = {
           }
         }
       },
-      {
-        test: /\.css$/,
-        use: [MiniCssExtractPlugin.loader, "css-loader"]
-      },
+      // {
+      //   test: /\.css$/,
+      //   use: [MiniCssExtractPlugin.loader, "css-loader"]
+      // },
       {
         test: /\.(png|jpg|gif)$/i,
         use: [
@@ -39,15 +39,25 @@ module.exports = {
       }
     ]
   },
+  devServer: {
+    proxy: 
+      {
+        "/all": "http://localhost:8081"
+      }
+    
+  },
+
+
+
   plugins: [
     new HtmlWebpackPlugin({
         template: "./src/index.html",
         filename: "./index.html"
       }),
-    new MiniCssExtractPlugin({
-        filename: "[name].css",
-        chunkFilename: "[id].css"
-      }),
+    // new MiniCssExtractPlugin({
+    //     filename: "[name].css",
+    //     chunkFilename: "[id].css"
+    //   }),
     new WebpackDasboardPlugin(),
     new FriendlyErrorsWebpackPlugin(),
   ]

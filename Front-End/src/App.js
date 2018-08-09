@@ -5,22 +5,14 @@ import styled from 'styled-components';
 
 import { Login, Home } from './components'
 
-const StyledBody = styled.div`
-  width: 60%;
-  margin: auto;
-`;
-
 const App = () => {
   return (
     <Router>
-      <div>
         <Switch>
           <Route path="/login" component={Login} />
           <Route path='/' component={Home} />
         </Switch>
-      </div>
-    </Router>
-    
+    </Router> 
   )
 }
 

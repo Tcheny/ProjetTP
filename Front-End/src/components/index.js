@@ -4,6 +4,8 @@ export { default as Login } from './Login';
 export { default as Header } from './Header';
 export { default as Post } from './Post';
 export { default as Rale } from './Rale';
+export { default as RaleImg } from './RaleImg';
+export { default as RaleVideo } from './RaleVideo';
 export { default as Search } from './Search';
 export { default as Select } from './Select';
 export { default as Button } from './Button';

@@ -1,8 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { Button } from './';
-import angry from '../images/angry-2.png'
+import { Button, RaleImg, RaleVideo } from './';
 
 const StyledContainer = styled.div`
   background-color: #f0f5f5;
@@ -36,16 +35,16 @@ const StyledImg = styled.div`
 `;
 
 const Rale = () => {
+  const raleImg = <RaleImg />
+  const raleVIdeo = <RaleVideo />
+
   return (
     <StyledContainer>
       <StyledBy>
         Par "data.name", "moment" + "heure"
       </StyledBy>
       <StyledMargin>
-        <StyledFlex>
-          <StyledImg>"Image"</StyledImg>
-          <div>"Post de rale"</div>
-        </StyledFlex>
+        <RaleImg />
         <hr/>
         <StyledPost>
           <Button
@@ -54,23 +53,26 @@ const Rale = () => {
           >
             Mais graavee
           </Button>
+          <div>"count"</div>
           <Button
             type="submit"
             width="10em"
           >
             Oh merde
           </Button>
+          <div>"count"</div>
           <Button
             type="submit"
             width="10em"
           >
             Ralez
           </Button>
+          <div>"count"</div>
         </StyledPost>
         <StyledFlex>
-          <div>emoji</div>
-          <div>emoji</div>
-          <div>emoji</div>
+          <StyledMargin>emoji</StyledMargin>
+          <StyledMargin>emoji</StyledMargin>
+          <StyledMargin>emoji</StyledMargin>
         </StyledFlex>
       </StyledMargin>
     </StyledContainer>

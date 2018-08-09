@@ -45,7 +45,7 @@ const Post = () => {
         <StyledPost>
           <StyledUpload>
             <Button width="10em">
-              <i class="fas fa-upload"></i> Photo / Vidéo
+              <i className="fas fa-upload"></i> Photo / Vidéo
             </Button>
             <StyledInput type="file" name="myfile" />
           </StyledUpload>
