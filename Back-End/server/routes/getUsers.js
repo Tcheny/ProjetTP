@@ -4,7 +4,10 @@ import queries from '../database/connexion';
 
 import { getUsers,
          insertUsers,
-         editUsers } from '../controllers/users';
+         editUsers,
+         deleteUsers
+        }
+        from '../controllers/users';
 
 const router = Router();
 
@@ -65,6 +68,21 @@ router.put('/edit/:id', async (req, res) => {
   }
 
   return res.status(200).send(editUsersResult.rows);
+});
+
+router.delete('/delete/:id', async (req, res) => {
+  let deleteUserResult = null;
+  
+  try {
+    deleteUserResult = await deleteUsers(req.params.id);
+  } catch (error) {
+    console.log(error);
+    res
+      .status(500)
+      .send(new Error("Erreur dans Delete User", error));
+  }
+
+  return res.status(200).send(deleteUserResult);
 });
 
 export default router;

@@ -49,12 +49,25 @@ const editUsers = async (id, userInfos) => {
     WHERE user_id = ${id}
     RETURNING *
   `;
+
     const editUserResult = await client.query(editUser);
     return editUserResult;
-}
+};
+
+const deleteUsers = async(id) => {
+  const deleteUser = SQL`
+    DELETE FROM users
+    WHERE user_id = ${id}
+    RETURNING *
+  `;
+  
+  const deleteUserResult =  await client.query(deleteUser);
+  return deleteUserResult;
+};
 
 module.exports = {
   getUsers,
   insertUsers,
-  editUsers
+  editUsers,
+  deleteUsers
 };
