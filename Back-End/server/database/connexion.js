@@ -5,13 +5,11 @@ const client = new Client({
   port: 5432,
   database: 'raleavie',
   user: 'postgres',
-  password: ''
+  password: 'untrucpouri'
 });
 
-client.on('error', (err) => {
-    console.log('Erreur émise par le client postgres: ', err)
-})
-
-client.connect()
+(async () => {
+  await client.connect()
+})();
 
 export default client;
