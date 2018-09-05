@@ -40,14 +40,12 @@ module.exports = {
     ]
   },
   devServer: {
+    overlay: true,
     proxy: 
       {
-        "/all": "http://localhost:8081"
+        '/': 'http://localhost:8081'
       }
-    
   },
-
-
 
   plugins: [
     new HtmlWebpackPlugin({

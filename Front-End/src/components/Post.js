@@ -9,13 +9,14 @@ const StyledContainer = styled.div`
   border-radius: 4px;
 `;
 
-const StyledForm = styled.form`
+const StyledForm = styled.div`
   margin: 20px;
 `;
 
 const StyledPost = styled.div`
   display: flex;
   justify-content: space-between;
+  margin-top: 20px;
 `;
 
 const StyledUpload = styled.div`
@@ -35,13 +36,11 @@ const Post = () => {
   return (
     <StyledContainer>
       <StyledForm>
-        <div className="form-group">
           <textarea
             className="form-control"
             rows="3"
             placeholder="Ralez plus fort que jamais!">
           </textarea>
-        </div>
         <StyledPost>
           <StyledUpload>
             <Button width="10em">

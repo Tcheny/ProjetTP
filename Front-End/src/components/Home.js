@@ -1,6 +1,7 @@
 import React, { Fragment, Component } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import axios from 'axios';
 
 import { Navbar, Header, Post, Rale } from './'
 
@@ -18,12 +19,15 @@ class Home extends Component {
   }
 
   componentDidMount() {
-    fetch("/all")
-      .then(res => res.json())
-      .then(data => this.setState({data}))
+    axios
+      .get('/posts')
+      .then(res => res.data)
+      .then(data => this.setState({ data }))
       .catch(error => (error))
   }
+
   render () {
+    const posts = this.state.data.map( post => post);
     return (  
       <Fragment>
         <Navbar>
@@ -33,14 +37,11 @@ class Home extends Component {
         </Navbar>
         <StyledBody>
           <Header />
-          {this.state.data.map( users => {
-            <div key={users.user_id}>{users.user_firstname}</div>
-          })}
-          <Post />
-          <Rale />
+          <Post/>
+          <Rale posts={posts} />
         </StyledBody>
       </Fragment>
-      )
+    )
   }
 };
 

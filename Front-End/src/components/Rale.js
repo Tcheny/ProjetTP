@@ -1,7 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
+import moment from 'moment';
 
 import { Button, RaleImg, RaleVideo } from './';
+import angry from '../images/angry-2.png';
+import crying from '../images/crying.png';
+import shocked from '../images/shocked.png';
 
 const StyledContainer = styled.div`
   background-color: #f0f5f5;
@@ -34,48 +38,55 @@ const StyledImg = styled.div`
   border: 1px solid #000;
 `;
 
-const Rale = () => {
-  const raleImg = <RaleImg />
-  const raleVIdeo = <RaleVideo />
+const Rale = ({posts}) => {
+  console.log(posts)
+  
+  const post = posts.map( post => {
+    const date = moment.utc(post.date_creation).format('DD-MM-YYYY, HH:mm')
+    
+    const raleImg = <RaleImg />
+    const raleVIdeo = <RaleVideo />
+  
+    return (
+      <StyledContainer key={post.post_id}>
+        <StyledBy>
+          Par {date}
+        </StyledBy>
+        <StyledMargin>
+          <RaleImg />
+          <hr/>
+          <StyledPost>
+            <Button type="submit" width="10em">
+              Mais graavee
+            </Button>
+            <div>"count"</div>
+            <Button type="submit" width="10em">
+              Oh merde
+            </Button>
+            <div>"count"</div>
+            <Button type="submit" width="10em">
+              Ralez
+            </Button>
+            <div>"count"</div>
+          </StyledPost>
+          <StyledFlex>
+            <StyledMargin>
+              <img src={angry} />emoji
+            </StyledMargin>
+            <StyledMargin>
+              <img src={crying} />emoji
+            </StyledMargin>
+            <StyledMargin>
+              <img src={shocked} />emoji
+            </StyledMargin>
+          </StyledFlex>
+        </StyledMargin>
+      </StyledContainer>
+    )
+  })
 
   return (
-    <StyledContainer>
-      <StyledBy>
-        Par "data.name", "moment" + "heure"
-      </StyledBy>
-      <StyledMargin>
-        <RaleImg />
-        <hr/>
-        <StyledPost>
-          <Button
-            type="submit"
-            width="10em"
-          >
-            Mais graavee
-          </Button>
-          <div>"count"</div>
-          <Button
-            type="submit"
-            width="10em"
-          >
-            Oh merde
-          </Button>
-          <div>"count"</div>
-          <Button
-            type="submit"
-            width="10em"
-          >
-            Ralez
-          </Button>
-          <div>"count"</div>
-        </StyledPost>
-        <StyledFlex>
-          <StyledMargin>emoji</StyledMargin>
-          <StyledMargin>emoji</StyledMargin>
-          <StyledMargin>emoji</StyledMargin>
-        </StyledFlex>
-      </StyledMargin>
-    </StyledContainer>
+    <div>{post}</div>
   )
 };
 
