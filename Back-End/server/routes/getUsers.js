@@ -11,7 +11,7 @@ import { getUsers,
 
 const router = Router();
 
-router.get('/all', async (req, res) => {
+router.get('/users', async (req, res) => {
   let queryResult = null;
 
   try {
@@ -26,7 +26,7 @@ router.get('/all', async (req, res) => {
   return res.status(200).send(queryResult.rows);
 });
 
-router.get('/:id', async (req, res) => {
+router.get('/user/:id', async (req, res) => {
   let getOneResult = null;
 
   try {
@@ -41,7 +41,7 @@ router.get('/:id', async (req, res) => {
   return res.status(200).send(getOneResult.rows);
 })
 
-router.post('/add', async (req, res) => {
+router.post('/user/add', async (req, res) => {
   let insertUsersResult = null;
 
   try {
@@ -63,7 +63,7 @@ router.post('/add', async (req, res) => {
   return res.status(200).send(insertUsersResult.rows);
 });
 
-router.put('/edit/:id', async (req, res) => {
+router.put('/user/edit/:id', async (req, res) => {
   let editUsersResult = null;
 
   try {
@@ -85,7 +85,7 @@ router.put('/edit/:id', async (req, res) => {
   return res.status(200).send(editUsersResult.rows);
 });
 
-router.delete('/delete/:id', async (req, res) => {
+router.delete('/user/delete/:id', async (req, res) => {
   let deleteUserResult = null;
   
   try {
