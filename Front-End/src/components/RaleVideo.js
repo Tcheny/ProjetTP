@@ -20,13 +20,13 @@ const StyledVideo = styled.div`
   width: 60%;
 `;
 
-const RaleVideo = () => {
+const RaleVideo = ({ post }) => {
   return (
     <StyledFlex>
           <StyledBorder>
-            <StyledVideo>"Video"</StyledVideo>
+            <StyledVideo>{ post.path_media }</StyledVideo>
           </StyledBorder>
-          <div>"Post de rale"</div>
+          <div>{ post.post }</div>
         </StyledFlex>
   )
 };

@@ -38,22 +38,18 @@ const StyledImg = styled.div`
   border: 1px solid #000;
 `;
 
-const Rale = ({posts}) => {
-  console.log(posts)
-  
-  const post = posts.map( post => {
+const Rale = ({ post }) => {  
     const date = moment.utc(post.date_creation).format('DD-MM-YYYY, HH:mm')
     
-    const raleImg = <RaleImg />
-    const raleVIdeo = <RaleVideo />
+    const postMedia = post.type_media === 1 ? <RaleImg post={post} /> : <RaleVideo post={post} />
   
     return (
-      <StyledContainer key={post.post_id}>
+      <StyledContainer>
         <StyledBy>
-          Par {date}
+          Par { date }
         </StyledBy>
         <StyledMargin>
-          <RaleImg />
+          { postMedia }
           <hr/>
           <StyledPost>
             <Button type="submit" width="10em">
@@ -83,7 +79,7 @@ const Rale = ({posts}) => {
         </StyledMargin>
       </StyledContainer>
     )
-  })
+  
 
   return (
     <div>{post}</div>

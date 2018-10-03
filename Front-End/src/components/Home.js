@@ -11,23 +11,35 @@ const StyledBody = styled.div`
 `;
 
 class Home extends Component {
-  constructor() {
-    super();
-    this.state = {
-      data: []
+    state = {
+      users: [],
+      posts: [],
+      comments: []
     }
-  }
 
-  componentDidMount() {
+  componentDidMount = () => {
     axios
-      .get('/posts')
-      .then(res => res.data)
-      .then(data => this.setState({ data }))
+      .all([
+        axios.get('/users'),
+        axios.get('/posts'),
+        axios.get('/comments'),
+      ])
+      .then(axios.spread(( user, post, comment ) => {
+        this.setState({
+          users: user.data,
+          posts: post.data,
+          comments: comment.data
+        })
+      }))
       .catch(error => (error))
-  }
+  };
 
+  
   render () {
-    const posts = this.state.data.map( post => post);
+    const allPosts = this.state.posts.map( post => {
+      return < Rale key={post.post_id} post={post}/>
+    });
+
     return (  
       <Fragment>
         <Navbar>
@@ -38,7 +50,7 @@ class Home extends Component {
         <StyledBody>
           <Header />
           <Post/>
-          <Rale posts={posts} />
+          { allPosts }
         </StyledBody>
       </Fragment>
     )

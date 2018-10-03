@@ -15,14 +15,22 @@ const StyledButton = styled.button`
   color: #fff;
 `;
 
-const Button = ({ width, m, bg, type, children }) => {
-  const bgColor = bg
+const Button = ({
+    width,
+    m,
+    violet,
+    green,
+    type,
+    children
+  }) =>  {
+
   return (  
     <StyledButton 
       type={type}
       width={width}
       m={m}
-      bg={bg}
+      violet={violet}
+      green={green}
       className="btn"
       >
       {children}

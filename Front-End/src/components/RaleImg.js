@@ -12,11 +12,11 @@ const StyledImg = styled.div`
   border: 1px solid #000;
 `;
 
-const RaleImg = () => {
+const RaleImg = ({ post }) => {
   return (
     <StyledFlex>
-          <StyledImg>"Image"</StyledImg>
-          <div>"Post de rale"</div>
+          <StyledImg>{ post.path_media }</StyledImg>
+          <div>{ post.post }</div>
         </StyledFlex>
   )
 };
