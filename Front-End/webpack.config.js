@@ -1,5 +1,4 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-// const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const WebpackDasboardPlugin = require('webpack-dashboard/plugin');
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
 
@@ -40,6 +39,7 @@ module.exports = {
     ]
   },
   devServer: {
+    historyApiFallback: true,
     overlay: true,
     proxy: 
       {
@@ -52,10 +52,6 @@ module.exports = {
         template: "./src/index.html",
         filename: "./index.html"
       }),
-    // new MiniCssExtractPlugin({
-    //     filename: "[name].css",
-    //     chunkFilename: "[id].css"
-    //   }),
     new WebpackDasboardPlugin(),
     new FriendlyErrorsWebpackPlugin(),
   ]

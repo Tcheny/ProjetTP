@@ -37,7 +37,7 @@ class Home extends Component {
   
   render () {
     const allPosts = this.state.posts.map( post => {
-      return < Rale key={post.post_id} post={post}/>
+      return <Rale key={post.post_id} post={post} />
     });
 
     return (  
@@ -47,6 +47,7 @@ class Home extends Component {
             Connexion
           </Link>
         </Navbar>
+        
         <StyledBody>
           <Header />
           <Post/>
