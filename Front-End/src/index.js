@@ -1,2 +1,5 @@
-import App from './App';
-// import style from './main.css'
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { App } from './scenes/index';
+
+ReactDOM.render(<App />, document.getElementById('root'));

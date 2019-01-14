@@ -6,18 +6,18 @@ const StyledSelect = styled.form`
 `;
 
 const Select = () => {
-  return (
-    <StyledSelect>
-        <select className="form-control">
-          <option value="" hidden>Catégories</option>
-          <option>Transport</option>
-          <option>Ecole</option>
-          <option>Travail</option>
-          <option>Famille</option>
-          <option>Amis</option>
-        </select>
-    </StyledSelect>
-  )
+    return (
+        <StyledSelect>
+            <select className="form-control">
+                <option value="" hidden>Catégories</option>
+                <option>Transport</option>
+                <option>Ecole</option>
+                <option>Travail</option>
+                <option>Famille</option>
+                <option>Amis</option>
+            </select>
+        </StyledSelect>
+    )
 };
 
 export default Select;
