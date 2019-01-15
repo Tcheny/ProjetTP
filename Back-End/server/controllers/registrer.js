@@ -5,12 +5,21 @@ import client from '../database/connexion';
 const createOne = async (newUser) => {
     const query = SQL`
         INSERT INTO users(
+            user_firstname,
+            user_lastname,
             user_email,
-            user_password
+            user_password,
+            user_pseudo,
+            user_type
         ) VALUES (
-            ${newUser.user_firstname},
-            ${newUser.user_password}
-        )`
+            ${newUser.firstname},
+            ${newUser.lastname},
+            ${newUser.email},
+            ${newUser.password},
+            ${newUser.pseudo},
+            ${newUser.type}
+        ) RETURNING *
+    `;
 
     const queryResult = await client.query(query);
     return queryResult;
@@ -22,7 +31,7 @@ const getOne = async (user) => {
         SELECT
             *
         FROM users
-        WHERE user_email = ${user}
+        WHERE user_email = ${user.user_email}
     `;
 
     const getOneResult = await client.query(getOne);

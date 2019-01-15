@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import auth from '../controllers/auth'
 
 import queries from '../database/connexion';
 import {
@@ -8,6 +9,8 @@ import {
     deleteUsers,
     getOneUser
 } from '../controllers/users';
+
+import { createOne, getOne } from '../controllers/registrer'
 
 const router = Router();
 
@@ -26,6 +29,36 @@ router.get('/all', async (req, res) => {
     return res.status(200).send(queryResult.rows);
 });
 
+
+
+
+
+// TEST SARA
+
+router.get('/user', async (req, res) => {
+    console.log("GETONE HEERRRE:", req.query)
+
+    let queryResult = null;
+
+    try {
+        queryResult = await getOne(req.query);
+    } catch (error) {
+        console.log(error);
+        res
+        .status(500)
+        .send(new Error("Erreur dans Users", error));
+    }
+
+    return res.status(200).send(queryResult.rows);
+});
+
+
+
+
+
+
+
+
 router.get('/:id', async (req, res) => {
     let getOneResult = null;
 
@@ -41,11 +74,27 @@ router.get('/:id', async (req, res) => {
     return res.status(200).send(getOneResult.rows);
 })
 
-router.post('/add', async (req, res) => {
-    let addUsersResult = null;
+router.get('/:email', async (req, res) => {
+    let getOneUSERResult = null;
 
     try {
-        addUsersResult = await addUsers({
+        getOneUSERResult = await getOne(req.body)
+    } catch (error) {
+        console.log(error);
+        res
+        .status(500)
+        .send(new Error("Erreur dans One User", error));
+    }
+
+    return res.status(200).send(getOneUSERResult.rows);
+})
+
+router.post('/add', async (req, res) => {
+    console.log(req.body)
+
+    let addUsersResult = null;
+    try {
+        addUsersResult = await createOne({
             firstname: req.body.user_firstname,
             lastname: req.body.user_lastname,
             email: req.body.user_email,
@@ -99,5 +148,6 @@ router.delete('/delete/:id', async (req, res) => {
 
     return res.status(200).send(deleteUserResult);
 });
+
 
 export default router;
