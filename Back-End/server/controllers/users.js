@@ -1,6 +1,7 @@
 const SQL = require("sql-template-strings");
 
 import client from '../database/connexion';
+import password from './miscs/encryptPassword'
 
 const getUsers = async () => {
     const query = SQL`
@@ -12,22 +13,38 @@ const getUsers = async () => {
 
     // execute la requete SQL
     const queryResult = await client.query(query);
-    return queryResult;
+    return queryResult.rows;
 };
 
-const getOneUser = async (id) => {
+const getOneUser = async (userId) => {
     const getOne = SQL`
         SELECT
-            *
+            user_firstname,
+            user_lastname,
+            user_email,
+            user_password,
+            user_pseudo,
+            user_type
         FROM users
-        WHERE user_id = ${id}
+        WHERE user_id = ${userId}
     `;
 
     const getOneResult = await client.query(getOne);
-    return getOneResult;
+    if(!getOneResult.rowCount) {
+        throw new Error('Pas de User avec id :', userId)
+    }
+    return getOneResult.rows[0];
 };
 
-const addUsers = async (userInfos) => {
+
+
+
+const addUsers = async (newUser) => {
+    if (await verifyUsernameExists(newUser.user_email)) {
+        throw new Error('Email déjà utilisé')
+    }
+    const encryptedPassword = await password.encryptPassword(newUser.password)
+
     const addUser = SQL`
         INSERT INTO users (
             user_firstname,
@@ -37,18 +54,38 @@ const addUsers = async (userInfos) => {
             user_pseudo,
             user_type
         ) VALUES (
-            ${userInfos.firstname},
-            ${userInfos.lastname},
-            ${userInfos.email},
-            ${userInfos.password},
-            ${userInfos.pseudo},
-            ${userInfos.type}
-        ) RETURNING *
+            ${newUser.firstname},
+            ${newUser.lastname},
+            ${newUser.email},
+            ${encryptedPassword},
+            ${newUser.pseudo},
+            ${newUser.type}
+        )
     `;
 
     const addUserResult = await client.query(addUser);
     return addUserResult;
 };
+
+
+const verifyUsernameExists = async (username) => {
+    const verify = SQL`
+        SELECT
+            *
+        FROM users
+        WHERE user_email = ${username}
+    `;
+    const retrievedUser = await client.query(verify);
+     if (retrievedUser.rowCount) {
+        return true
+     }
+     return false
+}
+
+
+
+
+
 
 const editUsers = async (id, userInfos) => {
     const editUser = SQL`
