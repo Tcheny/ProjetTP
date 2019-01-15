@@ -11,7 +11,7 @@ const StyledBody = styled.div`
     margin: auto;
 
     @media (max-width:767px) {
-        width: 90%   
+        width: 90%
     }
 `;
 
@@ -25,9 +25,9 @@ class Home extends Component {
     componentDidMount = () => {
         axios
         .all([
-            axios.get('/users'),
-            axios.get('/posts'),
-            axios.get('/comments'),
+            axios.get('/users/all'),
+            axios.get('/posts/all'),
+            axios.get('/comments/all'),
         ])
         .then(axios.spread(( user, post, comment ) => {
             this.setState({
@@ -39,20 +39,20 @@ class Home extends Component {
         .catch(error => (error))
     };
 
-  
+
     render () {
         const allPosts = this.state.posts.map( post => {
             return <Rale key={post.post_id} post={post} />
         });
 
-        return (  
+        return (
             <Fragment>
                 <Navbar>
                     <NavLink to='/login'>
                         Connexion
                     </NavLink>
                 </Navbar>
-                
+
                 <StyledBody>
                     <Header />
                     <Post/>
