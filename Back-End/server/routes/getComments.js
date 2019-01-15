@@ -14,7 +14,7 @@ from '../controllers/comments';
 
 const router = Router();
 
-router.get('/comments', async (req, res) => {
+router.get('/all', async (req, res) => {
   let queryResult = null;
 
   try {
@@ -29,7 +29,7 @@ router.get('/comments', async (req, res) => {
   return res.status(200).send(queryResult.rows);
 });
 
-router.get('/comment/:id', async (req, res) => {
+router.get('/:id', async (req, res) => {
   let getOneResult = null;
 
   try {
@@ -44,7 +44,7 @@ router.get('/comment/:id', async (req, res) => {
   return res.status(200).send(getOneResult.rows);
 })
 
-router.post('/comment/add', async (req, res) => {
+router.post('/add', async (req, res) => {
   let insertCommentsResult = null;
 
   try {
@@ -64,7 +64,7 @@ router.post('/comment/add', async (req, res) => {
   return res.status(200).send(insertCommentsResult.rows);
 });
 
-router.put('/comment/edit/:id', async (req, res) => {
+router.put('/edit/:id', async (req, res) => {
   let editCommentsResult = null;
 
   try {
@@ -84,7 +84,7 @@ router.put('/comment/edit/:id', async (req, res) => {
   return res.status(200).send(editCommentsResult.rows);
 });
 
-router.delete('/comment/delete/:id', async (req, res) => {
+router.delete('/delete/:id', async (req, res) => {
   let deleteCommentResult = null;
 
   try {

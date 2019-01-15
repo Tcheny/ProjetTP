@@ -14,7 +14,7 @@ from '../controllers/posts';
 
 const router = Router();
 
-router.get('/posts', async (req, res) => {
+router.get('/all', async (req, res) => {
   let queryResult = null;
 
   try {
@@ -29,7 +29,7 @@ router.get('/posts', async (req, res) => {
   return res.status(200).send(queryResult.rows);
 });
 
-router.get('/post/:id', async (req, res) => {
+router.get('/:id', async (req, res) => {
   let getOneResult = null;
 
   try {
@@ -44,7 +44,7 @@ router.get('/post/:id', async (req, res) => {
   return res.status(200).send(getOneResult.rows);
 })
 
-router.post('/post/add', async (req, res) => {
+router.post('/add', async (req, res) => {
   let insertPostsResult = null;
 
   try {
@@ -65,7 +65,7 @@ router.post('/post/add', async (req, res) => {
   return res.status(200).send(insertPostsResult.rows);
 });
 
-router.put('/post/edit/:id', async (req, res) => {
+router.put('/edit/:id', async (req, res) => {
   let editPostsResult = null;
 
   try {
@@ -86,7 +86,7 @@ router.put('/post/edit/:id', async (req, res) => {
   return res.status(200).send(editPostsResult.rows);
 });
 
-router.delete('/post/delete/:id', async (req, res) => {
+router.delete('/delete/:id', async (req, res) => {
   let deletePostResult = null;
 
   try {

@@ -3,9 +3,8 @@ import {   getAllCommentsFromPosts } from '../controllers/allCommentsFromPosts';
 
 const router = Router();
 
-router.get('/post/:id/comments', async (req, res) => {
+router.get('/posts/:id/comments', async (req, res) => {
   let getAllResult = null;
-  console.log("PARAMS", req.params)
   try {
     getAllResult = await getAllCommentsFromPosts(req.params.id)
   } catch (error) {
