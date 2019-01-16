@@ -1,12 +1,14 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const WebpackDasboardPlugin = require('webpack-dashboard/plugin');
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
+const path = require('path');
 
 module.exports = {
   module: {
     rules: [
       {
         test: /\.(js|jsx)$/,
+        include: path.resolve(__dirname, './src'),
         exclude: /node_modules/,
         use: {
           loader: "babel-loader"
@@ -48,7 +50,7 @@ module.exports = {
   devServer: {
     historyApiFallback: true,
     overlay: true,
-    proxy: 
+    proxy:
       {
         '/': 'http://localhost:8081'
       }
