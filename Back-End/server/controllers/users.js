@@ -1,7 +1,7 @@
 const SQL = require("sql-template-strings");
 
 import client from '../database/connexion';
-import password from './miscs/encryptPassword'
+import encryptPassword from './miscs/encryptPassword'
 
 const getUsers = async () => {
     const query = SQL`
@@ -43,7 +43,7 @@ const addUsers = async (newUser) => {
     if (await verifyUsernameExists(newUser.user_email)) {
         throw new Error('Email déjà utilisé')
     }
-    const encryptedPassword = await password.encryptPassword(newUser.password)
+    const encryptedPassword = await encryptPassword(newUser.password)
 
     const addUser = SQL`
         INSERT INTO users (
@@ -60,13 +60,11 @@ const addUsers = async (newUser) => {
             ${encryptedPassword},
             ${newUser.pseudo},
             ${newUser.type}
-        )
-    `;
+    )`;
 
     const addUserResult = await client.query(addUser);
     return addUserResult;
 };
-
 
 const verifyUsernameExists = async (username) => {
     const verify = SQL`
@@ -81,11 +79,6 @@ const verifyUsernameExists = async (username) => {
      }
      return false
 }
-
-
-
-
-
 
 const editUsers = async (id, userInfos) => {
     const editUser = SQL`

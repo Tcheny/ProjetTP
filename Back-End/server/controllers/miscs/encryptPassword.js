@@ -1,7 +1,6 @@
 import bcrypt from 'bcrypt'
 
-export default {
-    encryptPassword: async (password) => {
+export const encryptPassword = async (password) => {
         const salt = await bcrypt.genSalt(10)
 
         // 1 - crypter le password
@@ -10,4 +9,5 @@ export default {
 
         return cryptedPwd
     }
-}
+
+export default encryptPassword;

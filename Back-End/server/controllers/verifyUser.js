@@ -3,8 +3,8 @@ import bcrypt from 'bcrypt'
 
 import client from '../database/connexion';
 
-export default {
-    verifyUser: async (username, password) => {
+export const verifyUser = async (username, password) => {
+    console.log(username)
         const verify = SQL`
             SELECT
                 user_firstname,
@@ -23,7 +23,7 @@ export default {
             throw new Error(`Aucun utilisation ${username}`)
         }
 
-        const passwordRight = await bcrypt.compare(password, retrievedUser.rows[0].password)
+        const passwordRight = await bcrypt.compare(password, retrievedUser.rows[0].user_password)
 
         if (!passwordRight) {
             throw new Error('Mot de passe incorrect')
@@ -31,4 +31,5 @@ export default {
 
         return retrievedUser.rows[0]
     }
-}
+
+export default verifyUser;

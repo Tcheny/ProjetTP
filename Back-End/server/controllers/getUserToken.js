@@ -1,13 +1,10 @@
 import jwt from 'jsonwebtoken'
 import { getOneUser } from './users';
 
-export default {
-    getUserFromToken: async (jwtToken) => {
+export const getUserFromToken = async (jwtToken) => {
         if (!jwtToken) {
             throw new Error('Pas de Token')
         }
-
-        const verified = jwt.verify(jwtToken, process.env.JWT_SECRET)
 
         const decodedToken = jwt.decode(jwtToken)
         if (!decodedToken) {
@@ -15,5 +12,7 @@ export default {
         }
 
         const user = await getOneUser(decodedToken)
+        return user
     }
-}
+
+export default getUserFromToken;
