@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { Search, Select, Button } from '../components';
+import { Search, Button } from '../components';
 
 const StyledHeader = styled.header`
     display: flex;
@@ -22,7 +22,6 @@ const Header = () => {
         <StyledHeader>
             <StyledFlex>
                 <Search />
-                <Select />
             </StyledFlex>
             <StyledFlex button>
                 <Button width='12em' violet type='button'>

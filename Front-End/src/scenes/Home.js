@@ -21,9 +21,12 @@ class Home extends Component {
     }
 
     getAllPostsId = () => {
-        const result = axios.get('/posts/allId')
+        axios.get('/posts/allId')
         .then(res => {
             this.setState({postsId: res.data})
+        })
+        .catch(error => {
+            console.error(error)
         })
     }
 

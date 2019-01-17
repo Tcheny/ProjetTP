@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Redirect } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { Navbar, Button } from '../components';
@@ -18,7 +18,8 @@ const StyledContainButton = styled.div`
 class Login extends Component {
     state = {
         user_email: '',
-        user_password: ''
+        user_password: '',
+        redirect: false
     }
 
     handleSubmit = event => {
@@ -32,13 +33,19 @@ class Login extends Component {
         console.log('user', user)
 
         axios.post('/login', {user})
-        .then(res => {
-            console.log(res)
-            console.log(res.data)
-        })
+            .then(res => {
+                console.log(res);
+                this.setState({ redirect: true })
+            })
+            .catch(error => {
+                console.error(error);
+            });
     }
 
     render () {
+        if (this.state.redirect) {
+            return <Redirect to='/'/>
+        }
 
         return (
             <Fragment>

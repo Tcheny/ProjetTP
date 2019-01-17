@@ -60,19 +60,18 @@ class Rale extends Component {
 
     render () {
         const { postId } = this.props;
-        console.log('POST ------ :', this.state.props)
-
-
-            let date = '';
-            let postMedia = '';
-            let postText= '';
-            let author = '';
-
-            if (this.state.post) {
-
+        
+        
+        let date = '';
+        let postMedia = '';
+        let postText= '';
+        let author = '';
+        
+        if (this.state.post) {
                 date = moment.utc(this.state.post.date_media).format('DD-MM-YYYY, HH:mm')
 
-                // postMedia = this.state.post.type_media === 1 && <RaleImg postId={postId} />
+                postMedia = this.state.post.type_media === 1 && <RaleImg postId={postId} />
+
                 author= this.state.post.user_pseudo
                 postText = this.state.post.post
             }

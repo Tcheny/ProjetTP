@@ -22,11 +22,13 @@ const Button = ({
     violet,
     green,
     type,
-    children
+    children,
+    onSubmit
 }) =>  {
 
-    return (  
-        <StyledButton 
+    return (
+        <StyledButton
+            onSubmit={onSubmit}
             type={type}
             width={width}
             m={m}
