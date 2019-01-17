@@ -1,16 +1,13 @@
-import {
-  Router
-} from 'express';
+const { Router } = require('express');
 
-import queries from '../database/connexion';
-import {
+const queries = require('../database/connexion');
+const {
   getComments,
   getOneComment,
   insertComments,
   editComments,
   deleteComments
-}
-from '../controllers/comments';
+} = require('../controllers/comments');
 
 const router = Router();
 
@@ -99,4 +96,4 @@ router.delete('/delete/:id', async (req, res) => {
   return res.status(200).send(deleteCommentResult);
 });
 
-export default router;
+module.exports= router;

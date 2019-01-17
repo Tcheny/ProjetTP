@@ -1,7 +1,7 @@
-import jwt from 'jsonwebtoken'
-import { getOneUser } from './users';
+const jwt = require('jsonwebtoken');
+const { getOneUser } = require('./users');
 
-export const getUserFromToken = async (jwtToken) => {
+const getUserFromToken = async (jwtToken) => {
         if (!jwtToken) {
             throw new Error('Pas de Token')
         }
@@ -15,4 +15,4 @@ export const getUserFromToken = async (jwtToken) => {
         return user
     }
 
-export default getUserFromToken;
+module.exports= getUserFromToken;

@@ -1,6 +1,6 @@
-import jwt from 'jsonwebtoken'
+const jwt = require('jsonwebtoken');
 
-export const generateToken = (user) => {
+const generateToken = (user) => {
     if (process.env.JWT_SECRET) {
         const secret = process.env.JWT_SECRET
         const payload = {
@@ -15,7 +15,7 @@ export const generateToken = (user) => {
     }
 }
 
-export const validateToken = async (req, res, next) => {
+const validateToken = async (req, res, next) => {
 
     // User crée un compte ou se connecte sans token
     if (req.originalUrl === '/users/add' || req.originalUrl === '/login') {
@@ -35,9 +35,14 @@ export const validateToken = async (req, res, next) => {
             }
             console.log('Token validé pour ', req.originalUrl)
 
-            req.userId = decoded.userId
-            console.log("REQ USERID", decoded.userId)
+            const session = { userId: decoded.user }
+            req.session = session
             next()
         })
     }
+}
+
+module.exports = {
+    generateToken,
+    validateToken
 }

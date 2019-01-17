@@ -1,4 +1,4 @@
-import { Client } from 'pg';
+const { Client } = require('pg');
 
 const client = new Client({
   host: 'localhost',
@@ -13,4 +13,4 @@ const client = new Client({
   await client.connect()
 })();
 
-export default client;
+module.exports= client;

@@ -1,13 +1,13 @@
-import { Router } from 'express';
+const { Router } = require('express');
 
-import queries from '../database/connexion';
-import {
+const queries = require('../database/connexion');
+const {
     getUsers,
     addUsers,
     editUsers,
     deleteUsers,
     getOneUser
-} from '../controllers/users';
+} = require('../controllers/users');
 
 const router = Router();
 
@@ -95,5 +95,4 @@ router.delete('/delete/:id', async (req, res) => {
     return res.status(200).send(deleteUserResult);
 });
 
-
-export default router;
+module.exports= router;

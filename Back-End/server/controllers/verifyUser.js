@@ -1,12 +1,13 @@
 const SQL = require("sql-template-strings");
-import bcrypt from 'bcrypt'
+const bcrypt = require('bcrypt');
 
-import client from '../database/connexion';
+const client = require('../database/connexion');
 
-export const verifyUser = async (username, password) => {
+const verifyUser = async (username, password) => {
     console.log(username)
         const verify = SQL`
             SELECT
+                user_id,
                 user_firstname,
                 user_lastname,
                 user_email,
@@ -32,4 +33,4 @@ export const verifyUser = async (username, password) => {
         return retrievedUser.rows[0]
     }
 
-export default verifyUser;
+module.exports= verifyUser;

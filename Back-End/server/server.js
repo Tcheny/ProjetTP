@@ -1,10 +1,9 @@
-import express from 'express';
-import logger from 'morgan';
-import cookieParser from 'cookie-parser';
-import { validateToken } from './Authentication';
-//import getUserFromToken from './controllers/getUserToken';
-import config from './config/config';
-import router from './routes/getRouter';
+const express = require('express');
+const logger = require('morgan');
+const cookieParser = require('cookie-parser');
+const { validateToken } = require('./Authentication');
+const config = require('./config/config');
+const router = require('./routes/getRouter');
 
 const app = express();
 

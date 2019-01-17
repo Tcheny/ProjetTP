@@ -1,7 +1,7 @@
 const SQL = require("sql-template-strings");
 
-import client from '../database/connexion';
-import encryptPassword from './miscs/encryptPassword'
+const client= require('../database/connexion');
+const encryptPassword= require('./miscs/encryptPassword');
 
 const getUsers = async () => {
     const query = SQL`
