@@ -17,16 +17,16 @@ const StyledContainButton = styled.div`
 
 class Login extends Component {
     state = {
-        usernameInput: '',
-        passwordInput: ''
+        user_email: '',
+        user_password: ''
     }
 
     handleSubmit = event => {
         event.preventDefault();
 
         const user = {
-            usernameInput: this.state.usernameInput,
-            passwordInput: this.state.passwordInput
+            user_email: this.state.user_email,
+            user_password: this.state.user_password
         }
 
         console.log('user', user)
@@ -56,7 +56,7 @@ class Login extends Component {
                                 type="email"
                                 className="form-control"
                                 placeholder="Adresse mail"
-                                onChange={(e) => this.setState({usernameInput: e.target.value})}
+                                onChange={(e) => this.setState({user_email: e.target.value})}
                                 />
                         </div>
                     </div>
@@ -67,7 +67,7 @@ class Login extends Component {
                                 type="password"
                                 className="form-control"
                                 placeholder="Entrez un mot de passe"
-                                onChange={(e) => this.setState({passwordInput: e.target.value})}
+                                onChange={(e) => this.setState({user_password: e.target.value})}
                                 />
                         </div>
                     </div>
