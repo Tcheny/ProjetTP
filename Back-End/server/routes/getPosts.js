@@ -1,8 +1,13 @@
 const { Router } = require('express');
+const multer = require('multer');
+const fs = require('fs');
+const moment = require('moment');
+const path = require('path');
 
 const queries = require('../database/connexion');
 const {
-  getPosts,
+  getAllPostsIds,
+  getPostInfosById,
   getOnePost,
   insertPosts,
   editPosts,
@@ -10,12 +15,14 @@ const {
 } = require('../controllers/posts');
 
 const router = Router();
+const storage = multer.memoryStorage()
+const upload = multer({ storage: storage })
 
-router.get('/all', async (req, res) => {
+router.get('/allId', async (req, res) => {
   let queryResult = null;
 
   try {
-    queryResult = await getPosts(queries);
+    queryResult = await getAllPostsIds(queries);
   } catch (error) {
     console.log(error);
     res
@@ -25,6 +32,19 @@ router.get('/all', async (req, res) => {
 
   return res.status(200).send(queryResult.rows);
 });
+
+router.get('/postInfos', async (req, res) => {
+    let infos = null;
+
+    try { 
+        infos = await getPostInfosById(req.query.id)
+    } catch (error) {
+        console.log(error)
+        return res.status(500).send(new Error('Erreur dans Post Infos By Id'));
+    }
+
+    return res.status(200).send(infos)
+})
 
 router.get('/:id', async (req, res) => {
   let getOneResult = null;
@@ -41,16 +61,18 @@ router.get('/:id', async (req, res) => {
   return res.status(200).send(getOneResult.rows);
 })
 
-router.post('/add', async (req, res) => {
+router.post('/add',upload.single('uploadFile'), async (req, res) => {
   let insertPostsResult = null;
-
+    const writePath = path.join(__dirname, '../mediaUploads',req.file.originalname)
   try {
+    await fs.promises.writeFile(writePath, req.file.buffer)
+
     insertPostsResult = await insertPosts({
-      user_id: req.body.user_id,
+      user_id: req.session.userId,
       post: req.body.post,
-      path_media: req.body.path_media,
+      path_media: req.file.originalname,
       type_media: req.body.type_media,
-      date_creation: req.body.date_creation
+      date_creation: moment()
     });
   } catch (error) {
     console.log(error);
@@ -59,7 +81,7 @@ router.post('/add', async (req, res) => {
       .send(new Error("Erreur dans Add Post", error));
   }
 
-  return res.status(200).send(insertPostsResult.rows);
+  return res.status(200).send(insertPostsResult);
 });
 
 router.put('/edit/:id', async (req, res) => {

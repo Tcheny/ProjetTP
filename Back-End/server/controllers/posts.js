@@ -2,10 +2,10 @@ const SQL = require("sql-template-strings");
 
 const client = require('../database/connexion');
 
-const getPosts = async () => {
+const getAllPostsIds = async () => {
     const query = SQL`
         SELECT
-            *
+            post_id
         FROM
             posts
     `;
@@ -13,6 +13,26 @@ const getPosts = async () => {
     const queryResult = await client.query(query);
     return queryResult;
 };
+
+const getPostInfosById = async (id) => {
+
+    // INNER JOIN jointure users et posts pour le user_id en commun pour select user_firstname, user_pseudo
+
+    const infos = SQL`
+        SELECT
+            user_firstname,
+            user_pseudo,
+            post,
+            type_media,
+            date_creation
+        FROM posts
+        INNER JOIN users ON users.user_id = posts.user_id
+        WHERE post_id = ${id}
+    `;
+
+    const infosResult = await client.query(infos);
+    return infosResult.rows[0];
+}
 
 const getOnePost = async (id) => {
     const getOne = SQL`
@@ -44,7 +64,7 @@ const insertPosts = async postInfos => {
     `;
 
     const insertPostResult = await client.query(insertPost);
-    return insertPostResult;
+    return insertPostResult.rows[0];
 };
 
 const editPosts = async (id, postInfos) => {
@@ -75,7 +95,8 @@ const deletePosts = async (id) => {
 };
 
 module.exports = {
-    getPosts,
+    getAllPostsIds,
+    getPostInfosById,
     getOnePost,
     insertPosts,
     editPosts,
