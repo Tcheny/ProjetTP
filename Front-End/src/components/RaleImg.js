@@ -13,10 +13,17 @@ const StyledImg = styled.div`
 `;
 
 const RaleImg = ({ post }) => {
+    console.log("POST:", post)
+    const media = (file) => {
+        return `mediaUploads/${file.path_media}`
+    }
+
     return (
         <StyledFlex>
-            <StyledImg>{ post.path_media }</StyledImg>
-            <div>{ post.post }</div>
+            <StyledImg>
+                <img src={media(post)} />
+            { post.path_media }
+            </StyledImg>
         </StyledFlex>
     )
 };

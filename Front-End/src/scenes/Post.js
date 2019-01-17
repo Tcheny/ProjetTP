@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { Component } from 'react';
 import styled from 'styled-components';
+import axios from 'axios';
 
-import { Select, Button } from '../components'
+import { Button } from '../components'
 
 const StyledContainer = styled.div`
     background-color: #f0f5f5;
@@ -9,7 +10,7 @@ const StyledContainer = styled.div`
     border-radius: 4px;
 `;
 
-const StyledForm = styled.div`
+const StyledForm = styled.form`
      margin: 20px;
 `;
 
@@ -25,36 +26,75 @@ const StyledUpload = styled.div`
 `;
 
 const StyledInput = styled.input`
-    font-size: 100px;
-    position: absolute;
-    left: 0;
+    /* font-size: 100px; */
+    /* position: absolute; */
+    /* left: 0;
     top: 0;
-    opacity: 0;
+    opacity: 0; */
 `;
 
-const Post = () => {
-    return (
+class Post extends Component {
+    state = {
+        inputPost: '',
+        inputFile: null
+    }
+    submitForm = () => {
+
+        const formData = new FormData();
+        const inputPostValue = this.state.inputPost
+
+        formData.append('post', inputPostValue)
+        // type_media = 1 (type image)
+        formData.append('type_media', 1)
+        formData.append('uploadFile', this.state.inputFile)
+
+        axios.post('/posts/add', formData, { headers: {'Content-Type': 'multipart/form-data' }})
+        .then(res => {
+            console.log(res.data)
+            this.props.getAllPostsId()
+            this.setState({ inputPost: '', inputFile: null })
+        })
+    }
+
+    handleChange = event => {
+        this.setState({ inputPost: event.target.value })
+    }
+
+    handleChangeFile = event => {
+        this.setState({ inputFile: event.target.files[0] })
+    }
+
+    render() {
+        return (
         <StyledContainer>
-            <StyledForm>
+            {/* <StyledForm enctype="multipart/form-data"> */}
                 <textarea className="form-control"
                     rows="3"
-                    placeholder="Ralez plus fort que jamais!">
+                    placeholder="Ralez plus fort que jamais!"
+                    value={this.state.inputPost}
+                    onChange={this.handleChange}
+                >
                 </textarea>
                 <StyledPost>
-                    <StyledUpload>
-                        <Button width="10em">
-                            <i className="fas fa-upload"></i> Photo / Vidéo
-                        </Button>
-                        <StyledInput type="file" name="myfile" />
-                    </StyledUpload>
-                    <Select />
-                    <Button type="submit" width="10em">
+                    {/* <StyledUpload> */}
+                        {/* <Button width="10em">
+                            <i className="fas fa-upload"></i> Photo
+                        </Button> */}
+                        <StyledInput
+                            type="file"
+                            key={this.state.inputPost}
+                            name="mediaUpload"
+                            onChange={this.handleChangeFile}
+                        />
+                    {/* </StyledUpload> */}
+                    <button onClick={this.submitForm}>
                         Envoyer
-                    </Button>
+                    </button>
                 </StyledPost>
-            </StyledForm>
+            {/* </StyledForm> */}
         </StyledContainer>
-    )
+        )
+    }
 };
 
 export default Post;

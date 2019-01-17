@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { Component } from 'react';
 import styled from 'styled-components';
 import moment from 'moment';
+import axios from 'axios';
 
 import { Button, RaleImg, RaleVideo } from '../components';
 // import angry from '../images/angry-2.png';
@@ -38,46 +39,82 @@ const StyledImg = styled.div`
     border: 1px solid #000;
 `;
 
-const Rale = ({ post }) => {
-    const date = moment.utc(post.date_creation).format('DD-MM-YYYY, HH:mm')
+class Rale extends Component {
+    state = {
+        post: null
+    }
 
-    const postMedia = post.type_media === 1 ? <RaleImg post={post} /> : <RaleVideo post={post} />
+    getPostInfosById = () => {
+        axios.get('/posts/postInfos', { params: { id: this.props.postId.post_id}})
+        .then(res => {
+            this.setState({ post: res.data })
+        })
+        .catch(error => {
+            console.error(error)
+        })
+    }
 
-    return (
-        <StyledContainer>
-            <StyledBy>
-                Par { date }
-            </StyledBy>
-            <StyledMargin>
-                { postMedia }
-                <hr/>
-            <StyledPost>
-                <Button type="submit" width="10em">
-                    Mais graavee
-                </Button>
-                <div>"count"</div>
-                <Button type="submit" width="10em">
-                    Oh merde
-                </Button>
-                <div>"count"</div>
-                <Button type="submit" width="10em">
-                    Ralez
-                </Button>
-                <div>"count"</div>
-            </StyledPost>
-                <StyledFlex>
-                    <StyledMargin> 😡 (count) </StyledMargin>
-                    <StyledMargin> 😂 (count) </StyledMargin>
-                    <StyledMargin> 😱 (count) </StyledMargin>
-                </StyledFlex>
-            </StyledMargin>
-        </StyledContainer>
-    )
+    componentDidMount = () => {
+        this.getPostInfosById()
+    }
+
+    render () {
+        const { postId } = this.props;
+        console.log('POST ------ :', this.state.props)
 
 
-  return (
-    <div>{post}</div>
-  )
+            let date = '';
+            let postMedia = '';
+            let postText= '';
+            let author = '';
+
+            if (this.state.post) {
+
+                date = moment.utc(this.state.post.date_media).format('DD-MM-YYYY, HH:mm')
+
+                // postMedia = this.state.post.type_media === 1 && <RaleImg postId={postId} />
+                author= this.state.post.user_pseudo
+                postText = this.state.post.post
+            }
+
+
+            return (
+                <StyledContainer>
+                    <StyledBy>
+                        Par {author}, { date }
+                    </StyledBy>
+                    <StyledMargin>
+                        { postMedia }
+                        { postText }
+                        <hr/>
+                    <StyledPost>
+                        <Button type="submit" width="10em">
+                            Mais graavee
+                        </Button>
+                        <div>"count"</div>
+                        <Button type="submit" width="10em">
+                            Oh merde
+                        </Button>
+                        <div>"count"</div>
+                        <Button type="submit" width="10em">
+                            Ralez
+                        </Button>
+                        <div>"count"</div>
+                    </StyledPost>
+                        <StyledFlex>
+                            <StyledMargin> 😡 (count) </StyledMargin>
+                            <StyledMargin> 😂 (count) </StyledMargin>
+                            <StyledMargin> 😱 (count) </StyledMargin>
+                        </StyledFlex>
+                    </StyledMargin>
+                </StyledContainer>
+            )
+
+
+        return (
+            <div>{post}</div>
+        )
+    }
 };
 
 export default Rale;

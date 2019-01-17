@@ -17,32 +17,24 @@ const StyledBody = styled.div`
 
 class Home extends Component {
     state = {
-        users: [],
-        posts: [],
-        comments: []
+        postsId: [],
+    }
+
+    getAllPostsId = () => {
+        const result = axios.get('/posts/allId')
+        .then(res => {
+            this.setState({postsId: res.data})
+        })
     }
 
     componentDidMount = () => {
-        axios
-        .all([
-            axios.get('/users/all'),
-            axios.get('/posts/all'),
-            axios.get('/comments/all'),
-        ])
-        .then(axios.spread(( user, post, comment ) => {
-            this.setState({
-            users: user.data,
-            posts: post.data,
-            comments: comment.data
-            })
-        }))
-        .catch(error => (error))
+        this.getAllPostsId()
     };
 
 
     render () {
-        const allPosts = this.state.posts.map( post => {
-            return <Rale key={post.post_id} post={post} />
+        const allPosts = this.state.postsId.map((id, index) => {
+            return <Rale key={index} postId={id} />
         });
 
         return (
@@ -55,7 +47,7 @@ class Home extends Component {
 
                 <StyledBody>
                     <Header />
-                    <Post/>
+                    <Post getAllPostsId={this.getAllPostsId}/>
                     { allPosts }
                 </StyledBody>
             </Fragment>
