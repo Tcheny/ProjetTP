@@ -1,10 +1,10 @@
 const jwt = require('jsonwebtoken');
 
-const generateToken = (user) => {
+const generateToken = (userId) => {
     if (process.env.JWT_SECRET) {
         const secret = process.env.JWT_SECRET
         const payload = {
-            user
+            userId
         }
         const token = jwt.sign(payload, secret, {
             expiresIn: '30day'
@@ -35,7 +35,7 @@ const validateToken = async (req, res, next) => {
             }
             console.log('Token validé pour ', req.originalUrl)
 
-            const session = { userId: decoded.user }
+            const session = { userId: decoded.userId }
             req.session = session
             next()
         })

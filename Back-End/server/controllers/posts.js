@@ -14,6 +14,8 @@ const getAllPostsIds = async () => {
     return queryResult;
 };
 
+
+// requete des values nécessaires a un post
 const getPostInfosById = async (id) => {
 
     // INNER JOIN jointure users et posts pour le user_id en commun pour select user_firstname, user_pseudo
@@ -24,6 +26,7 @@ const getPostInfosById = async (id) => {
             user_pseudo,
             post,
             type_media,
+            path_media,
             date_creation
         FROM posts
         INNER JOIN users ON users.user_id = posts.user_id

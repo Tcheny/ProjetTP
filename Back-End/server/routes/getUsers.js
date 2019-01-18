@@ -8,6 +8,7 @@ const {
     deleteUsers,
     getOneUser
 } = require('../controllers/users');
+const { generateToken } = require('../Authentication');
 
 const router = Router();
 
@@ -24,35 +25,38 @@ router.get('/all', async (req, res) => {
     return res.status(200).send(queryResult);
 });
 
-router.get('/:id', async (req, res) => {
-    let getOneResult = null;
+// router.get('/:id', async (req, res) => {
+//     let getOneResult = null;
 
-    try {
-        getOneResult = await getOneUser(req.params.id)
-    } catch (error) {
-        console.log(error);
-        res
-        .status(500)
-        .send(new Error("Erreur dans One User", error));
-    }
+//     try {
+//         getOneResult = await getOneUser(req.params.id)
+//     } catch (error) {
+//         console.log(error);
+//         res
+//         .status(500)
+//         .send(new Error("Erreur dans One User", error));
+//     }
 
-    return res.status(200).send(getOneResult.rows);
-})
+//     return res.status(200).send(getOneResult);
+// })
 
 router.post('/add', async (req, res) => {
     const userInfos = {
-        firstname: req.body.user_firstname,
-        lastname: req.body.user_lastname,
-        email: req.body.user_email,
-        password: req.body.user_password,
-        pseudo: req.body.user_pseudo,
-        type: req.body.user_type
+        firstname: req.body.user.user_firstname,
+        lastname: req.body.user.user_lastname,
+        email: req.body.user.user_email,
+        password: req.body.user.user_password,
+        pseudo: req.body.user.user_pseudo,
+        type: req.body.user.user_type
     }
     try {
-        await addUsers(userInfos)
+        const addedUser = await addUsers(userInfos)
+        const token = generateToken(addedUser.user_id)
+        res.cookie('token', token)
+        
     } catch (error) {
         console.log(error);
-        return res.status(500).send(new Error("Erreur dans AddUsers", error));
+        return res.status(500).send(error.message);
     }
 
     return res.status(200).send(userInfos);

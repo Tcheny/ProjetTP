@@ -40,7 +40,7 @@ const getOneUser = async (userId) => {
 
 
 const addUsers = async (newUser) => {
-    if (await verifyUsernameExists(newUser.user_email)) {
+    if (await verifyUsernameExists(newUser.email)) {
         throw new Error('Email déjà utilisé')
     }
     const encryptedPassword = await encryptPassword(newUser.password)
@@ -60,10 +60,11 @@ const addUsers = async (newUser) => {
             ${encryptedPassword},
             ${newUser.pseudo},
             ${newUser.type}
-    )`;
+        ) RETURNING *
+    `;
 
     const addUserResult = await client.query(addUser);
-    return addUserResult;
+    return addUserResult.rows[0];
 };
 
 const verifyUsernameExists = async (username) => {
@@ -109,9 +110,9 @@ const deleteUsers = async(id) => {
 };
 
 module.exports = {
-  getUsers,
-  addUsers,
-  editUsers,
-  deleteUsers,
-  getOneUser
+    getUsers,
+    addUsers,
+    editUsers,
+    deleteUsers,
+    getOneUser
 };

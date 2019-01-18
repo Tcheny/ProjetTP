@@ -6,38 +6,43 @@ const path = require('path');
 
 const queries = require('../database/connexion');
 const {
-  getAllPostsIds,
-  getPostInfosById,
-  getOnePost,
-  insertPosts,
-  editPosts,
-  deletePosts
+    getAllPostsIds,
+    getPostInfosById,
+    getOnePost,
+    insertPosts,
+    editPosts,
+    deletePosts
 } = require('../controllers/posts');
 
 const router = Router();
 const storage = multer.memoryStorage()
-const upload = multer({ storage: storage })
+const upload = multer({ storage })
 
 router.get('/allId', async (req, res) => {
-  let queryResult = null;
+    let queryResult = null;
 
-  try {
-    queryResult = await getAllPostsIds(queries);
-  } catch (error) {
-    console.log(error);
-    res
-      .status(500)
-      .send(new Error("Erreur dans posts", error));
-  }
+    try {
+        queryResult = await getAllPostsIds(queries);
+    } catch (error) {
+        console.log(error);
+        return res.status(500).send(new Error("Erreur dans posts", error));
+    }
 
-  return res.status(200).send(queryResult.rows);
+    return res.status(200).send(queryResult.rows);
 });
 
+
+
+
+// chercher l'image dans l'infos du post
 router.get('/postInfos', async (req, res) => {
     let infos = null;
-
+    
     try { 
         infos = await getPostInfosById(req.query.id)
+        const writePath = path.join(__dirname, '../mediaUploads', infos.path_media)
+        const file = await fs.promises.readFile(writePath)
+        infos.file = file;
     } catch (error) {
         console.log(error)
         return res.status(500).send(new Error('Erreur dans Post Infos By Id'));
@@ -46,78 +51,75 @@ router.get('/postInfos', async (req, res) => {
     return res.status(200).send(infos)
 })
 
+
+
+
+
 router.get('/:id', async (req, res) => {
-  let getOneResult = null;
+    let getOneResult = null;
 
-  try {
-    getOneResult = await getOnePost(req.params.id)
-  } catch (error) {
-    console.log(error);
-    res
-      .status(500)
-      .send(new Error("Erreur dans One Post", error));
-  }
+    try {
+        getOneResult = await getOnePost(req.params.id)
+    } catch (error) {
+        console.log(error);
+        return res.status(500).send(new Error("Erreur dans One Post", error));
+    }
 
-  return res.status(200).send(getOneResult.rows);
+    return res.status(200).send(getOneResult.rows);
 })
 
 router.post('/add',upload.single('uploadFile'), async (req, res) => {
-  let insertPostsResult = null;
-    const writePath = path.join(__dirname, '../mediaUploads',req.file.originalname)
-  try {
-    await fs.promises.writeFile(writePath, req.file.buffer)
+    let insertPostsResult = null;
+    const writePath = path.join(__dirname, '../mediaUploads', req.file.originalname)
 
-    insertPostsResult = await insertPosts({
-      user_id: req.session.userId,
-      post: req.body.post,
-      path_media: req.file.originalname,
-      type_media: req.body.type_media,
-      date_creation: moment()
-    });
-  } catch (error) {
-    console.log(error);
-    res
-      .status(500)
-      .send(new Error("Erreur dans Add Post", error));
-  }
+    try {
+        await fs.promises.writeFile(writePath, req.file.buffer)
 
-  return res.status(200).send(insertPostsResult);
+        insertPostsResult = await insertPosts({
+            user_id: req.session.userId,
+            post: req.body.post,
+            path_media: req.file.originalname,
+            type_media: req.body.type_media,
+            date_creation: moment()
+        });
+    } catch (error) {
+        console.log(error);
+        return res.status(500).send(new Error("Erreur dans Add Post", error));
+    }
+
+    return res.status(200).send(insertPostsResult);
 });
 
 router.put('/edit/:id', async (req, res) => {
-  let editPostsResult = null;
+    let editPostsResult = null;
 
-  try {
-    editPostsResult = await editPosts(req.params.id, {
-      user_id: req.body.user_id,
-      post: req.body.post,
-      path_media: req.body.path_media,
-      type_media: req.body.type_media,
-      date_creation: req.body.date_creation
-    });
-  } catch (error) {
-    console.log(error);
-    res
-      .status(500)
-      .send(new Error("Erreur dans Edit Post", error));
-  }
+    try {
+        editPostsResult = await editPosts(req.params.id, {
+            user_id: req.body.user_id,
+            post: req.body.post,
+            path_media: req.body.path_media,
+            type_media: req.body.type_media,
+            date_creation: req.body.date_creation
+        });
+    } catch (error) {
+        console.log(error);
+        return res.status(500).send(new Error("Erreur dans Edit Post", error));
+    }
 
-  return res.status(200).send(editPostsResult.rows);
+    return res.status(200).send(editPostsResult.rows);
 });
 
 router.delete('/delete/:id', async (req, res) => {
-  let deletePostResult = null;
+    let deletePostResult = null;
 
-  try {
-    deletePostResult = await deletePosts(req.params.id);
-  } catch (error) {
-    console.log(error);
-    res
-      .status(500)
-      .send(new Error("Erreur dans Delete Post", error));
-  }
+    try {
+        deletePostResult = await deletePosts(req.params.id);
+    } catch (error) {
+        console.log(error);
+        return res.status(500).send(new Error("Erreur dans Delete Post", error));
+    }
 
-  return res.status(200).send(deletePostResult);
+    return res.status(200).send(deletePostResult);
 });
 
-module.exports= router;
+module.exports = router;

@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { generateToken } = require('../Authentication');
+const {  generateToken } = require('../Authentication');
 const verifyUser = require('../controllers/verifyUser');
 
 const router = Router();
@@ -25,4 +25,4 @@ router.get('/logout', (req, res) => {
     res.status(200).send('token deleted')
 })
 
-module.exports= router;
+module.exports = router;
