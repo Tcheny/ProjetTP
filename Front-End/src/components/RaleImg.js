@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 
+
 const StyledFlex = styled.div`
     display: flex;
 `;
@@ -12,19 +13,21 @@ const StyledImg = styled.div`
     border: 1px solid #000;
 `;
 
+const imgFile = styled.img`
+    width: 100px;
+    height: 100px;
+`;
+
 class RaleImg extends Component {
+
+
     render () {
-        const { postId } = this.props;
-        console.log("RALE IMG :", postId)
-        // const media = (file) => {
-        //     return `mediaUploads/${file.path_media}`
+        const { imgUrl } = this.props;
         
-    
         return (
             <StyledFlex>
                 <StyledImg>
-                    {/* <img src={media(postId)} /> */}
-                {/* { postId.path_media } */}
+                    <img src={imgUrl} style={{width: "100px", height: "100px"}} />
                 </StyledImg>
             </StyledFlex>
         )

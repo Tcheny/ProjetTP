@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import moment from 'moment';
 import axios from 'axios';
 
+import schtroumpf from '../images/Schtroumpf-1.jpg';
 import { Button, RaleImg, RaleVideo } from '../components';
 // import angry from '../images/angry-2.png';
 // import crying from '../images/crying.png';
@@ -41,17 +42,34 @@ const StyledImg = styled.div`
 
 class Rale extends Component {
     state = {
-        post: null
+        post: null,
+        imgUrl: schtroumpf
     }
 
     getPostInfosById = () => {
         axios.get('/posts/postInfos', { params: { id: this.props.postId.post_id}})
         .then(res => {
-            this.setState({ post: res.data })
+            
+            // transform buffer to 8bits unsign
+            const arrayBufferView = new Uint8Array(res.data.file.data);
+            // new blob
+            const imgBlob = new Blob([arrayBufferView], { type: 'image/jpeg' })
+            const imgUrl = URL.createObjectURL(imgBlob)
+            this.setState({ 
+                post: res.data,
+                imgUrl: imgUrl
+            })
         })
         .catch(error => {
             console.error(error)
         })
+    }
+
+    updateImgContent = () => {
+        if (this.props.file) {
+            
+            this.setState({ imgUrl: imgUrl })
+        }
     }
 
     componentDidMount = () => {
@@ -61,7 +79,6 @@ class Rale extends Component {
     render () {
         const { postId } = this.props;
         
-        
         let date = '';
         let postMedia = '';
         let postText= '';
@@ -70,7 +87,7 @@ class Rale extends Component {
         if (this.state.post) {
                 date = moment.utc(this.state.post.date_media).format('DD-MM-YYYY, HH:mm')
 
-                postMedia = this.state.post.type_media === 1 && <RaleImg postId={postId} />
+            postMedia = this.state.post.type_media === 1 && <RaleImg imgUrl={this.state.imgUrl} />
 
                 author= this.state.post.user_pseudo
                 postText = this.state.post.post

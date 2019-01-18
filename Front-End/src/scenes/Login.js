@@ -15,11 +15,18 @@ const StyledContainButton = styled.div`
     flex-direction: column;
 `;
 
+const StyledNavLink = styled(NavLink)`
+    width: 30%;
+    margin: 10px auto;
+    background: linear-gradient(to bottom, rgba(47,95,109,1) 25%,rgba(26,46,56,1) 69%);
+    color: #fff;
+`;
+
 class Login extends Component {
     state = {
         user_email: '',
         user_password: '',
-        redirect: false
+        redirect: false,
     }
 
     handleSubmit = event => {
@@ -29,8 +36,6 @@ class Login extends Component {
             user_email: this.state.user_email,
             user_password: this.state.user_password
         }
-
-        console.log('user', user)
 
         axios.post('/login', {user})
             .then(res => {
@@ -79,12 +84,19 @@ class Login extends Component {
                         </div>
                     </div>
                     <StyledContainButton>
-                        <Button type="submit" width="30%" m="10px auto">
-                            S'inscrire
-                        </Button>
-                        <Button type="submit" width="30%" m="10px auto">
+                        <Button 
+                            type="submit"
+                            width="30%"
+                            m="10px auto"
+                            onSubmit={this.handleSubmit}
+                        >
                             Se connecter
                         </Button>
+                        <StyledNavLink className="btn"
+                            to='/subcription'
+                        >
+                            S'inscrire
+                        </StyledNavLink>
                     </StyledContainButton>
                 </StyledForm>
             </Fragment>

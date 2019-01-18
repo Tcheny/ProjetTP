@@ -35,6 +35,8 @@ class Home extends Component {
     };
 
 
+
+
     render () {
         const allPosts = this.state.postsId.map((id, index) => {
             return <Rale key={index} postId={id} />
@@ -43,6 +45,9 @@ class Home extends Component {
         return (
             <Fragment>
                 <Navbar>
+                    <NavLink to='/logout'>
+                        Deconnexion
+                    </NavLink>
                     <NavLink to='/login'>
                         Connexion
                     </NavLink>
