@@ -7,11 +7,11 @@ import { Navbar } from '../components'
 import { Header, Post, Rale} from './index'
 
 const StyledBody = styled.div`
-    width: 60%;
+    width: 50%;
     margin: auto;
 
     @media (max-width:767px) {
-        width: 90%
+        width: 80%
     }
 `;
 

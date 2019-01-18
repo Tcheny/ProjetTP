@@ -7,15 +7,19 @@ const StyledFlex = styled.div`
 `;
 
 const StyledImg = styled.div`
-    width: 40%;
-    height: 150px;
-    margin-right: 50px;
-    border: 1px solid #000;
+    width: 500px;
+    height: 667px;
+    border: 1px solid grey;
+    border-radius: 10px;
 `;
 
-const imgFile = styled.img`
-    width: 100px;
-    height: 100px;
+const ImgFile = styled.img`
+    object-fit: contain;
+    width: 100%;
+    height: 100%;
+    /* height: 100%;
+    min-height: initial;
+    width: auto; */
 `;
 
 class RaleImg extends Component {
@@ -27,7 +31,7 @@ class RaleImg extends Component {
         return (
             <StyledFlex>
                 <StyledImg>
-                    <img src={imgUrl} style={{width: "100px", height: "100px"}} />
+                    <ImgFile src={imgUrl} />
                 </StyledImg>
             </StyledFlex>
         )
