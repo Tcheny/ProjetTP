@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
-import styled from 'styled-components';
-import moment from 'moment';
-import axios from 'axios';
+import React, { Component } from "react";
+import styled from "styled-components";
+import moment from "moment";
+import axios from "axios";
 
-import schtroumpf from '../images/Schtroumpf-1.jpg';
-import { Button, RaleImg, RaleVideo } from '../components';
+import schtroumpf from "../images/Schtroumpf-1.jpg";
+import { Button, RaleImg, RaleVideo } from "../components";
 // import angry from '../images/angry-2.png';
 // import crying from '../images/crying.png';
 // import shocked from '../images/shocked.png';
@@ -21,7 +21,7 @@ const StyledBy = styled.div`
 `;
 
 const StyledMargin = styled.div`
-     margin: 20px;
+    margin: 20px;
 `;
 
 const StyledPost = styled.div`
@@ -30,7 +30,7 @@ const StyledPost = styled.div`
 `;
 
 const StyledFlex = styled.div`
-     display: flex;
+    display: flex;
 `;
 
 const StyledImg = styled.div`
@@ -44,65 +44,68 @@ class Rale extends Component {
     state = {
         post: null,
         imgUrl: schtroumpf
-    }
+    };
 
     getPostInfosById = () => {
-        axios.get('/posts/postInfos', { params: { id: this.props.postId.post_id}})
-        .then(res => {
-            
-            // transform buffer to 8bits unsign
-            const arrayBufferView = new Uint8Array(res.data.file.data);
-            // new blob
-            const imgBlob = new Blob([arrayBufferView], { type: 'image/jpeg' })
-            const imgUrl = URL.createObjectURL(imgBlob)
-            this.setState({ 
-                post: res.data,
-                imgUrl: imgUrl
+        axios
+            .get("http://localhost:8081/posts/postInfos", {
+                params: { id: this.props.postId.post_id }
             })
-        })
-        .catch(error => {
-            console.error(error)
-        })
-    }
+            .then(res => {
+                // transform buffer to 8bits unsign
+                const arrayBufferView = new Uint8Array(res.data.file.data);
+                // new blob
+                const imgBlob = new Blob([arrayBufferView], {
+                    type: "image/jpeg"
+                });
+                const imgUrl = URL.createObjectURL(imgBlob);
+                this.setState({ post: res.data, imgUrl: imgUrl });
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    };
 
     updateImgContent = () => {
         if (this.props.file) {
-            
-            this.setState({ imgUrl: imgUrl })
+            this.setState({ imgUrl: imgUrl });
         }
-    }
+    };
 
     componentDidMount = () => {
-        this.getPostInfosById()
-    }
+        this.getPostInfosById();
+    };
 
-    render () {
+    render() {
         const { postId } = this.props;
-        
-        let date = '';
-        let postMedia = '';
-        let postText= '';
-        let author = '';
-        
+
+        let date = "";
+        let postMedia = "";
+        let postText = "";
+        let author = "";
+
         if (this.state.post) {
-                date = moment.utc(this.state.post.date_media).format('DD-MM-YYYY, HH:mm')
+            date = moment
+                .utc(this.state.post.date_media)
+                .format("DD-MM-YYYY, HH:mm");
 
-            postMedia = this.state.post.type_media === 1 && <RaleImg imgUrl={this.state.imgUrl} />
+            postMedia = this.state.post.type_media === 1 && (
+                <RaleImg imgUrl={this.state.imgUrl} />
+            );
 
-                author= this.state.post.user_pseudo
-                postText = this.state.post.post
-            }
+            author = this.state.post.user_pseudo;
+            postText = this.state.post.post;
+        }
 
-
-            return (
-                <StyledContainer>
-                    <StyledBy>
-                        Par {author}, { date }
-                    </StyledBy>
-                    <StyledMargin>
-                        { postMedia }
-                        { postText }
-                        <hr/>
+        return (
+            <StyledContainer>
+                <StyledBy>
+                    Par {author}, {date}
+                </StyledBy>
+                <StyledMargin>
+                    {postMedia}
+                    {postText}
+                    <hr />
                     <StyledPost>
                         <Button type="submit" width="10em">
                             Mais graavee
@@ -117,20 +120,17 @@ class Rale extends Component {
                         </Button>
                         <div>"count"</div>
                     </StyledPost>
-                        <StyledFlex>
-                            <StyledMargin> 😡 (count) </StyledMargin>
-                            <StyledMargin> 😂 (count) </StyledMargin>
-                            <StyledMargin> 😱 (count) </StyledMargin>
-                        </StyledFlex>
-                    </StyledMargin>
-                </StyledContainer>
-            )
+                    <StyledFlex>
+                        <StyledMargin> 😡 (count) </StyledMargin>
+                        <StyledMargin> 😂 (count) </StyledMargin>
+                        <StyledMargin> 😱 (count) </StyledMargin>
+                    </StyledFlex>
+                </StyledMargin>
+            </StyledContainer>
+        );
 
-
-        return (
-            <div>{post}</div>
-        )
+        return <div>{post}</div>;
     }
-};
+}
 
 export default Rale;

@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
-import styled from 'styled-components';
-import axios from 'axios';
+import React, { Component } from "react";
+import styled from "styled-components";
+import axios from "axios";
 
-import { Button } from '../components'
+import { Button } from "../components";
 
 const StyledContainer = styled.div`
     background-color: #f0f5f5;
@@ -11,7 +11,7 @@ const StyledContainer = styled.div`
 `;
 
 const StyledForm = styled.form`
-     margin: 20px;
+    margin: 20px;
 `;
 
 const StyledPost = styled.div`
@@ -35,66 +35,66 @@ const StyledInput = styled.input`
 
 class Post extends Component {
     state = {
-        inputPost: '',
+        inputPost: "",
         inputFile: null
-    }
+    };
     submitForm = () => {
-
         const formData = new FormData();
-        const inputPostValue = this.state.inputPost
+        const inputPostValue = this.state.inputPost;
 
-        formData.append('post', inputPostValue)
+        formData.append("post", inputPostValue);
         // type_media = 1 (type image)
-        formData.append('type_media', 1)
-        formData.append('uploadFile', this.state.inputFile)
+        formData.append("type_media", 1);
+        formData.append("uploadFile", this.state.inputFile);
 
-        axios.post('/posts/add', formData, { headers: {'Content-Type': 'multipart/form-data' }})
-        .then(res => {
-            console.log(res.data)
-            this.props.getAllPostsId()
-            this.setState({ inputPost: '', inputFile: null })
-        })
-    }
+        axios
+            .post("http://localhost:8081/posts/add", formData, {
+                headers: { "Content-Type": "multipart/form-data" }
+            })
+            .then(res => {
+                console.log(res.data);
+                this.props.getAllPostsId();
+                this.setState({ inputPost: "", inputFile: null });
+            });
+    };
 
     handleChange = event => {
-        this.setState({ inputPost: event.target.value })
-    }
+        this.setState({ inputPost: event.target.value });
+    };
 
     handleChangeFile = event => {
-        this.setState({ inputFile: event.target.files[0] })
-    }
+        this.setState({ inputFile: event.target.files[0] });
+    };
 
     render() {
         return (
-        <StyledContainer>
-            {/* <StyledForm enctype="multipart/form-data"> */}
-                <textarea className="form-control"
+            <StyledContainer>
+                {/* <StyledForm enctype="multipart/form-data"> */}
+                <textarea
+                    className="form-control"
                     rows="3"
                     placeholder="Ralez plus fort que jamais!"
                     value={this.state.inputPost}
                     onChange={this.handleChange}
-                >
-                </textarea>
+                />
                 <StyledPost>
                     {/* <StyledUpload> */}
-                        {/* <Button width="10em">
+                    {/* <Button width="10em">
                             <i className="fas fa-upload"></i> Photo
                         </Button> */}
-                        <StyledInput
-                            type="file"
-                            key={this.state.inputPost}
-                            name="mediaUpload"
-                            onChange={this.handleChangeFile}
-                        />
+                    <StyledInput
+                        type="file"
+                        key={this.state.inputPost}
+                        name="mediaUpload"
+                        onChange={this.handleChangeFile}
+                    />
                     {/* </StyledUpload> */}
-                    <button onClick={this.submitForm}>
-                        Envoyer
-                    </button>
+                    <button onClick={this.submitForm}>Envoyer</button>
                 </StyledPost>
-            {/* </StyledForm> */}
-        </StyledContainer>
-        )
+                {/* </StyledForm> */}
+            </StyledContainer>
+        );
     }
-};
+}
 
 export default Post;

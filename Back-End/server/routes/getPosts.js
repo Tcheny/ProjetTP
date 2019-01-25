@@ -1,10 +1,10 @@
-const { Router } = require('express');
-const multer = require('multer');
-const fs = require('fs');
-const moment = require('moment');
-const path = require('path');
+const { Router } = require("express");
+const multer = require("multer");
+const fs = require("fs");
+const moment = require("moment");
+const path = require("path");
 
-const queries = require('../database/connexion');
+const queries = require("../database/connexion");
 const {
     getAllPostsIds,
     getPostInfosById,
@@ -12,13 +12,13 @@ const {
     insertPosts,
     editPosts,
     deletePosts
-} = require('../controllers/posts');
+} = require("../controllers/posts");
 
 const router = Router();
-const storage = multer.memoryStorage()
-const upload = multer({ storage })
+const storage = multer.memoryStorage();
+const upload = multer({ storage });
 
-router.get('/allId', async (req, res) => {
+router.get("/allId", async (req, res) => {
     let queryResult = null;
 
     try {
@@ -31,49 +31,50 @@ router.get('/allId', async (req, res) => {
     return res.status(200).send(queryResult.rows);
 });
 
-
-
-
 // chercher l'image dans l'infos du post
-router.get('/postInfos', async (req, res) => {
+router.get("/postInfos", async (req, res) => {
     let infos = null;
-    
-    try { 
-        infos = await getPostInfosById(req.query.id)
-        const writePath = path.join(__dirname, '../mediaUploads', infos.path_media)
-        const file = await fs.promises.readFile(writePath)
+
+    try {
+        infos = await getPostInfosById(req.query.id);
+        const writePath = path.join(
+            __dirname,
+            "../mediaUploads",
+            infos.path_media
+        );
+        const file = await fs.promises.readFile(writePath);
         infos.file = file;
     } catch (error) {
-        console.log(error)
-        return res.status(500).send(new Error('Erreur dans Post Infos By Id'));
+        console.log(error);
+        return res.status(500).send(new Error("Erreur dans Post Infos By Id"));
     }
 
-    return res.status(200).send(infos)
-})
+    return res.status(200).send(infos);
+});
 
-
-
-
-
-router.get('/:id', async (req, res) => {
+router.get("/all", async (req, res) => {
     let getOneResult = null;
 
     try {
-        getOneResult = await getOnePost(req.params.id)
+        getOneResult = await getOnePost(queries);
     } catch (error) {
         console.log(error);
         return res.status(500).send(new Error("Erreur dans One Post", error));
     }
 
     return res.status(200).send(getOneResult.rows);
-})
+});
 
-router.post('/add',upload.single('uploadFile'), async (req, res) => {
+router.post("/add", upload.single("uploadFile"), async (req, res) => {
     let insertPostsResult = null;
-    const writePath = path.join(__dirname, '../mediaUploads', req.file.originalname)
+    const writePath = path.join(
+        __dirname,
+        "../mediaUploads",
+        req.file.originalname
+    );
 
     try {
-        await fs.promises.writeFile(writePath, req.file.buffer)
+        await fs.promises.writeFile(writePath, req.file.buffer);
 
         insertPostsResult = await insertPosts({
             user_id: req.session.userId,
@@ -90,7 +91,7 @@ router.post('/add',upload.single('uploadFile'), async (req, res) => {
     return res.status(200).send(insertPostsResult);
 });
 
-router.put('/edit/:id', async (req, res) => {
+router.put("/edit/:id", async (req, res) => {
     let editPostsResult = null;
 
     try {
@@ -109,14 +110,16 @@ router.put('/edit/:id', async (req, res) => {
     return res.status(200).send(editPostsResult.rows);
 });
 
-router.delete('/delete/:id', async (req, res) => {
+router.delete("/delete/:id", async (req, res) => {
     let deletePostResult = null;
 
     try {
         deletePostResult = await deletePosts(req.params.id);
     } catch (error) {
         console.log(error);
-        return res.status(500).send(new Error("Erreur dans Delete Post", error));
+        return res
+            .status(500)
+            .send(new Error("Erreur dans Delete Post", error));
     }
 
     return res.status(200).send(deletePostResult);
