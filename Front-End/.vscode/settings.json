@@ -1,4 +1,4 @@
-{
-    "editor.formatOnSave": true,
-    "prettier.tabWidth": 4,
-}
+// {
+//     "editor.formatOnSave": false,
+//     "prettier.tabWidth": 4,
+// }

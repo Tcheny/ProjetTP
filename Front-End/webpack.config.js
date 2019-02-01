@@ -1,9 +1,7 @@
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-const WebpackDasboardPlugin = require("webpack-dashboard/plugin");
-const FriendlyErrorsWebpackPlugin = require("friendly-errors-webpack-plugin");
 const path = require("path");
 
 module.exports = {
+    // How to process project files with loaders
     module: {
         rules: [
             {
@@ -15,18 +13,9 @@ module.exports = {
                 }
             },
             {
-                test: /\.html$/,
-                use: {
-                    loader: "html-loader",
-                    options: {
-                        minimize: true
-                    }
-                }
+                test: /\.css$/,
+                use: ["style-loader", "css-loader"]
             },
-            // {
-            //   test: /\.css$/,
-            //   use: [MiniCssExtractPlugin.loader, "css-loader"]
-            // },
             {
                 test: /\.(png|jpg|gif)$/i,
                 use: [
@@ -38,29 +27,7 @@ module.exports = {
                     }
                 ]
             }
-            //   {
-            //       test: /\.(png|jpg|gif)$/,
-            //       use: [{
-            //           loader: 'file-loader',
-            //           options: {},
-            //       }, ],
-            //   },
         ]
     },
-    // devServer: {
-    //     historyApiFallback: true,
-    //     overlay: true,
-    //     proxy: {
-    //         "/": "http://localhost:8081"
-    //     }
-    // },
-
-    plugins: [
-        new HtmlWebpackPlugin({
-            template: "./src/index.html",
-            filename: "./index.html"
-        }),
-        new WebpackDasboardPlugin(),
-        new FriendlyErrorsWebpackPlugin()
-    ]
+    mode: "development"
 };

@@ -1,20 +1,19 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import React, { Component } from "react";
+import { Login, Home, Subcribe, About, Settings } from "./scenes/index";
+import { HashRouter, Switch, Route } from "react-router-dom";
 
-import { Login, Home, Subcribe } from './scenes/index';
-
-const App = () => {
-    return (
-        <Router>
-            <Switch>
-                <Route path='/logout' component={Home}/>
-                <Route exact path='/subcription' component={Subcribe} />
-                <Route exact path='/login' component={Login} />
-                <Route exact path='/' component={Home} />
-        </Switch>
-
-        </Router>
-    )
-};
-
-export default App;
+export default class App extends Component {
+    render() {
+        return (
+            <HashRouter>
+                <Switch>
+                    <Route path="/user/edit" component={Settings} />
+                    <Route path="/about" component={About} />
+                    <Route path="/subcription" component={Subcribe} />
+                    <Route path="/login" component={Login} />
+                    <Route exact path="/" component={Home} />
+                </Switch>
+            </HashRouter>
+        );
+    }
+}

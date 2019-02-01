@@ -1,23 +1,28 @@
 import React, { Fragment, Component } from "react";
-import { NavLink } from "react-router-dom";
-import styled from "styled-components";
+import { NavLink, Redirect } from "react-router-dom";
 import axios from "axios";
+import { Container, Row, Col } from "react-bootstrap";
 
 import { Navbar } from "../components";
 import { Header, Post, Rale } from "./index";
-
-const StyledBody = styled.div`
-    width: 50%;
-    margin: auto;
-
-    @media (max-width: 767px) {
-        width: 80%;
-    }
-`;
+import schtroumpf from "../images/strom.jpg";
 
 class Home extends Component {
     state = {
-        postsId: []
+        postsId: [],
+        currentUser: null
+    };
+
+    verifyCurrentUser = () => {
+        axios
+            .get("http://localhost:8081/auth")
+            .then(res => {
+                console.log(res);
+                this.setState({ currentUser: res.data.user });
+            })
+            .catch(error => {
+                console.error(error);
+            });
     };
 
     getAllPostsId = () => {
@@ -32,6 +37,7 @@ class Home extends Component {
     };
 
     componentDidMount = () => {
+        this.verifyCurrentUser();
         this.getAllPostsId();
     };
 
@@ -42,16 +48,24 @@ class Home extends Component {
 
         return (
             <Fragment>
-                <Navbar>
-                    <NavLink to="/logout">Deconnexion</NavLink>
-                    <NavLink to="/login">Connexion</NavLink>
-                </Navbar>
-
-                <StyledBody>
-                    <Header />
-                    <Post getAllPostsId={this.getAllPostsId} />
-                    {allPosts}
-                </StyledBody>
+                <Navbar currentUser={this.state.currentUser} />
+                <div style={{ width: "100%" }}>
+                    <img style={{ width: "100%" }} src={schtroumpf} />
+                    <h1>
+                        RALEZ <br /> MAIS FAITES LE BIEN.
+                    </h1>
+                </div>
+                <Container>
+                    <Row>
+                        <Col md={{ span: 6, offset: 3 }}>
+                            <div>
+                                <Header />
+                                <Post getAllPostsId={this.getAllPostsId} />
+                                {allPosts}
+                            </div>
+                        </Col>
+                    </Row>
+                </Container>
             </Fragment>
         );
     }
