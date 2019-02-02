@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { NavLink, withRouter } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import axios from "axios";
 import { Navbar, Nav, NavDropdown } from "react-bootstrap";
 
@@ -19,7 +19,7 @@ class NavbarStyle extends Component {
         const { currentUser } = this.props;
 
         const isAuth = () => {
-            if (currentUser === null || currentUser === undefined) {
+            if (currentUser === null) {
                 return (
                     <Nav.Link href="#/login">
                         <i className="fa fa-user" /> Login
@@ -27,7 +27,11 @@ class NavbarStyle extends Component {
                 );
             } else {
                 return (
-                    <NavDropdown title="Profil" id="collasible-nav-dropdown">
+                    <NavDropdown
+                        alignRight
+                        title="Profil"
+                        id="collasible-nav-dropdown"
+                    >
                         <NavDropdown.Item href="#/about">
                             <i className="fa fa-user" />
                             My Profil
@@ -50,7 +54,12 @@ class NavbarStyle extends Component {
         };
 
         return (
-            <Navbar expand="lg" bg="dark" variant="dark" fixed="top">
+            <Navbar
+                bg="dark"
+                variant="dark"
+                className="navbar navbar-default"
+                sticky="top"
+            >
                 <Navbar.Brand href="/">Rale à vie</Navbar.Brand>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse

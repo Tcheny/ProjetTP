@@ -2,8 +2,6 @@ import React, { Component } from "react";
 import axios from "axios";
 import { Form, Button } from "react-bootstrap";
 
-// import { Button } from "../components";
-
 class Post extends Component {
     state = {
         inputPost: "",

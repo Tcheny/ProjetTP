@@ -11,7 +11,7 @@ const app = express();
 
 app.use(logger("dev"));
 
-app.use(express.static(__dirname + "./../dist"));
+app.use(express.static(__dirname + "./../client"));
 
 app.use(cookieParser());
 // parser le body sous JSON
