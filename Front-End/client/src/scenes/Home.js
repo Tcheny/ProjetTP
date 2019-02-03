@@ -3,26 +3,12 @@ import axios from "axios";
 import { Container, Row, Col } from "react-bootstrap";
 
 import { Navbar, Search } from "../components";
-import { Header, Post, Rale } from "./index";
+import { Post, Rale } from "./index";
 
 class Home extends Component {
     state = {
         postsId: []
-        // currentUser: null
     };
-
-    // verifyCurrentUser = () => {
-    //     axios
-    //         .get("http://localhost:8081/auth")
-    //         .then(res => {
-    //             console.log(res);
-    //             this.setState({ currentUser: res.data.user });
-    //         })
-    //         .catch(error => {
-    //             console.error(error.response);
-    //             this.setState({ currentUser: error.response.data.user });
-    //         });
-    // };
 
     getAllPostsId = () => {
         axios
@@ -36,28 +22,25 @@ class Home extends Component {
     };
 
     componentDidMount = () => {
-        // this.verifyCurrentUser();
         this.getAllPostsId();
     };
 
     render() {
-        const { user } = this.props;
+        const { currentUser, userId } = this.props;
 
-        const allRales = this.state.postsId.map((id, index) => {
-            return <Rale key={index} postId={id} />;
+        const allRales = this.state.postsId.map((postId, index) => {
+            return <Rale key={index} postId={postId} userId={userId} />;
         });
 
-        // console.log("USER", this.props.user);
-
         const post = () => {
-            if (this.state.currentUser) {
+            if (currentUser) {
                 return <Post getAllPostsId={this.getAllPostsId} />;
             }
         };
 
         return (
             <Fragment>
-                <Navbar currentUser={user} />
+                <Navbar currentUser={currentUser} />
                 <div className="main-background">
                     <h1 className="main-title">
                         RALEZ <br /> MAIS FAITES LE BIEN.

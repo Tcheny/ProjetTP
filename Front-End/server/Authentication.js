@@ -18,11 +18,11 @@ const generateToken = userId => {
 const validateToken = async (req, res, next) => {
     // User crée un compte ou se connecte sans token
     if (
-        req.path !== "/logout"
-        // req.path === "/users/add" ||
-        // req.path === "/login" ||
-        // req.path === "/posts/postInfos" ||
-        // req.path === "/posts/allId"
+        // req.path !== "/logout"
+        req.path === "/users/add" ||
+        req.path === "/login" ||
+        req.path === "/posts/postInfos" ||
+        req.path === "/posts/allId"
     ) {
         next();
     } else if (!req.cookies.token) {

@@ -16,15 +16,34 @@ const getUsers = async () => {
     return queryResult.rows;
 };
 
+// Select * from users => /about
+const getUserId = async userId => {
+    const query = SQL`
+        SELECT
+            *
+        FROM users
+        WHERE user_id = ${userId}
+    `;
+
+    const queryResult = await client.query(query);
+    if (!queryResult.rowCount) {
+        throw new Error("Pas de User avec id :", userId);
+    }
+    return queryResult.rows;
+};
+
+// Select * from users => /auth
 const getOneUser = async userId => {
     const getOne = SQL`
         SELECT
+            user_id,
             user_firstname,
             user_lastname,
             user_email,
             user_password,
             user_pseudo,
-            user_type
+            user_type,
+            user_infos
         FROM users
         WHERE user_id = ${userId}
     `;
@@ -36,6 +55,7 @@ const getOneUser = async userId => {
     return getOneResult.rows[0];
 };
 
+// Insert new User avec encrypted password
 const addUsers = async newUser => {
     if (await verifyUsernameExists(newUser.email)) {
         throw new Error("Email déjà utilisé");
@@ -64,6 +84,7 @@ const addUsers = async newUser => {
     return addUserResult.rows[0];
 };
 
+// verifyuser_email exists
 const verifyUsernameExists = async username => {
     const verify = SQL`
         SELECT
@@ -79,12 +100,13 @@ const verifyUsernameExists = async username => {
 };
 
 const editUsers = async (id, userInfos) => {
+    const encryptedPassword = await encryptPassword(userInfos.password);
     const editUser = SQL`
         UPDATE users
         SET user_firstname = ${userInfos.firstname},
             user_lastname = ${userInfos.lastname},
             user_email = ${userInfos.email},
-            user_password = ${userInfos.password},
+            user_password = ${encryptedPassword},
             user_pseudo = ${userInfos.pseudo},
             user_type = ${userInfos.type}
         WHERE user_id = ${id}
@@ -92,7 +114,7 @@ const editUsers = async (id, userInfos) => {
     `;
 
     const editUserResult = await client.query(editUser);
-    return editUserResult;
+    return editUserResult.rows[0];
 };
 
 const deleteUsers = async id => {
@@ -111,5 +133,6 @@ module.exports = {
     addUsers,
     editUsers,
     deleteUsers,
-    getOneUser
+    getOneUser,
+    getUserId
 };

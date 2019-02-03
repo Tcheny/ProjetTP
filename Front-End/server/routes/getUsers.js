@@ -2,6 +2,7 @@ const { Router } = require("express");
 
 const queries = require("../database/connexion");
 const {
+    getUserId,
     getUsers,
     addUsers,
     editUsers,
@@ -12,11 +13,12 @@ const { generateToken } = require("../Authentication");
 
 const router = Router();
 
+// Get all user Id
 router.get("/all", async (req, res) => {
     let queryResult = null;
 
     try {
-        queryResult = await getUsers();
+        queryResult = await getUsers(queries);
     } catch (error) {
         console.log(error);
         return res.status(500).send(new Error("Erreur dans Users", error));
@@ -25,11 +27,12 @@ router.get("/all", async (req, res) => {
     return res.status(200).send(queryResult);
 });
 
-router.get("/:id", async (req, res) => {
+// probleme requete
+router.get("/userInfos", async (req, res) => {
     let getOneResult = null;
 
     try {
-        getOneResult = await getOneUser(req.params.id);
+        getOneResult = await getUserId(queries);
     } catch (error) {
         console.log(error);
         res.status(500).send(new Error("Erreur dans One User", error));

@@ -1,6 +1,6 @@
-const SQL = require('sql-template-strings');
+const SQL = require("sql-template-strings");
 
-const client = require('../database/connexion');
+const client = require("../database/connexion");
 
 const getComments = async () => {
     const query = SQL`
@@ -14,7 +14,7 @@ const getComments = async () => {
     return queryResult;
 };
 
-const getOneComment = async (id) => {
+const getOneComment = async id => {
     const getOne = SQL`
         SELECT
             *
@@ -42,7 +42,7 @@ const insertComments = async commentInfos => {
     `;
 
     const insertCommentResult = await client.query(insertComment);
-    return insertCommentResult;
+    return insertCommentResult.rows;
 };
 
 const editComments = async (id, commentInfos) => {
@@ -60,7 +60,7 @@ const editComments = async (id, commentInfos) => {
     return editCommentResult;
 };
 
-const deleteComments = async (id) => {
+const deleteComments = async id => {
     const deleteComment = SQL`
         DELETE FROM comments
         WHERE comment_id = ${id}

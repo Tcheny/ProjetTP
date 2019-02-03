@@ -2,6 +2,7 @@ const SQL = require("sql-template-strings");
 
 const client = require("../database/connexion");
 
+// Select post_id from table posts
 const getAllPostsIds = async () => {
     const query = SQL`
         SELECT
@@ -15,6 +16,7 @@ const getAllPostsIds = async () => {
 };
 
 // requete des values nécessaires a un post
+// Select les valeurs from posts ou le user_id == post_id
 const getPostInfosById = async id => {
     // INNER JOIN jointure users et posts pour le user_id en commun pour select user_firstname, user_pseudo
 
@@ -46,6 +48,7 @@ const getOnePost = async () => {
     return getOneResult;
 };
 
+// Insert un post
 const insertPosts = async postInfos => {
     const insertPost = SQL`
         INSERT INTO posts (

@@ -1,12 +1,36 @@
 import React, { Component } from "react";
 import moment from "moment";
 import axios from "axios";
-import { Container, Row, Col, Card, Button } from "react-bootstrap";
+import { Container, Row, Form, Card, Button } from "react-bootstrap";
 
 class Rale extends Component {
     state = {
         post: null,
-        imgUrl: ""
+        imgUrl: "",
+        comments: {
+            user_id: "",
+            post_id: "",
+            comment: ""
+        }
+    };
+
+    submitForm = event => {
+        event.preventDefault();
+        const comments = {
+            user_id: this.props.userId,
+            post_id: this.props.postId.post_id,
+            comment: this.state.comment
+        };
+        axios
+            .post("http://localhost:8081/comments/add", { comments })
+            .then(res => {
+                console.log(res.data);
+                this.setState({
+                    comments: {
+                        comment: ""
+                    }
+                });
+            });
     };
 
     getPostInfosById = () => {
@@ -40,8 +64,6 @@ class Rale extends Component {
     };
 
     render() {
-        const { postId } = this.props;
-
         let date = "";
         let imgUrl = "";
         let postText = "";
@@ -68,47 +90,30 @@ class Rale extends Component {
                         <Card.Text>{postText}</Card.Text>
                         <Button variant="outline-success">Go somewhere</Button>
                     </Card.Body>
-                    <Card.Footer
-                        className="text-muted"
-                        style={{ display: "flex" }}
-                    >
-                        <div> 😡 (count) </div>
-                        <div> 😂 (count) </div>
-                        <div> 😱 (count) </div>
+                    <Card.Footer className="text-muted">
+                        <div style={{ display: "flex" }}>
+                            <div> 😡 (count) </div>
+                            <div> 😂 (count) </div>
+                            <div> 😱 (count) </div>
+                        </div>
+                        <hr />
+                        <Form onSubmit={this.submitForm}>
+                            <Form.Group controlId="exampleForm.ControlTextarea1">
+                                <Form.Control
+                                    type="text"
+                                    placeholder="Commentez ce rale"
+                                    onChange={e =>
+                                        this.setState({
+                                            comment: e.target.value
+                                        })
+                                    }
+                                />
+                            </Form.Group>
+                        </Form>
                     </Card.Footer>
                 </Card>
             </div>
         );
-
-        // <div>
-        //     <div>
-        //         Par {author}, {date}
-        //     </div>
-        //     <div>
-        //         {postMedia}
-        //         {postText}
-        //         <hr />
-        //         <div>
-        //             <Button type="submit" width="10em">
-        //                 Mais graavee
-        //             </Button>
-        //             <div>"count"</div>
-        //             <Button type="submit" width="10em">
-        //                 Oh merde
-        //             </Button>
-        //             <div>"count"</div>
-        //             <Button type="submit" width="10em">
-        //                 Ralez
-        //             </Button>
-        //             <div>"count"</div>
-        //         </div>
-        //         <div>
-        //             <div> 😡 (count) </div>
-        //             <div> 😂 (count) </div>
-        //             <div> 😱 (count) </div>
-        //         </div>
-        //     </div>
-        // </div>
     }
 }
 

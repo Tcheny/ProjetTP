@@ -64,30 +64,6 @@ class Post extends Component {
                 </Form.Group>
             </Form>
         );
-
-        // <div>
-        //     {/* <StyledForm enctype="multipart/form-data"> */}
-        //     <textarea
-        //         placeholder="Ralez plus fort que jamais!"
-        //         value={this.state.inputPost}
-        //         onChange={this.handleChange}
-        //     />
-        //     <div>
-        //         {/* <StyledUpload> */}
-        //         {/* <Button width="10em">
-        //                 <i className="fas fa-upload"></i> Photo
-        //             </Button> */}
-        //         <input
-        //             type="file"
-        //             key={this.state.inputPost}
-        //             name="mediaUpload"
-        //             onChange={this.handleChangeFile}
-        //         />
-        //         {/* </StyledUpload> */}
-        //         <button onClick={this.submitForm}>Envoyer</button>
-        //     </div>
-        //     {/* </StyledForm> */}
-        // </div>
     }
 }
 

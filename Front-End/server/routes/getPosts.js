@@ -18,6 +18,7 @@ const router = Router();
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
+// Get all posts id
 router.get("/allId", async (req, res) => {
     let queryResult = null;
 
@@ -38,7 +39,11 @@ router.get("/postInfos", async (req, res) => {
     try {
         infos = await getPostInfosById(req.query.id);
         // create the file path
-        const writePath = path.join(__dirname, "../mediaUploads", infos.path_media);
+        const writePath = path.join(
+            __dirname,
+            "../mediaUploads",
+            infos.path_media
+        );
         const file = await fs.promises.readFile(writePath);
         infos.file = file;
     } catch (error) {
@@ -65,7 +70,11 @@ router.get("/all", async (req, res) => {
 router.post("/add", upload.single("uploadFile"), async (req, res) => {
     let insertPostsResult = null;
     // create the filename
-    const writePath = path.join(__dirname, "../mediaUploads", req.file.originalname);
+    const writePath = path.join(
+        __dirname,
+        "../mediaUploads",
+        req.file.originalname
+    );
 
     try {
         await fs.promises.writeFile(writePath, req.file.buffer);
