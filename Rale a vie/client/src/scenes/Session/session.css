@@ -64,9 +64,7 @@
     transform: scale(0.95);
 }
 
-input[type="email"],
-input[type="password"],
-input[type="text"] {
+.input-text {
     background: rgba(0, 0, 0, 0.3);
     border: none;
     color: #fff;
@@ -85,17 +83,13 @@ input[type="text"] {
         0 1px 1px rgba(255, 255, 255, 0.2);
 }
 
-input[type="email"]:focus,
-input[type="password"]:focus,
-input[type="text"]:focus {
+.input-text:focus {
     box-shadow: inset 0 -5px 45px rgba(100, 100, 100, 0.4),
         0 1px 1px rgba(255, 255, 255, 0.2);
     border-bottom: 2px solid #5fbae9;
 }
 
-input[type="email"]:placeholder,
-input[type="password"]:placeholder,
-input[type="text"]:placeholder {
+.input-text:placeholder {
     color: #cccccc;
 }
 

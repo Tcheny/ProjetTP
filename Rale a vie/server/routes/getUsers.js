@@ -72,14 +72,15 @@ router.put("/edit/:id", async (req, res) => {
             email: req.body.user_email,
             password: req.body.user_password,
             pseudo: req.body.user_pseudo,
-            type: req.body.user_type
+            type: req.body.user_type,
+            infos: req.body.user_infos
         });
     } catch (error) {
         console.log(error);
         res.status(500).send(new Error("Erreur dans Edit User", error));
     }
 
-    return res.status(200).send(editUsersResult.rows);
+    return res.status(200).send(editUsersResult);
 });
 
 router.delete("/delete/:id", async (req, res) => {

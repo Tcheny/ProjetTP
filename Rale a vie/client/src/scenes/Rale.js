@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import moment from "moment";
 import axios from "axios";
-import { Container, Row, Form, Card, Button } from "react-bootstrap";
+import { InputGroup, Row, Form, Card, Button } from "react-bootstrap";
 
 class Rale extends Component {
     state = {
@@ -88,14 +88,43 @@ class Rale extends Component {
                     <Card.Img variant="top" src={imgUrl} />
                     <Card.Body>
                         <Card.Text>{postText}</Card.Text>
-                        <Button variant="outline-success">Go somewhere</Button>
-                    </Card.Body>
-                    <Card.Footer className="text-muted">
+
                         <div style={{ display: "flex" }}>
-                            <div> 😡 (count) </div>
                             <div> 😂 (count) </div>
+                            <div> 😒 (count) </div>
+                            <div> 😡 (count) </div>
                             <div> 😱 (count) </div>
                         </div>
+                    </Card.Body>
+                    <Card.Footer className="text-muted">
+                        {/* <Row> */}
+                        <InputGroup className="justify-content-around">
+                            <InputGroup.Prepend>
+                                <Button variant="dark">Tu as raison!</Button>
+                                <InputGroup.Text>count</InputGroup.Text>
+                            </InputGroup.Prepend>
+
+                            <InputGroup.Prepend>
+                                <Button variant="dark">Mouais bof</Button>
+                                <InputGroup.Text>count</InputGroup.Text>
+                            </InputGroup.Prepend>
+
+                            <InputGroup.Prepend>
+                                <Button variant="dark">💬</Button>
+                                <InputGroup.Text>count</InputGroup.Text>
+                            </InputGroup.Prepend>
+                        </InputGroup>
+                        {/* 
+                            <Button variant="dark">Tu as raison!</Button>
+                            <InputGroup.Prepend>
+                                <InputGroup.Text>count</InputGroup.Text>
+                            </InputGroup.Prepend>
+                            <Button variant="dark">Mouais bof</Button>
+                            <InputGroup.Prepend>
+                                <InputGroup.Text>count</InputGroup.Text>
+                            </InputGroup.Prepend>
+                            <Button variant="dark">💬</Button> */}
+                        {/* </Row> */}
                         <hr />
                         <Form onSubmit={this.submitForm}>
                             <Form.Group controlId="exampleForm.ControlTextarea1">

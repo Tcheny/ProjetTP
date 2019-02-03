@@ -1,7 +1,9 @@
 const path = require("path");
 
 module.exports = {
+    // Entry point to the application
     entry: ["babel-polyfill", "./client/src/index.js"],
+    // Output the final bundled code to
     output: {
         path: path.resolve(__dirname, "client"),
         filename: "main.js"

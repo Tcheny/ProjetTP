@@ -108,7 +108,8 @@ const editUsers = async (id, userInfos) => {
             user_email = ${userInfos.email},
             user_password = ${encryptedPassword},
             user_pseudo = ${userInfos.pseudo},
-            user_type = ${userInfos.type}
+            user_type = ${userInfos.type},
+            user_infos = ${userInfos.infos}
         WHERE user_id = ${id}
         RETURNING *
     `;

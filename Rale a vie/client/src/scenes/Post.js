@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
-import { Form, Button } from "react-bootstrap";
+import { Form, Card, Button, Row } from "react-bootstrap";
 
 class Post extends Component {
     state = {
@@ -37,32 +37,42 @@ class Post extends Component {
 
     render() {
         return (
-            <Form>
-                <Form.Group controlId="exampleForm.ControlTextarea1">
-                    <Form.Label>Créer un rale</Form.Label>
-                    <Form.Control
-                        as="textarea"
-                        rows="5"
-                        placeholder="Ralez plus fort que jamais !"
-                        value={this.state.inputPost}
-                        onChange={this.handleChange}
-                    />
-                    <Button
-                        as="input"
-                        type="file"
-                        key={this.state.inputPost}
-                        name="mediaUpload"
-                        onChange={this.handleChangeFile}
-                    />
+            <Card>
+                <Card.Header>Créer un rale</Card.Header>
+                <Card.Body>
+                    <Form>
+                        <Form.Group controlId="exampleForm.ControlTextarea1">
+                            <Form.Control
+                                as="textarea"
+                                rows="5"
+                                placeholder="Ralez plus fort que jamais !"
+                                value={this.state.inputPost}
+                                onChange={this.handleChange}
+                            />
+                        </Form.Group>
+                    </Form>
+                </Card.Body>
+                <Card.Footer className="text-muted">
+                    <Row className="justify-content-around">
+                        <Button
+                            as="input"
+                            type="file"
+                            variant="dark"
+                            key={this.state.inputPost}
+                            name="mediaUpload"
+                            onChange={this.handleChangeFile}
+                        />
 
-                    <Button
-                        as="input"
-                        type="submit"
-                        value="Envoyer"
-                        onClick={this.submitForm}
-                    />
-                </Form.Group>
-            </Form>
+                        <Button
+                            as="input"
+                            type="submit"
+                            variant="dark"
+                            value="Envoyer"
+                            onClick={this.submitForm}
+                        />
+                    </Row>
+                </Card.Footer>
+            </Card>
         );
     }
 }

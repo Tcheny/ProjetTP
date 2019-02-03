@@ -44,7 +44,7 @@ class Login extends Component {
                         <form onSubmit={this.handleSubmit}>
                             <input
                                 type="email"
-                                className="fadeIn second"
+                                className="input-text fadeIn second"
                                 placeholder="e-mail"
                                 onChange={e =>
                                     this.setState({
@@ -54,7 +54,7 @@ class Login extends Component {
                             />
                             <input
                                 type="password"
-                                className="fadeIn third"
+                                className="input-text fadeIn third"
                                 placeholder="password"
                                 onChange={e =>
                                     this.setState({

@@ -1,21 +1,24 @@
 import React from "react";
-import { Button } from "react-bootstrap";
+import { Row, Button, InputGroup, FormControl } from "react-bootstrap";
 
 const Search = () => {
     return (
-        <div>
-            <div>
-                <input type="search" placeholder="Recherche..." />
-                <button type="submit">Ok</button>
-            </div>
-            <div>
-                <Button type="button" variant="outline-success">
+        <div style={{ margin: "30px 0" }}>
+            <InputGroup className="mb-3">
+                <FormControl placeholder="Recherche..." />
+                <InputGroup.Append>
+                    <Button variant="dark">ok</Button>
+                </InputGroup.Append>
+            </InputGroup>
+
+            <Row className="justify-content-around">
+                <Button type="button" variant="dark">
                     Les plus drôles
                 </Button>
-                <Button type="button" variant="outline-success">
+                <Button type="button" variant="dark">
                     Les plus commentés
                 </Button>
-            </div>
+            </Row>
         </div>
     );
 };

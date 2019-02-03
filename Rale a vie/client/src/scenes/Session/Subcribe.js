@@ -10,8 +10,7 @@ class Subcribe extends Component {
             firstname: "",
             email: "",
             password: "",
-            pseudo: "",
-            redirect: false
+            pseudo: ""
         }
     };
 
@@ -23,7 +22,8 @@ class Subcribe extends Component {
             email: this.state.email,
             password: this.state.password,
             pseudo: this.state.pseudo,
-            type: "user"
+            type: "user",
+            infos: ""
         };
 
         axios

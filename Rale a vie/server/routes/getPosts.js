@@ -15,6 +15,7 @@ const {
 } = require("../controllers/posts");
 
 const router = Router();
+// configuring Multer to use files directory for storing files
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
@@ -67,8 +68,11 @@ router.get("/all", async (req, res) => {
     return res.status(200).send(getOneResult.rows);
 });
 
+// express route where we receive files from the client
+// passing multer middleware
 router.post("/add", upload.single("uploadFile"), async (req, res) => {
     let insertPostsResult = null;
+
     // create the filename
     const writePath = path.join(
         __dirname,
