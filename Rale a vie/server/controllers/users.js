@@ -84,7 +84,7 @@ const addUsers = async newUser => {
     return addUserResult.rows[0];
 };
 
-// verifyuser_email exists
+// verify user_email exists
 const verifyUsernameExists = async username => {
     const verify = SQL`
         SELECT

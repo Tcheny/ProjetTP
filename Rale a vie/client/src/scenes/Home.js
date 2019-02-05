@@ -5,6 +5,8 @@ import { Container, Row, Col } from "react-bootstrap";
 import { Navbar, Search } from "../components";
 import { Post, Rale } from "./index";
 
+import { AuthConsumer } from "../AuthContext";
+
 class Home extends Component {
     state = {
         postsId: []
