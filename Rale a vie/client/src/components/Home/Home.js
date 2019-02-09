@@ -2,12 +2,13 @@ import React, { Fragment, Component } from "react";
 import axios from "axios";
 import { Container, Row, Col } from "react-bootstrap";
 
-import { Navbar, Search } from "../components";
-import { Post, Rale } from "./index";
+import NavbarApp from "../NavbarApp/index";
+import Post from "../Post/index";
+import DisplayRale from "../DisplayRale/index";
+import Search from "../Search/index";
+import Header from "../Header/Header";
 
-import { AuthConsumer } from "../AuthContext";
-
-class Home extends Component {
+export default class Home extends Component {
     state = {
         postsId: []
     };
@@ -28,35 +29,26 @@ class Home extends Component {
     };
 
     render() {
-        const { currentUser, userId } = this.props;
+        const { isAuth, userId } = this.props;
 
         const allRales = this.state.postsId.map((postId, index) => {
-            return <Rale key={index} postId={postId} userId={userId} />;
+            return <DisplayRale key={index} postId={postId} userId={userId} />;
         });
-
-        const post = () => {
-            if (currentUser) {
-                return <Post getAllPostsId={this.getAllPostsId} />;
-            }
-        };
 
         return (
             <Fragment>
-                <Navbar currentUser={currentUser} />
-                <div className="main-background">
-                    <h1 className="main-title">
-                        RALEZ <br /> MAIS FAITES LE BIEN.
-                    </h1>
-                    <a className="js-scrollTo" href="#page-1">
-                        <i className="fa fa-arrow-circle-down fa-4x" />
-                    </a>
-                </div>
+                <NavbarApp />
+                <Header />
                 <Container>
                     <Row>
                         <Col md={{ span: 6, offset: 3 }}>
-                            <div id="page-1" style={{ margin: "50px 0" }}>
+                            <div style={{ margin: "50px 0" }}>
                                 <Search />
-                                {post()}
+                                {isAuth ? (
+                                    <Post getAllPostsId={this.getAllPostsId} />
+                                ) : (
+                                    ""
+                                )}
                                 {allRales}
                             </div>
                         </Col>
@@ -66,5 +58,3 @@ class Home extends Component {
         );
     }
 }
-
-export default Home;

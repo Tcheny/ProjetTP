@@ -23,7 +23,7 @@ const validateToken = async (req, res, next) => {
         req.path === "/login" ||
         req.path === "/posts/postInfos" ||
         req.path === "/posts/allId" ||
-        req.path === "/about"
+        req.path === "/auth"
     ) {
         next();
     } else if (!req.cookies.token) {
@@ -35,11 +35,11 @@ const validateToken = async (req, res, next) => {
         jwt.verify(token, secret, (err, decoded) => {
             // Si le token n'est pas authentifié
             if (err) {
-                console.log("JSON web token invalide", req.path, err);
-                // res.clearCookie();
+                console.log("JWT invalide", req.path, err);
+                res.clearCookie();
                 return res.redirect("/");
             }
-            console.log("Token validé pour ", req.path);
+            console.log("Token validé pour", req.path);
 
             const session = { userId: decoded.userId };
             req.session = session;

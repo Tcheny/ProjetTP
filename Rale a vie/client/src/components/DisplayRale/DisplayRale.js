@@ -3,7 +3,7 @@ import moment from "moment";
 import axios from "axios";
 import { InputGroup, Row, Form, Card, Button } from "react-bootstrap";
 
-class Rale extends Component {
+export default class Rale extends Component {
     state = {
         post: null,
         imgUrl: "",
@@ -145,5 +145,3 @@ class Rale extends Component {
         );
     }
 }
-
-export default Rale;

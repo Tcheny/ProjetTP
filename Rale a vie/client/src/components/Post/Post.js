@@ -2,13 +2,15 @@ import React, { Component } from "react";
 import axios from "axios";
 import { Form, Card, Button, Row } from "react-bootstrap";
 
-class Post extends Component {
+export default class Post extends Component {
     state = {
         inputPost: "",
         inputFile: null
     };
 
     submitForm = () => {
+        // Prepend post
+
         const formData = new FormData();
         const inputPostValue = this.state.inputPost;
 
@@ -76,5 +78,3 @@ class Post extends Component {
         );
     }
 }
-
-export default Post;

@@ -9,6 +9,7 @@ const getAllPostsIds = async () => {
             post_id
         FROM
             posts
+        ORDER BY date_creation desc 
     `;
 
     const queryResult = await client.query(query);

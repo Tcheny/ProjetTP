@@ -43,9 +43,9 @@ app.get("/", (req, res) => {
     res.sendFile("index.html");
 });
 
-// app.use("*", (req, res) => {
-//     res.redirect("/");
-// });
+app.use("*", (req, res) => {
+    res.redirect("/");
+});
 
 app.listen(config.port, () =>
     console.log(`App listening on port ${config.port}!`)

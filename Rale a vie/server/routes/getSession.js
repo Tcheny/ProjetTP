@@ -19,7 +19,7 @@ router.post("/login", async (req, res) => {
 
     res.cookie("token", generateToken(userToLogin.user_id));
 
-    res.status(200).send(`Bienvenue, ${userToLogin.user_firstname}`);
+    res.status(200).send(`Bienvenue, ${userToLogin.user_pseudo}`);
 });
 
 router.get("/logout", (req, res) => {

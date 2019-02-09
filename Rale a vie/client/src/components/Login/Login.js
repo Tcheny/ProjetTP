@@ -1,8 +1,6 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import { NavLink, withRouter } from "react-router-dom";
-
 import axios from "axios";
-import "./session.css";
 
 class Login extends Component {
     state = {
@@ -10,10 +8,12 @@ class Login extends Component {
         password: ""
     };
 
-    handleSubmit = event => {
-        event.preventDefault();
+    handleSubmit = () => {
+        this.login();
+    };
 
-        axios
+    login = async () => {
+        await axios
             .post("http://localhost:8081/login", {
                 user_email: this.state.email,
                 user_password: this.state.password
@@ -33,11 +33,6 @@ class Login extends Component {
                 <div className=" fadeInDown">
                     <div className="formContent">
                         <div className="fadeIn first">
-                            <img
-                                src="https://p5.storage.canalblog.com/54/53/586993/105476253_o.jpg"
-                                className="icon"
-                                alt="User Icon"
-                            />
                             <h1 className="title">LOGIN</h1>
                         </div>
 
