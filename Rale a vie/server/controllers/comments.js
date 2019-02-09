@@ -19,11 +19,12 @@ const getOneComment = async id => {
         SELECT
             *
         FROM comments
+        INNER JOIN users ON users.user_id = comments.user_id
         WHERE comment_id = ${id}
     `;
 
     const getOneResult = await client.query(getOne);
-    return getOneResult;
+    return getOneResult.rows[0];
 };
 
 const insertComments = async commentInfos => {
@@ -42,7 +43,7 @@ const insertComments = async commentInfos => {
     `;
 
     const insertCommentResult = await client.query(insertComment);
-    return insertCommentResult.rows;
+    return insertCommentResult.rows[0];
 };
 
 const editComments = async (id, commentInfos) => {

@@ -16,6 +16,7 @@ class Subcribe extends Component {
 
     handleSubmit = event => {
         event.preventDefault();
+
         const user = {
             lastname: this.state.lastname,
             firstname: this.state.firstname,

@@ -39,21 +39,22 @@ router.get("/:id", async (req, res) => {
 });
 
 router.post("/add", async (req, res) => {
-    let insertCommentsResult = null;
+    let addedComment = null;
 
     try {
-        insertCommentsResult = await insertComments({
-            user_id: req.body.comments.user_id,
-            post_id: req.body.comments.post_id,
-            comment: req.body.comments.comment,
+        const insertCommentsResult = await insertComments({
+            user_id: req.body.comment.user_id,
+            post_id: req.body.comment.post_id,
+            comment: req.body.comment.comment,
             date_creation: moment()
         });
+        addedComment = await getOneComment(insertCommentsResult.comment_id);
     } catch (error) {
         console.log(error);
         res.status(500).send(new Error("Erreur dans Add Comment", error));
     }
 
-    return res.status(200).send(insertCommentsResult);
+    return res.status(200).send(addedComment);
 });
 
 router.put("/edit/:id", async (req, res) => {

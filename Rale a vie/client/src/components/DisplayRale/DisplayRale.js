@@ -7,28 +7,29 @@ export default class Rale extends Component {
     state = {
         post: null,
         imgUrl: "",
-        comments: {
-            user_id: "",
-            post_id: "",
-            comment: ""
-        }
+        commentsToDisplay: [],
+        comment: ""
     };
 
     submitForm = event => {
         event.preventDefault();
-        const comments = {
-            user_id: this.props.userId,
+
+        const comment = {
+            user_id: this.props.currentUser && this.props.currentUser.user_id,
             post_id: this.props.postId.post_id,
             comment: this.state.comment
         };
+
         axios
-            .post("http://localhost:8081/comments/add", { comments })
+            .post("http://localhost:8081/comments/add", { comment })
             .then(res => {
                 console.log(res.data);
+                const updatedCommentsToDisplay = this.state.commentsToDisplay.concat(
+                    res.data
+                );
                 this.setState({
-                    comments: {
-                        comment: ""
-                    }
+                    comment: "",
+                    commentsToDisplay: updatedCommentsToDisplay
                 });
             });
     };
@@ -47,6 +48,19 @@ export default class Rale extends Component {
                 });
                 const imgUrl = URL.createObjectURL(imgBlob);
                 this.setState({ post: res.data, imgUrl: imgUrl });
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    };
+
+    getAllCommentsByRaleId = () => {
+        axios
+            .get("http://localhost:8081/posts/comments", {
+                params: { id: this.props.postId.post_id }
+            })
+            .then(res => {
+                this.setState({ commentsToDisplay: res.data });
             })
             .catch(error => {
                 console.error(error);
@@ -79,6 +93,16 @@ export default class Rale extends Component {
             postText = this.state.post.post;
         }
 
+        const commentsList = this.state.commentsToDisplay.map(comment => {
+            return (
+                <div key={comment.comment_id}>
+                    <div> {comment.date_creation}</div>
+                    <div> {comment.comment}</div>
+                    <div> {comment.user_pseudo}</div>
+                </div>
+            );
+        });
+
         return (
             <div style={{ margin: "30px 0" }}>
                 <Card>
@@ -97,7 +121,6 @@ export default class Rale extends Component {
                         </div>
                     </Card.Body>
                     <Card.Footer className="text-muted">
-                        {/* <Row> */}
                         <InputGroup className="justify-content-around">
                             <InputGroup.Prepend>
                                 <Button variant="dark">Tu as raison!</Button>
@@ -110,21 +133,22 @@ export default class Rale extends Component {
                             </InputGroup.Prepend>
 
                             <InputGroup.Prepend>
-                                <Button variant="dark">💬</Button>
+                                <Button
+                                    variant="dark"
+                                    onClick={this.getAllCommentsByRaleId}
+                                >
+                                    💬
+                                </Button>
                                 <InputGroup.Text>count</InputGroup.Text>
                             </InputGroup.Prepend>
                         </InputGroup>
-                        {/* 
-                            <Button variant="dark">Tu as raison!</Button>
-                            <InputGroup.Prepend>
-                                <InputGroup.Text>count</InputGroup.Text>
-                            </InputGroup.Prepend>
-                            <Button variant="dark">Mouais bof</Button>
-                            <InputGroup.Prepend>
-                                <InputGroup.Text>count</InputGroup.Text>
-                            </InputGroup.Prepend>
-                            <Button variant="dark">💬</Button> */}
-                        {/* </Row> */}
+
+                        <hr />
+                        <div>
+                            <p>les commentaires:</p>
+                            <div>{commentsList}</div>
+                        </div>
+
                         <hr />
                         <Form onSubmit={this.submitForm}>
                             <Form.Group controlId="exampleForm.ControlTextarea1">

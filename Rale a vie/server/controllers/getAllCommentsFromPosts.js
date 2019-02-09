@@ -2,7 +2,7 @@ const SQL = require("sql-template-strings");
 
 const client = require("../database/connexion");
 
-const getAllCommentsFromPosts = async id => {
+const getAllCommentsFromPosts = async () => {
     const query = SQL`
         SELECT
             *

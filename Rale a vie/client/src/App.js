@@ -9,7 +9,6 @@ import Subcribe from "./components/Subcribe";
 export default () => (
     <HashRouter>
         <Switch>
-            {/* <Route path="/user/edit" component={Settings} /> */}
             <Route path="/about" component={About} />
             <Route path="/subcription" component={Subcribe} />
             <Route path="/login" component={Login} />

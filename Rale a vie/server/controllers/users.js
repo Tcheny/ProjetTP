@@ -102,16 +102,15 @@ const verifyUsernameExists = async username => {
 const editUsers = async (id, userInfos) => {
     const encryptedPassword = await encryptPassword(userInfos.password);
     const editUser = SQL`
-        UPDATE users
+    UPDATE users
         SET user_firstname = ${userInfos.firstname},
             user_lastname = ${userInfos.lastname},
             user_email = ${userInfos.email},
             user_password = ${encryptedPassword},
             user_pseudo = ${userInfos.pseudo},
-            user_type = ${userInfos.type},
             user_infos = ${userInfos.infos}
         WHERE user_id = ${id}
-        RETURNING *
+    RETURNING *
     `;
 
     const editUserResult = await client.query(editUser);

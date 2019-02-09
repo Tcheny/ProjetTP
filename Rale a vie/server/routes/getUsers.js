@@ -62,18 +62,17 @@ router.post("/add", async (req, res) => {
     return res.status(200).send(userInfos);
 });
 
-router.put("/edit/:id", async (req, res) => {
+router.post("/edit", async (req, res) => {
     let editUsersResult = null;
 
     try {
-        editUsersResult = await editUsers(req.params.id, {
-            firstname: req.body.user_firstname,
-            lastname: req.body.user_lastname,
-            email: req.body.user_email,
-            password: req.body.user_password,
-            pseudo: req.body.user_pseudo,
-            type: req.body.user_type,
-            infos: req.body.user_infos
+        editUsersResult = await editUsers(req.body.user_id, {
+            firstname: req.body.user.user_firstname,
+            lastname: req.body.user.user_lastname,
+            email: req.body.user.user_email,
+            password: req.body.user.user_password,
+            pseudo: req.body.user.user_pseudo,
+            infos: req.body.user.user_infos
         });
     } catch (error) {
         console.log(error);

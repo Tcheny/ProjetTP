@@ -4,6 +4,11 @@ import { AuthConsumer } from "../../contexts/AuthContext";
 
 export default () => (
     <AuthConsumer>
-        {({ currentUser }) => <About currentUser={currentUser} />}
+        {({ currentUser, verifyCurrentUser }) => (
+            <About
+                currentUser={currentUser}
+                verifyCurrentUser={verifyCurrentUser}
+            />
+        )}
     </AuthConsumer>
 );

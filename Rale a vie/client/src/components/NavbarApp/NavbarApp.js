@@ -3,8 +3,6 @@ import { Navbar, Nav, NavDropdown } from "react-bootstrap";
 
 export default class NavbarApp extends Component {
     render() {
-        // debugger;
-
         const { isAuth, logout } = this.props;
         return (
             <Navbar
