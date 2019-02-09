@@ -3,5 +3,9 @@ import Login from "./Login";
 import { AuthConsumer } from "../../contexts/AuthContext";
 
 export default () => (
-    <AuthConsumer>{({ isAuth }) => <Login isAuth={isAuth} />}</AuthConsumer>
+    <AuthConsumer>
+        {({ isAuth, verifyCurrentUser }) => (
+            <Login isAuth={isAuth} verifyCurrentUser={verifyCurrentUser} />
+        )}
+    </AuthConsumer>
 );

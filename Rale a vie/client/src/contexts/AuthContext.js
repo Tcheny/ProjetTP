@@ -53,7 +53,6 @@ export class AuthProvider extends React.Component {
                     isAuth: false,
                     currentUser: null
                 });
-                this.props.history.push("/");
             })
             .catch(error => {
                 console.error(error);
@@ -66,6 +65,7 @@ export class AuthProvider extends React.Component {
             <AuthContext.Provider
                 value={{
                     ...this.state,
+                    verifyCurrentUser: this.verifyCurrentUser,
                     logout: this.logout
                 }}
             >

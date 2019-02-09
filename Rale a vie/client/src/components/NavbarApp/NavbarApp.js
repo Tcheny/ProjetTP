@@ -3,6 +3,8 @@ import { Navbar, Nav, NavDropdown } from "react-bootstrap";
 
 export default class NavbarApp extends Component {
     render() {
+        // debugger;
+
         const { isAuth, logout } = this.props;
         return (
             <Navbar
@@ -32,7 +34,7 @@ export default class NavbarApp extends Component {
                                 Settings
                             </NavDropdown.Item>
                             <NavDropdown.Divider />
-                            <NavDropdown.Item href="/" onClick={logout}>
+                            <NavDropdown.Item onClick={logout}>
                                 <i className="fa fa-user" />
                                 Logout
                             </NavDropdown.Item>

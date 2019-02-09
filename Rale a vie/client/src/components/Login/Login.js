@@ -8,7 +8,8 @@ class Login extends Component {
         password: ""
     };
 
-    handleSubmit = () => {
+    handleSubmit = event => {
+        event.preventDefault();
         this.login();
     };
 
@@ -19,7 +20,9 @@ class Login extends Component {
                 user_password: this.state.password
             })
             .then(res => {
+                debugger;
                 console.log("Login: ", res.data);
+                this.props.verifyCurrentUser();
                 this.props.history.push("/");
             })
             .catch(error => {
