@@ -23,7 +23,7 @@ class Subcribe extends Component {
             email: this.state.email,
             password: this.state.password,
             pseudo: this.state.pseudo,
-            type: "user",
+            type: "admin",
             infos: ""
         };
 
