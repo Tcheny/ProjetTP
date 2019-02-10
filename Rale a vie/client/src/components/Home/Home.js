@@ -42,7 +42,7 @@ export default class Home extends Component {
                 <Container>
                     <Row>
                         <Col md={{ span: 6, offset: 3 }}>
-                            <div style={{ margin: "50px 0" }}>
+                            <div style={{ margin: "100px 0" }}>
                                 <Search />
                                 {isAuth ? (
                                     <Post getAllPostsId={this.getAllPostsId} />

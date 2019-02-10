@@ -24,6 +24,7 @@ export default class About extends Component {
     };
 
     editProfil = () => {
+        debugger;
         const user_id =
             this.props.currentUser && this.props.currentUser.user_id;
         const editUser = {

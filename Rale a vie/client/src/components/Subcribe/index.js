@@ -4,8 +4,13 @@ import { AuthConsumer } from "../../contexts/AuthContext";
 
 export default props => (
     <AuthConsumer>
-        {({ isAuth, currentUser }) => (
-            <Subcribe {...props} isAuth={isAuth} currentUser={currentUser} />
+        {({ isAuth, currentUser, verifyCurrentUser }) => (
+            <Subcribe
+                {...props}
+                isAuth={isAuth}
+                currentUser={currentUser}
+                verifyCurrentUser={verifyCurrentUser}
+            />
         )}
     </AuthConsumer>
 );

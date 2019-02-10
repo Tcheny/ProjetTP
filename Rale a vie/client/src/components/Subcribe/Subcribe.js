@@ -23,7 +23,7 @@ class Subcribe extends Component {
             email: this.state.email,
             password: this.state.password,
             pseudo: this.state.pseudo,
-            type: "admin",
+            type: "user",
             infos: ""
         };
 
@@ -31,6 +31,7 @@ class Subcribe extends Component {
             .post("http://localhost:8081/users/add", { user })
             .then(res => {
                 console.log("UserAdd: ", res);
+                this.props.verifyCurrentUser();
                 this.props.history.push("/");
             })
             .catch(error => {

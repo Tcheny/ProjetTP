@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { NavLink, withRouter } from "react-router-dom";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 class Login extends Component {
     state = {
@@ -22,6 +23,7 @@ class Login extends Component {
             .then(res => {
                 console.log("Login: ", res.data);
                 this.props.verifyCurrentUser();
+                toast("Success LogIn !");
                 this.props.history.push("/");
             })
             .catch(error => {

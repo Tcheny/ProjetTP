@@ -9,8 +9,6 @@ export default class Post extends Component {
     };
 
     submitForm = () => {
-        // Prepend post
-
         const formData = new FormData();
         const inputPostValue = this.state.inputPost;
 

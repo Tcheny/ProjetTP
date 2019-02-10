@@ -1,6 +1,7 @@
 import React from "react";
 import axios from "axios";
 import { withRouter } from "react-router-dom";
+import { toast } from "react-toastify";
 
 /**
  * `createContext` contient 2 propriétés :
@@ -49,6 +50,8 @@ export class AuthProvider extends React.Component {
             .get("http://localhost:8081/logout")
             .then(res => {
                 console.log("logout: ", res);
+                toast("Success LogOut !");
+
                 this.setState({
                     isAuth: false,
                     currentUser: null
@@ -56,6 +59,9 @@ export class AuthProvider extends React.Component {
             })
             .catch(error => {
                 console.error(error);
+                toast.warn("Error logout !", {
+                    position: toast.POSITION.TOP_CENTER
+                });
             });
     };
 

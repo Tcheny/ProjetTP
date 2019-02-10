@@ -52,6 +52,7 @@
         "popper.js": "^1.14.6",
         "react-bootstrap": "^1.0.0-beta.5",
         "react-favicon": "0.0.14",
+        "react-toastify": "^4.5.2",
         "sql-template-strings": "^2.2.2",
         "style-loader": "^0.23.1"
     }
