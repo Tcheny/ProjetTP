@@ -13,6 +13,15 @@ export default class Home extends Component {
         postsId: []
     };
 
+    myRef = React.createRef();
+
+    scrolling = () => {
+        this.myRef.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+        });
+    };
+
     getAllPostsId = () => {
         axios
             .get("http://localhost:8081/posts/allId")
@@ -38,11 +47,14 @@ export default class Home extends Component {
         return (
             <Fragment>
                 <NavbarApp />
-                <Header />
+                <Header scrolling={this.scrolling} />
                 <Container>
                     <Row>
                         <Col md={{ span: 6, offset: 3 }}>
-                            <div style={{ margin: "100px 0" }}>
+                            <div
+                                style={{ margin: "100px 0" }}
+                                ref={r => (this.myRef = r)}
+                            >
                                 <Search />
                                 {isAuth ? (
                                     <Post getAllPostsId={this.getAllPostsId} />

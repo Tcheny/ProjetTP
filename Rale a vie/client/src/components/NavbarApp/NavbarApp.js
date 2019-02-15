@@ -1,15 +1,19 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import { Navbar, Nav, NavDropdown } from "react-bootstrap";
+import { LinkContainer } from "react-router-bootstrap";
 
 export default class NavbarApp extends Component {
     render() {
         const { isAuth, logout } = this.props;
         return (
             <Navbar
+                // collapseOnSelect
+                expand="lg"
                 bg="dark"
                 variant="dark"
                 className="navbar navbar-default"
-                sticky="top"
+                fixed="top"
             >
                 <Navbar.Brand href="/">Rale à vie</Navbar.Brand>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
@@ -23,26 +27,27 @@ export default class NavbarApp extends Component {
                             title="Profil"
                             id="collasible-nav-dropdown"
                         >
-                            <NavDropdown.Item href="#/about">
-                                <i className="fa fa-user" />
-                                My Profil
-                            </NavDropdown.Item>
-                            <NavDropdown.Item href="#/user/edit">
-                                <i className="fa fa-gear" />
-                                Settings
-                            </NavDropdown.Item>
+                            <LinkContainer to="/about">
+                                <NavDropdown.Item>
+                                    <i className="nav-item fas fa-cog" />
+                                    My Profil
+                                </NavDropdown.Item>
+                            </LinkContainer>
+
                             <NavDropdown.Divider />
                             <NavDropdown.Item onClick={logout}>
-                                <i className="fa fa-user" />
+                                <i className="nav-item fas fa-user-ninja" />
                                 Logout
                             </NavDropdown.Item>
                         </NavDropdown>
                     ) : (
-                        <Nav.Link href="#/login">
-                            <i className="fa fa-user" /> Login
-                        </Nav.Link>
+                        <LinkContainer to="/login">
+                            <Nav.Link>
+                                <i className=" nav-item fas fa-user" />
+                                Login
+                            </Nav.Link>
+                        </LinkContainer>
                     )}
-                    ;
                 </Navbar.Collapse>
             </Navbar>
         );

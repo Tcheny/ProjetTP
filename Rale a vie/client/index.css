@@ -2,19 +2,13 @@ body {
     margin: 0;
     padding: 0;
     font-family: sans-serif;
-    /* background-color: #e9ebee !important; */
-    background: linear-gradient(
-            to bottom,
-            rgba(57, 173, 219, 0.25) 0%,
-            rgba(42, 60, 87, 0.4) 100%
-        ),
-        linear-gradient(135deg, #ac6943 0%, #5c0c3d 100%);
+    background-color: #e9ebee !important;
 }
 
 /* NAVBAR */
 
 .navbar-default {
-    background: #000 !important;
+    background: transparent !important;
 }
 
 .nav-link {
@@ -25,12 +19,15 @@ body {
     color: #fff;
 }
 
+.nav-item {
+    margin: 10px;
+}
+
 /* HEADER */
 
 .main-background {
-    width: 100%;
-    height: 650px;
-    position: relative;
+    width: 100vw;
+    height: 100vh;
     background-image: url("./images/storm.jpg");
     background-position: center;
     background-repeat: no-repeat;
@@ -45,15 +42,29 @@ body {
     text-shadow: #5e3c32 5px 5px 20px;
 }
 
-.fa {
-    margin: 10px 10px;
-}
-
 .fa-4x {
+    cursor: pointer;
     position: absolute;
     bottom: 5%;
     left: 50%;
+    transform: translate(-50%, 0);
     color: #fff;
+    animation: 3s infinite flotting;
+    animation-timing-function: ease;
+}
+
+@keyframes flotting {
+    0% {
+        transform: translate(-50%, 0);
+    }
+
+    50% {
+        transform: translate(-50%, -50%);
+    }
+
+    100% {
+        transform: translate(-50%, 0);
+    }
 }
 
 /* LOGIN & SUBCRIBE */

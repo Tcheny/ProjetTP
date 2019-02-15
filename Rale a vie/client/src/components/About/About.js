@@ -188,7 +188,7 @@ export default class About extends Component {
                     )}
                 </Card.Body>
                 <Card.Footer className="text-muted">
-                    <Nav.Link href="#/">Home</Nav.Link>
+                    <Nav.Link href="/">Home</Nav.Link>
                 </Card.Footer>
             </Card>
         );

@@ -1,5 +1,5 @@
 import React from "react";
-import { HashRouter, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { ToastContainer, Flip } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -9,7 +9,7 @@ import Home from "./components/Home";
 import Subcribe from "./components/Subcribe";
 
 export default () => (
-    <HashRouter>
+    <Router>
         <div>
             <Switch>
                 <Route path="/about" component={About} />
@@ -24,5 +24,5 @@ export default () => (
                 hideProgressBar
             />
         </div>
-    </HashRouter>
+    </Router>
 );
