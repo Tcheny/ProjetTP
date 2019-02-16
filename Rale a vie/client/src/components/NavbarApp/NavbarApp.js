@@ -1,11 +1,28 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import { Navbar, Nav, NavDropdown } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 
-export default class NavbarApp extends Component {
+class NavbarApp extends Component {
     render() {
-        const { isAuth, logout } = this.props;
+        const { isAuth, match, logout } = this.props;
+        const isMain =
+            match.url === "/" ? (
+                <LinkContainer to="/about">
+                    <NavDropdown.Item>
+                        <i className="nav-item fas fa-cog" />
+                        Mon Profil
+                    </NavDropdown.Item>
+                </LinkContainer>
+            ) : (
+                <LinkContainer to="/">
+                    <NavDropdown.Item>
+                        <i className="nav-item fas fa-home" />
+                        Home
+                    </NavDropdown.Item>
+                </LinkContainer>
+            );
         return (
             <Navbar
                 // collapseOnSelect
@@ -27,24 +44,18 @@ export default class NavbarApp extends Component {
                             title="Profil"
                             id="collasible-nav-dropdown"
                         >
-                            <LinkContainer to="/about">
-                                <NavDropdown.Item>
-                                    <i className="nav-item fas fa-cog" />
-                                    My Profil
-                                </NavDropdown.Item>
-                            </LinkContainer>
-
+                            {isMain}
                             <NavDropdown.Divider />
                             <NavDropdown.Item onClick={logout}>
                                 <i className="nav-item fas fa-user-ninja" />
-                                Logout
+                                Déconnexion
                             </NavDropdown.Item>
                         </NavDropdown>
                     ) : (
                         <LinkContainer to="/login">
                             <Nav.Link>
                                 <i className=" nav-item fas fa-user" />
-                                Login
+                                Se connecter
                             </Nav.Link>
                         </LinkContainer>
                     )}
@@ -53,3 +64,5 @@ export default class NavbarApp extends Component {
         );
     }
 }
+
+export default withRouter(NavbarApp);

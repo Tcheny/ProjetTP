@@ -20,6 +20,7 @@ const AuthContext = React.createContext();
  */
 export class AuthProvider extends React.Component {
     state = {
+        isNav: false,
         isAuth: false,
         currentUser: null
     };
@@ -50,7 +51,7 @@ export class AuthProvider extends React.Component {
             .get("http://localhost:8081/logout")
             .then(res => {
                 console.log("logout: ", res);
-                toast("Success LogOut !");
+                toast(`A bientôt ${this.state.currentUser.user_pseudo} !`);
 
                 this.setState({
                     isAuth: false,
@@ -59,7 +60,7 @@ export class AuthProvider extends React.Component {
             })
             .catch(error => {
                 console.error(error);
-                toast.warn("Error logout !", {
+                toast.error("Error logout !", {
                     position: toast.POSITION.TOP_CENTER
                 });
             });

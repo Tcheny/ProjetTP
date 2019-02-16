@@ -23,11 +23,14 @@ class Login extends Component {
             .then(res => {
                 console.log("Login: ", res.data);
                 this.props.verifyCurrentUser();
-                toast("Success LogIn !");
                 this.props.history.push("/");
+                toast(`${res.data}!`);
             })
             .catch(error => {
-                console.error(error);
+                console.error(error.request.response);
+                toast.error(error.request.response.replace(/"/g, ""), {
+                    position: toast.POSITION.TOP_CENTER
+                });
             });
     };
 

@@ -1,5 +1,14 @@
-import React, { Component, Fragment } from "react";
-import { Card, Nav, Modal, Button } from "react-bootstrap";
+import React, { Component } from "react";
+import {
+    Card,
+    Modal,
+    Button,
+    Container,
+    Row,
+    Col,
+    Form
+} from "react-bootstrap";
+import NavbarApp from "../NavbarApp/index";
 import { schtroumpf } from "../../../images/Schtroumpf-2.png";
 import axios from "axios";
 
@@ -72,125 +81,264 @@ export default class About extends Component {
     };
 
     render() {
-        const { user, currentUser } = this.state;
+        const { user } = this.state;
 
         return (
-            <Card className="text-center">
-                <Card.Header>A propos de moi</Card.Header>
-                <Card.Img variant="top" src={schtroumpf} />
-                <Card.Body>
-                    {user && (
-                        <Fragment>
-                            <Card.Title>
-                                {user.user_firstname}
-                                <br />
-                                {user.user_lastname}
-                            </Card.Title>
-                            <Card.Text>pseudo : {user.user_pseudo}</Card.Text>
-                            <Card.Title>Petit détail</Card.Title>
-                            <Card.Text>{user.user_infos}</Card.Text>
-                            <Button variant="primary" onClick={this.handleShow}>
-                                Edit profil
-                            </Button>
+            <div className="profile-page">
+                <NavbarApp />
 
-                            <Modal
-                                show={this.state.show}
-                                onHide={this.handleClose}
-                            >
-                                <Modal.Header closeButton>
-                                    <Modal.Title>Modal heading</Modal.Title>
-                                </Modal.Header>
+                <Card className="page-header header-filter text-center">
+                    <Card.Body className="main main-raised">
+                        <div className="profile-content">
+                            <Container>
+                                <Row>
+                                    <Col md={{ span: 8, offset: 2 }}>
+                                        {user && (
+                                            <div className="profile">
+                                                <Card.Img
+                                                    className="img-raised rounded-circle img-fluid"
+                                                    src="https://www.biography.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cg_face%2Cq_auto:good%2Cw_300/MTU0NjQzOTk4OTQ4OTkyMzQy/ansel-elgort-poses-for-a-portrait-during-the-baby-driver-premiere-2017-sxsw-conference-and-festivals-on-march-11-2017-in-austin-texas-photo-by-matt-winkelmeyer_getty-imagesfor-sxsw-square.jpg"
+                                                />
+                                                <Card.Title>
+                                                    {user.user_firstname}
+                                                    <br />
+                                                    {user.user_lastname}
+                                                </Card.Title>
+                                                <Card.Text>
+                                                    pseudo : {user.user_pseudo}
+                                                </Card.Text>
+                                                <Card.Text className="description text-center">
+                                                    {user.user_infos}
+                                                </Card.Text>
+                                                <Button
+                                                    variant="primary"
+                                                    onClick={this.handleShow}
+                                                >
+                                                    Edit profil
+                                                </Button>
 
-                                <Modal.Body>
-                                    <label>FirstName</label>
-                                    <input
-                                        type="text"
-                                        defaultValue={user.user_firstname}
-                                        onChange={e => {
-                                            this.handleChange({
-                                                user_firstnameField:
-                                                    e.target.value
-                                            });
-                                        }}
-                                    />
+                                                <Modal
+                                                    size="lg"
+                                                    aria-labelledby="contained-modal-title-vcenter"
+                                                    centered
+                                                    show={this.state.show}
+                                                    onHide={this.handleClose}
+                                                >
+                                                    <Modal.Header closeButton>
+                                                        <Modal.Title>
+                                                            Vos informations :
+                                                        </Modal.Title>
+                                                    </Modal.Header>
 
-                                    <label>LastName</label>
-                                    <input
-                                        type="text"
-                                        defaultValue={user.user_lastname}
-                                        onChange={e => {
-                                            this.handleChange({
-                                                user_lastnameField:
-                                                    e.target.value
-                                            });
-                                        }}
-                                    />
+                                                    <Modal.Body>
+                                                        <Form>
+                                                            <Form.Group
+                                                                as={Row}
+                                                                controlId="formBasicEmail"
+                                                            >
+                                                                <Form.Label
+                                                                    column
+                                                                    sm="2"
+                                                                >
+                                                                    Prénom
+                                                                </Form.Label>
+                                                                <Col sm="10">
+                                                                    <Form.Control
+                                                                        type="text"
+                                                                        defaultValue={
+                                                                            user.user_firstname
+                                                                        }
+                                                                        onChange={e => {
+                                                                            this.handleChange(
+                                                                                {
+                                                                                    user_firstnameField:
+                                                                                        e
+                                                                                            .target
+                                                                                            .value
+                                                                                }
+                                                                            );
+                                                                        }}
+                                                                        placeholder="Prénom"
+                                                                    />
+                                                                </Col>
+                                                            </Form.Group>
+                                                            <Form.Group
+                                                                as={Row}
+                                                            >
+                                                                <Form.Label
+                                                                    column
+                                                                    sm="2"
+                                                                >
+                                                                    Nom
+                                                                </Form.Label>
+                                                                <Col sm="10">
+                                                                    <Form.Control
+                                                                        type="text"
+                                                                        defaultValue={
+                                                                            user.user_lastname
+                                                                        }
+                                                                        onChange={e => {
+                                                                            this.handleChange(
+                                                                                {
+                                                                                    user_lastnameField:
+                                                                                        e
+                                                                                            .target
+                                                                                            .value
+                                                                                }
+                                                                            );
+                                                                        }}
+                                                                        placeholder="Nom"
+                                                                    />
+                                                                </Col>
+                                                            </Form.Group>
+                                                            <Form.Group
+                                                                as={Row}
+                                                            >
+                                                                <Form.Label
+                                                                    column
+                                                                    sm="2"
+                                                                >
+                                                                    E-mail
+                                                                </Form.Label>
+                                                                <Col sm="10">
+                                                                    <Form.Control
+                                                                        type="email"
+                                                                        defaultValue={
+                                                                            user.user_email
+                                                                        }
+                                                                        onChange={e => {
+                                                                            this.handleChange(
+                                                                                {
+                                                                                    user_emailField:
+                                                                                        e
+                                                                                            .target
+                                                                                            .value
+                                                                                }
+                                                                            );
+                                                                        }}
+                                                                        placeholder="E-mail"
+                                                                    />
+                                                                </Col>
+                                                            </Form.Group>
+                                                            <Form.Group
+                                                                as={Row}
+                                                            >
+                                                                <Form.Label
+                                                                    column
+                                                                    sm="2"
+                                                                >
+                                                                    Mot de passe
+                                                                </Form.Label>
+                                                                <Col sm="10">
+                                                                    <Form.Control
+                                                                        type="password"
+                                                                        defaultValue={
+                                                                            user.user_password
+                                                                        }
+                                                                        onChange={e => {
+                                                                            this.handleChange(
+                                                                                {
+                                                                                    user_passwordField:
+                                                                                        e
+                                                                                            .target
+                                                                                            .value
+                                                                                }
+                                                                            );
+                                                                        }}
+                                                                        placeholder="Mot de passe"
+                                                                    />
+                                                                </Col>
+                                                            </Form.Group>
+                                                            <Form.Group
+                                                                as={Row}
+                                                            >
+                                                                <Form.Label
+                                                                    column
+                                                                    sm="2"
+                                                                >
+                                                                    Pseudo
+                                                                </Form.Label>
+                                                                <Col sm="10">
+                                                                    <Form.Control
+                                                                        type="text"
+                                                                        defaultValue={
+                                                                            user.user_pseudo
+                                                                        }
+                                                                        onChange={e => {
+                                                                            this.handleChange(
+                                                                                {
+                                                                                    user_pseudoField:
+                                                                                        e
+                                                                                            .target
+                                                                                            .value
+                                                                                }
+                                                                            );
+                                                                        }}
+                                                                        placeholder="Pseudo"
+                                                                    />
+                                                                </Col>
+                                                            </Form.Group>
+                                                            <Form.Group
+                                                                as={Row}
+                                                            >
+                                                                <Form.Label
+                                                                    column
+                                                                    sm="2"
+                                                                >
+                                                                    Infos
+                                                                </Form.Label>
+                                                                <Col sm="10">
+                                                                    <Form.Control
+                                                                        type="text"
+                                                                        defaultValue={
+                                                                            user.user_infos
+                                                                        }
+                                                                        onChange={e => {
+                                                                            this.handleChange(
+                                                                                {
+                                                                                    user_infosField:
+                                                                                        e
+                                                                                            .target
+                                                                                            .value
+                                                                                }
+                                                                            );
+                                                                        }}
+                                                                        placeholder="Détails"
+                                                                    />
+                                                                </Col>
+                                                            </Form.Group>
+                                                        </Form>
+                                                    </Modal.Body>
 
-                                    <label>Email</label>
-                                    <input
-                                        type="email"
-                                        defaultValue={user.user_email}
-                                        onChange={e => {
-                                            this.handleChange({
-                                                user_emailField: e.target.value
-                                            });
-                                        }}
-                                    />
-                                    <input
-                                        type="password"
-                                        defaultValue={user.user_password}
-                                        onChange={e => {
-                                            this.handleChange({
-                                                user_passwordField:
-                                                    e.target.value
-                                            });
-                                        }}
-                                    />
-                                    <label>Pseudo</label>
-                                    <input
-                                        type="text"
-                                        defaultValue={user.user_pseudo}
-                                        onChange={e => {
-                                            this.handleChange({
-                                                user_pseudoField: e.target.value
-                                            });
-                                        }}
-                                    />
-
-                                    <label>Infos</label>
-                                    <input
-                                        type="text"
-                                        defaultValue={user.user_infos}
-                                        onChange={e => {
-                                            this.handleChange({
-                                                user_infosField: e.target.value
-                                            });
-                                        }}
-                                    />
-                                </Modal.Body>
-
-                                <Modal.Footer>
-                                    <Button
-                                        variant="secondary"
-                                        onClick={this.handleClose}
-                                    >
-                                        Close
-                                    </Button>
-                                    <Button
-                                        variant="primary"
-                                        onClick={this.editProfil}
-                                    >
-                                        Save changes
-                                    </Button>
-                                </Modal.Footer>
-                            </Modal>
-                        </Fragment>
-                    )}
-                </Card.Body>
-                <Card.Footer className="text-muted">
-                    <Nav.Link href="/">Home</Nav.Link>
-                </Card.Footer>
-            </Card>
+                                                    <Modal.Footer>
+                                                        <Button
+                                                            variant="secondary"
+                                                            onClick={
+                                                                this.handleClose
+                                                            }
+                                                        >
+                                                            Fermer
+                                                        </Button>
+                                                        <Button
+                                                            variant="primary"
+                                                            onClick={
+                                                                this.editProfil
+                                                            }
+                                                        >
+                                                            Enregistrer les
+                                                            changements
+                                                        </Button>
+                                                    </Modal.Footer>
+                                                </Modal>
+                                            </div>
+                                        )}
+                                    </Col>
+                                </Row>
+                            </Container>
+                        </div>
+                    </Card.Body>
+                </Card>
+            </div>
         );
     }
 }

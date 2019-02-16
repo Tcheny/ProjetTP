@@ -1,11 +1,11 @@
 const SQL = require("sql-template-strings");
-const bcrypt = require('bcrypt');
+const bcrypt = require("bcrypt");
 
-const client = require('../database/connexion');
+const client = require("../database/connexion");
 
 const verifyUser = async (username, password) => {
-    console.log(username)
-        const verify = SQL`
+    console.log(username);
+    const verify = SQL`
             SELECT
                 user_id,
                 user_firstname,
@@ -18,19 +18,22 @@ const verifyUser = async (username, password) => {
             WHERE user_email = ${username}
         `;
 
-        const retrievedUser = await client.query(verify)
+    const retrievedUser = await client.query(verify);
 
-        if (!retrievedUser.rowCount) {
-            throw new Error(`Aucun utilisation ${username}`)
-        }
-
-        const passwordRight = await bcrypt.compare(password, retrievedUser.rows[0].user_password)
-
-        if (!passwordRight) {
-            throw new Error('Mot de passe incorrect')
-        }
-
-        return retrievedUser.rows[0]
+    if (!retrievedUser.rowCount) {
+        throw new Error(`${username} ne correspond à aucun compte.`);
     }
 
-module.exports= verifyUser;
+    const passwordRight = await bcrypt.compare(
+        password,
+        retrievedUser.rows[0].user_password
+    );
+
+    if (!passwordRight) {
+        throw new Error("Le mot de passe est incorrect.");
+    }
+
+    return retrievedUser.rows[0];
+};
+
+module.exports = verifyUser;
