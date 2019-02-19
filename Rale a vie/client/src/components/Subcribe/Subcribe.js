@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { NavLink, withRouter } from "react-router-dom";
-
 import axios from "axios";
+import { Card, Button, Form } from "react-bootstrap";
 
 class Subcribe extends Component {
     state = {
@@ -41,14 +41,14 @@ class Subcribe extends Component {
 
     render() {
         return (
-            <div className="wrapper">
-                <div className=" fadeInDown">
+            <Card className="wrapper">
+                <Card.Body className=" fadeInDown">
                     <div className="formContent">
-                        <div className="fadeIn first">
-                            <h1 className="title">Log in</h1>
-                        </div>
+                        <Card.Title className="fadeIn first">
+                            <h1 className="title">S'inscrire</h1>
+                        </Card.Title>
 
-                        <form onSubmit={this.handleSubmit}>
+                        <Form onSubmit={this.handleSubmit}>
                             <input
                                 type="text"
                                 className="input-text fadeIn second"
@@ -99,23 +99,21 @@ class Subcribe extends Component {
                                     })
                                 }
                             />
-                            <button
+                            <Button
                                 type="submit"
                                 className="input-button fadeIn fifth"
                                 onSubmit={this.handleSubmit}
                             >
                                 SE CONNECTER
-                            </button>
-                        </form>
+                            </Button>
+                        </Form>
 
-                        <div className="formFooter">
-                            <NavLink className="a underlineHover" to={"/"}>
-                                Go to the Site
-                            </NavLink>
-                        </div>
+                        <NavLink className="a underlineHover" to={"/"}>
+                            <div className="formFooter">Rale à vie</div>
+                        </NavLink>
                     </div>
-                </div>
-            </div>
+                </Card.Body>
+            </Card>
         );
     }
 }

@@ -9,7 +9,6 @@ import {
     Form
 } from "react-bootstrap";
 import NavbarApp from "../NavbarApp/index";
-import { schtroumpf } from "../../../images/Schtroumpf-2.png";
 import axios from "axios";
 
 export default class About extends Component {
@@ -33,7 +32,6 @@ export default class About extends Component {
     };
 
     editProfil = () => {
-        debugger;
         const user_id =
             this.props.currentUser && this.props.currentUser.user_id;
         const editUser = {
@@ -114,7 +112,7 @@ export default class About extends Component {
                                                     variant="primary"
                                                     onClick={this.handleShow}
                                                 >
-                                                    Edit profil
+                                                    Modifier le profil
                                                 </Button>
 
                                                 <Modal

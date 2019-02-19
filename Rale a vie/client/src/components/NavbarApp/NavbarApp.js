@@ -1,12 +1,23 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 import { withRouter } from "react-router-dom";
 import { Navbar, Nav, NavDropdown } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 
 class NavbarApp extends Component {
+    endSession = () => {
+        this.props.logout();
+        setTimeout(() => {
+            this.props.history.push("/login");
+        }, 1000);
+    };
+
+    componentDidMount = () => {
+        this.endSession;
+    };
+
     render() {
-        const { isAuth, match, logout } = this.props;
+        const { isAuth, match } = this.props;
+
         const isMain =
             match.url === "/" ? (
                 <LinkContainer to="/about">
@@ -23,9 +34,9 @@ class NavbarApp extends Component {
                     </NavDropdown.Item>
                 </LinkContainer>
             );
+
         return (
             <Navbar
-                // collapseOnSelect
                 expand="lg"
                 bg="dark"
                 variant="dark"
@@ -46,8 +57,8 @@ class NavbarApp extends Component {
                         >
                             {isMain}
                             <NavDropdown.Divider />
-                            <NavDropdown.Item onClick={logout}>
-                                <i className="nav-item fas fa-user-ninja" />
+                            <NavDropdown.Item onClick={this.endSession}>
+                                <i className="nav-item fas fa-sign-out-alt" />
                                 Déconnexion
                             </NavDropdown.Item>
                         </NavDropdown>

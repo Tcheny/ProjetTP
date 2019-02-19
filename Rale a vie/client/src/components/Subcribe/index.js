@@ -1,9 +1,9 @@
 import React from "react";
 import Subcribe from "./Subcribe";
-import { AuthConsumer } from "../../contexts/AuthContext";
+import { UseConsumer } from "../../contexts/UseContext";
 
 export default props => (
-    <AuthConsumer>
+    <UseConsumer>
         {({ isAuth, currentUser, verifyCurrentUser }) => (
             <Subcribe
                 {...props}
@@ -12,5 +12,5 @@ export default props => (
                 verifyCurrentUser={verifyCurrentUser}
             />
         )}
-    </AuthConsumer>
+    </UseConsumer>
 );

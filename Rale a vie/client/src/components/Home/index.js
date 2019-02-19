@@ -1,7 +1,7 @@
 import React from "react";
 import Home from "./Home";
-import { AuthConsumer } from "../../contexts/AuthContext";
+import { UseConsumer } from "../../contexts/UseContext";
 
 export default () => (
-    <AuthConsumer>{({ isAuth }) => <Home isAuth={isAuth} />}</AuthConsumer>
+    <UseConsumer>{({ isAuth }) => <Home isAuth={isAuth} />}</UseConsumer>
 );

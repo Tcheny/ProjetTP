@@ -1,12 +1,12 @@
 import React from "react";
 import NavbarApp from "./NavbarApp";
-import { AuthConsumer } from "../../contexts/AuthContext";
+import { UseConsumer } from "../../contexts/UseContext";
 
 export default () => (
-    <AuthConsumer>
+    <UseConsumer>
         {value => {
             const { isAuth, logout } = value;
             return <NavbarApp isAuth={isAuth} logout={logout} />;
         }}
-    </AuthConsumer>
+    </UseConsumer>
 );

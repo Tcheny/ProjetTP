@@ -1,14 +1,14 @@
 import React from "react";
 import About from "./About";
-import { AuthConsumer } from "../../contexts/AuthContext";
+import { UseConsumer } from "../../contexts/UseContext";
 
 export default () => (
-    <AuthConsumer>
+    <UseConsumer>
         {({ currentUser, verifyCurrentUser }) => (
             <About
                 currentUser={currentUser}
                 verifyCurrentUser={verifyCurrentUser}
             />
         )}
-    </AuthConsumer>
+    </UseConsumer>
 );

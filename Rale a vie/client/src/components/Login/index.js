@@ -1,11 +1,11 @@
 import React from "react";
 import Login from "./Login";
-import { AuthConsumer } from "../../contexts/AuthContext";
+import { UseConsumer } from "../../contexts/UseContext";
 
 export default () => (
-    <AuthConsumer>
+    <UseConsumer>
         {({ isAuth, verifyCurrentUser }) => (
             <Login isAuth={isAuth} verifyCurrentUser={verifyCurrentUser} />
         )}
-    </AuthConsumer>
+    </UseConsumer>
 );

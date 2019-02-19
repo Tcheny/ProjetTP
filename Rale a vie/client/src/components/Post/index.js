@@ -1,11 +1,11 @@
 import React from "react";
 import Post from "./Post";
-import { AuthConsumer } from "../../contexts/AuthContext";
+import { UseConsumer } from "../../contexts/UseContext";
 
 export default props => (
-    <AuthConsumer>
+    <UseConsumer>
         {({ isAuth, currentUser }) => (
             <Post {...props} isAuth={isAuth} currentUser={currentUser} />
         )}
-    </AuthConsumer>
+    </UseConsumer>
 );

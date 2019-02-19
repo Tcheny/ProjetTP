@@ -1,14 +1,17 @@
 import React, { Component } from "react";
 import moment from "moment";
+import "moment/locale/fr";
 import axios from "axios";
-import { InputGroup, Row, Form, Card, Button } from "react-bootstrap";
+import { InputGroup, ListGroup, Form, Card, Button } from "react-bootstrap";
 
 export default class Rale extends Component {
     state = {
+        isToggle: false,
+        users_id: [],
         post: null,
         imgUrl: "",
-        commentsToDisplay: [],
-        comment: ""
+        commentsToDisplay: []
+        // comment: ""
     };
 
     submitForm = event => {
@@ -23,14 +26,26 @@ export default class Rale extends Component {
         axios
             .post("http://localhost:8081/comments/add", { comment })
             .then(res => {
+                debugger;
                 console.log(res.data);
                 const updatedCommentsToDisplay = this.state.commentsToDisplay.concat(
                     res.data
                 );
                 this.setState({
-                    comment: "",
+                    // comment: "",
                     commentsToDisplay: updatedCommentsToDisplay
                 });
+            });
+    };
+
+    getUsersById = () => {
+        axios
+            .get("http://localhost:8081/users/all")
+            .then(res => {
+                this.setState({ users_id: res.data });
+            })
+            .catch(error => {
+                console.error(error);
             });
     };
 
@@ -60,7 +75,10 @@ export default class Rale extends Component {
                 params: { id: this.props.postId.post_id }
             })
             .then(res => {
-                this.setState({ commentsToDisplay: res.data });
+                this.setState(prevState => ({
+                    isToggle: !prevState.isToggle,
+                    commentsToDisplay: res.data
+                }));
             })
             .catch(error => {
                 console.error(error);
@@ -75,18 +93,19 @@ export default class Rale extends Component {
 
     componentDidMount = () => {
         this.getPostInfosById();
+        this.getUsersById();
     };
 
     render() {
         let date = "";
+        let heure = "";
         let imgUrl = "";
         let postText = "";
         let author = "";
 
         if (this.state.post) {
-            date = moment
-                .utc(this.state.post.date_creation)
-                .format("DD-MM-YYYY, HH:mm");
+            date = moment.utc(this.state.post.date_creation).format("ll");
+            heure = moment.utc(this.state.post.date_creation).format("LT");
 
             imgUrl = this.state.imgUrl;
             author = this.state.post.user_pseudo;
@@ -94,12 +113,23 @@ export default class Rale extends Component {
         }
 
         const commentsList = this.state.commentsToDisplay.map(comment => {
+            let authorComment = "";
+            let dateComment = moment.utc(comment.date_creation).format("ll");
+            let heureComment = moment.utc(comment.date_creation).format("LT");
+
+            this.state.users_id.filter(user => {
+                if (parseInt(user.user_id) === comment.user_id) {
+                    authorComment = user.user_pseudo;
+                }
+            });
+
             return (
-                <div key={comment.comment_id}>
-                    <div> {comment.date_creation}</div>
+                <ListGroup.Item key={comment.comment_id}>
+                    <div>
+                        {authorComment}, le {dateComment} à {heureComment}
+                    </div>
                     <div> {comment.comment}</div>
-                    <div> {comment.user_pseudo}</div>
-                </div>
+                </ListGroup.Item>
             );
         });
 
@@ -107,7 +137,7 @@ export default class Rale extends Component {
             <div style={{ margin: "30px 0" }}>
                 <Card>
                     <Card.Header>
-                        Par {author}, le {date}
+                        Par {author}, le {date} à {heure}
                     </Card.Header>
                     <Card.Img variant="top" src={imgUrl} />
                     <Card.Body>
@@ -144,12 +174,18 @@ export default class Rale extends Component {
                         </InputGroup>
 
                         <hr />
-                        <div>
-                            <p>les commentaires:</p>
-                            <div>{commentsList}</div>
-                        </div>
+                        <ListGroup>
+                            {this.state.isToggle ? (
+                                <div>
+                                    les commentaires:
+                                    {commentsList}
+                                    <hr />
+                                </div>
+                            ) : (
+                                ""
+                            )}
+                        </ListGroup>
 
-                        <hr />
                         <Form onSubmit={this.submitForm}>
                             <Form.Group controlId="exampleForm.ControlTextarea1">
                                 <Form.Control

@@ -4,11 +4,11 @@ import App from "./App";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../index.css";
 
-import { AuthProvider } from "./contexts/AuthContext";
+import { UseProvider } from "./contexts/UseContext";
 
 render(
-    <AuthProvider>
+    <UseProvider>
         <App />
-    </AuthProvider>,
+    </UseProvider>,
     document.getElementById("root")
 );

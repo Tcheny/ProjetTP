@@ -1,11 +1,11 @@
 import React from "react";
 import Search from "./Search";
-import { AuthConsumer } from "../../contexts/AuthContext";
+import { UseConsumer } from "../../contexts/UseContext";
 
 export default props => (
-    <AuthConsumer>
+    <UseConsumer>
         {({ isAuth, currentUser }) => (
             <Search {...props} isAuth={isAuth} currentUser={currentUser} />
         )}
-    </AuthConsumer>
+    </UseConsumer>
 );

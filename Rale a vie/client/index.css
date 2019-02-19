@@ -69,15 +69,6 @@ body {
 
 /* LOGIN & SUBCRIBE */
 
-.a {
-    color: #92badd;
-    display: inline-block;
-    text-decoration: none;
-    font-weight: 400;
-}
-
-/* STRUCTURE */
-
 .wrapper {
     position: absolute;
     display: flex;
@@ -169,6 +160,7 @@ body {
 
 /* Simple CSS3 Fade-in-down Animation */
 .fadeInDown {
+    flex: 0;
     animation-name: fadeInDown;
     animation-duration: 1s;
     animation-fill-mode: both;
