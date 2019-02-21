@@ -75,17 +75,17 @@ router.put("/edit/:id", async (req, res) => {
     return res.status(200).send(editCommentsResult.rows);
 });
 
-router.delete("/delete/:id", async (req, res) => {
+router.delete("/delete", async (req, res) => {
     let deleteCommentResult = null;
 
     try {
-        deleteCommentResult = await deleteComments(req.params.id);
+        deleteCommentResult = await deleteComments(req.query.id);
     } catch (error) {
         console.log(error);
         res.status(500).send(new Error("Erreur dans Delete Post", error));
     }
 
-    return res.status(200).send(deleteCommentResult);
+    return res.status(200).send(deleteCommentResult.rows[0]);
 });
 
 module.exports = router;

@@ -9,9 +9,9 @@ import Search from "../Search/index";
 import Header from "../Header/Header";
 
 export default class Home extends Component {
-    state = {
-        postsId: []
-    };
+    // state = {
+    //     postsId: []
+    // };
 
     myRef = React.createRef();
 
@@ -22,26 +22,26 @@ export default class Home extends Component {
         });
     };
 
-    getAllPostsId = () => {
-        axios
-            .get("http://localhost:8081/posts/allId")
-            .then(res => {
-                this.setState({ postsId: res.data });
-            })
-            .catch(error => {
-                console.error(error);
-            });
-    };
+    // getAllPostsId = () => {
+    //     axios
+    //         .get("http://localhost:8081/posts/allId")
+    //         .then(res => {
+    //             this.setState({ postsId: res.data });
+    //         })
+    //         .catch(error => {
+    //             console.error(error);
+    //         });
+    // };
 
     componentDidMount = () => {
-        this.getAllPostsId();
+        this.props.getAllPostsId();
     };
 
     render() {
-        const { isAuth, userId } = this.props;
+        const { isAuth, getAllPostsId, posts_id } = this.props;
 
-        const allRales = this.state.postsId.map((postId, index) => {
-            return <DisplayRale key={index} postId={postId} userId={userId} />;
+        const allRales = posts_id.map((posts, index) => {
+            return <DisplayRale key={index} posts={posts} />;
         });
 
         return (
@@ -57,11 +57,12 @@ export default class Home extends Component {
                             >
                                 <Search />
                                 {isAuth ? (
-                                    <Post getAllPostsId={this.getAllPostsId} />
+                                    <Post getAllPostsId={getAllPostsId} />
                                 ) : (
                                     ""
                                 )}
                                 {allRales}
+                                {/* <DisplayRale /> */}
                             </div>
                         </Col>
                     </Row>

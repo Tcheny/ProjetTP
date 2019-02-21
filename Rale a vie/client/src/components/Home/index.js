@@ -3,5 +3,13 @@ import Home from "./Home";
 import { UseConsumer } from "../../contexts/UseContext";
 
 export default () => (
-    <UseConsumer>{({ isAuth }) => <Home isAuth={isAuth} />}</UseConsumer>
+    <UseConsumer>
+        {({ isAuth, posts_id, getAllPostsId }) => (
+            <Home
+                isAuth={isAuth}
+                posts_id={posts_id}
+                getAllPostsId={getAllPostsId}
+            />
+        )}
+    </UseConsumer>
 );

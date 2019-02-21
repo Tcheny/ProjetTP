@@ -38,16 +38,16 @@ const getPostInfosById = async id => {
     return infosResult.rows[0];
 };
 
-const getOnePost = async () => {
-    const getOne = SQL`
-        SELECT
-            *
-        FROM posts
-    `;
+// const getOnePost = async () => {
+//     const getOne = SQL`
+//         SELECT
+//             *
+//         FROM posts
+//     `;
 
-    const getOneResult = await client.query(getOne);
-    return getOneResult;
-};
+//     const getOneResult = await client.query(getOne);
+//     return getOneResult;
+// };
 
 // Insert un post
 const insertPosts = async postInfos => {
@@ -71,21 +71,21 @@ const insertPosts = async postInfos => {
     return insertPostResult.rows[0];
 };
 
-const editPosts = async (id, postInfos) => {
-    const editPost = SQL`
-        UPDATE posts
-        SET user_id = ${postInfos.user_id},
-            post = ${postInfos.post},
-            path_media = ${postInfos.path_media},
-            type_media = ${postInfos.type_media},
-            date_creation = ${postInfos.date_creation}
-        WHERE post_id = ${id}
-        RETURNING *
-    `;
+// const editPosts = async (id, postInfos) => {
+//     const editPost = SQL`
+//         UPDATE posts
+//         SET user_id = ${postInfos.user_id},
+//             post = ${postInfos.post},
+//             path_media = ${postInfos.path_media},
+//             type_media = ${postInfos.type_media},
+//             date_creation = ${postInfos.date_creation}
+//         WHERE post_id = ${id}
+//         RETURNING *
+//     `;
 
-    const editPostResult = await client.query(editPost);
-    return editPostResult;
-};
+//     const editPostResult = await client.query(editPost);
+//     return editPostResult;
+// };
 
 const deletePosts = async id => {
     const deletePost = SQL`
@@ -101,8 +101,8 @@ const deletePosts = async id => {
 module.exports = {
     getAllPostsIds,
     getPostInfosById,
-    getOnePost,
     insertPosts,
-    editPosts,
+    // getOnePost,
+    // editPosts,
     deletePosts
 };

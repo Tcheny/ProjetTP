@@ -339,3 +339,8 @@ body {
 .edit-form {
     margin: 20px 10px;
 }
+
+.fa-trash-alt,
+.fa-heart {
+    cursor: pointer;
+}

@@ -8,9 +8,9 @@ const queries = require("../database/connexion");
 const {
     getAllPostsIds,
     getPostInfosById,
-    getOnePost,
     insertPosts,
-    editPosts,
+    // getOnePost,
+    // editPosts,
     deletePosts
 } = require("../controllers/posts");
 
@@ -55,18 +55,18 @@ router.get("/postInfos", async (req, res) => {
     return res.status(200).send(infos);
 });
 
-router.get("/all", async (req, res) => {
-    let getOneResult = null;
+// router.get("/all", async (req, res) => {
+//     let getOneResult = null;
 
-    try {
-        getOneResult = await getOnePost(queries);
-    } catch (error) {
-        console.log(error);
-        return res.status(500).send(new Error("Erreur dans One Post", error));
-    }
+//     try {
+//         getOneResult = await getOnePost(queries);
+//     } catch (error) {
+//         console.log(error);
+//         return res.status(500).send(new Error("Erreur dans One Post", error));
+//     }
 
-    return res.status(200).send(getOneResult.rows);
-});
+//     return res.status(200).send(getOneResult.rows);
+// });
 
 // express route where we receive files from the client
 // passing multer middleware
@@ -98,30 +98,30 @@ router.post("/add", upload.single("uploadFile"), async (req, res) => {
     return res.status(200).send(insertPostsResult);
 });
 
-router.put("/edit/:id", async (req, res) => {
-    let editPostsResult = null;
+// router.post("/edit/:id", async (req, res) => {
+//     let editPostsResult = null;
 
-    try {
-        editPostsResult = await editPosts(req.params.id, {
-            user_id: req.body.user_id,
-            post: req.body.post,
-            path_media: req.body.path_media,
-            type_media: req.body.type_media,
-            date_creation: req.body.date_creation
-        });
-    } catch (error) {
-        console.log(error);
-        return res.status(500).send(new Error("Erreur dans Edit Post", error));
-    }
+//     try {
+//         editPostsResult = await editPosts(req.params.id, {
+//             user_id: req.body.user_id,
+//             post: req.body.post,
+//             path_media: req.body.path_media,
+//             type_media: req.body.type_media,
+//             date_creation: req.body.date_creation
+//         });
+//     } catch (error) {
+//         console.log(error);
+//         return res.status(500).send(new Error("Erreur dans Edit Post", error));
+//     }
 
-    return res.status(200).send(editPostsResult.rows);
-});
+//     return res.status(200).send(editPostsResult.rows);
+// });
 
-router.delete("/delete/:id", async (req, res) => {
+router.delete("/delete", async (req, res) => {
     let deletePostResult = null;
 
     try {
-        deletePostResult = await deletePosts(req.params.id);
+        deletePostResult = await deletePosts(req.query.id);
     } catch (error) {
         console.log(error);
         return res
@@ -129,7 +129,7 @@ router.delete("/delete/:id", async (req, res) => {
             .send(new Error("Erreur dans Delete Post", error));
     }
 
-    return res.status(200).send(deletePostResult);
+    return res.status(200).send(deletePostResult.rows[0]);
 });
 
 module.exports = router;

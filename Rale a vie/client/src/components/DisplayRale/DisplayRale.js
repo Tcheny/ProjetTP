@@ -2,16 +2,22 @@ import React, { Component } from "react";
 import moment from "moment";
 import "moment/locale/fr";
 import axios from "axios";
-import { InputGroup, ListGroup, Form, Card, Button } from "react-bootstrap";
+import {
+    InputGroup,
+    ListGroup,
+    Form,
+    FormControl,
+    Card,
+    Button,
+    Row
+} from "react-bootstrap";
 
 export default class Rale extends Component {
     state = {
         isToggle: false,
-        users_id: [],
         post: null,
         imgUrl: "",
         commentsToDisplay: []
-        // comment: ""
     };
 
     submitForm = event => {
@@ -19,40 +25,27 @@ export default class Rale extends Component {
 
         const comment = {
             user_id: this.props.currentUser && this.props.currentUser.user_id,
-            post_id: this.props.postId.post_id,
+            post_id: this.props.posts.post_id,
             comment: this.state.comment
         };
 
         axios
             .post("http://localhost:8081/comments/add", { comment })
             .then(res => {
-                debugger;
                 console.log(res.data);
                 const updatedCommentsToDisplay = this.state.commentsToDisplay.concat(
                     res.data
                 );
                 this.setState({
-                    // comment: "",
                     commentsToDisplay: updatedCommentsToDisplay
                 });
-            });
-    };
-
-    getUsersById = () => {
-        axios
-            .get("http://localhost:8081/users/all")
-            .then(res => {
-                this.setState({ users_id: res.data });
-            })
-            .catch(error => {
-                console.error(error);
             });
     };
 
     getPostInfosById = () => {
         axios
             .get("http://localhost:8081/posts/postInfos", {
-                params: { id: this.props.postId.post_id }
+                params: { id: this.props.posts.post_id }
             })
             .then(res => {
                 // transform buffer to 8bits unsign
@@ -72,13 +65,50 @@ export default class Rale extends Component {
     getAllCommentsByRaleId = () => {
         axios
             .get("http://localhost:8081/posts/comments", {
-                params: { id: this.props.postId.post_id }
+                params: { id: this.props.posts.post_id }
             })
             .then(res => {
                 this.setState(prevState => ({
                     isToggle: !prevState.isToggle,
                     commentsToDisplay: res.data
                 }));
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    };
+
+    deletePostsById = id => {
+        axios
+            .delete("http://localhost:8081/posts/delete", {
+                params: { id: id }
+            })
+            .then(res => {
+                console.log(res.data);
+                this.setState({
+                    posts: this.props.posts.post_id !== id
+                });
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    };
+
+    deleteCommentById = id => {
+        axios
+            .delete("http://localhost:8081/comments/delete", {
+                params: { id: id }
+            })
+            .then(res => {
+                console.log(res.data);
+                const updatedCommentsDeleted = this.state.commentsToDisplay.filter(
+                    comment => {
+                        return comment.comment_id !== id;
+                    }
+                );
+                this.setState({
+                    commentsToDisplay: updatedCommentsDeleted
+                });
             })
             .catch(error => {
                 console.error(error);
@@ -93,7 +123,7 @@ export default class Rale extends Component {
 
     componentDidMount = () => {
         this.getPostInfosById();
-        this.getUsersById();
+        this.props.getAllUsersById();
     };
 
     render() {
@@ -105,7 +135,10 @@ export default class Rale extends Component {
 
         if (this.state.post) {
             date = moment.utc(this.state.post.date_creation).format("ll");
-            heure = moment.utc(this.state.post.date_creation).format("LT");
+            heure = moment
+                .utc(this.state.post.date_creation)
+                .utcOffset("+0200")
+                .format("LT");
 
             imgUrl = this.state.imgUrl;
             author = this.state.post.user_pseudo;
@@ -115,20 +148,40 @@ export default class Rale extends Component {
         const commentsList = this.state.commentsToDisplay.map(comment => {
             let authorComment = "";
             let dateComment = moment.utc(comment.date_creation).format("ll");
-            let heureComment = moment.utc(comment.date_creation).format("LT");
+            let heureComment = moment
+                .utc(comment.date_creation)
+                .utcOffset("+0200")
+                .format("LT");
 
-            this.state.users_id.filter(user => {
+            this.props.users_id.filter(user => {
                 if (parseInt(user.user_id) === comment.user_id) {
                     authorComment = user.user_pseudo;
                 }
             });
 
             return (
-                <ListGroup.Item key={comment.comment_id}>
-                    <div>
-                        {authorComment}, le {dateComment} à {heureComment}
-                    </div>
-                    <div> {comment.comment}</div>
+                <ListGroup.Item
+                    key={comment.comment_id}
+                    style={{
+                        margin: "5px 0",
+                        borderRadius: "30px"
+                    }}
+                >
+                    <Row className="justify-content-between align-items-center">
+                        <div>
+                            {authorComment}, le {dateComment} à {heureComment}
+                            <div> {comment.comment}</div>
+                        </div>
+                        <div>
+                            <i
+                                className="far fa-trash-alt"
+                                onClick={e =>
+                                    this.deleteCommentById(comment.comment_id)
+                                }
+                            />
+                            <i className="far fa-heart" />
+                        </div>
+                    </Row>
                 </ListGroup.Item>
             );
         });
@@ -137,7 +190,19 @@ export default class Rale extends Component {
             <div style={{ margin: "30px 0" }}>
                 <Card>
                     <Card.Header>
-                        Par {author}, le {date} à {heure}
+                        <Row className="justify-content-between align-items-center">
+                            <div>
+                                Par {author}, le {date} à {heure}
+                            </div>
+                            <i
+                                className="far fa-trash-alt"
+                                onClick={e =>
+                                    this.deletePostsById(
+                                        this.props.posts.post_id
+                                    )
+                                }
+                            />
+                        </Row>
                     </Card.Header>
                     <Card.Img variant="top" src={imgUrl} />
                     <Card.Body>
@@ -187,8 +252,8 @@ export default class Rale extends Component {
                         </ListGroup>
 
                         <Form onSubmit={this.submitForm}>
-                            <Form.Group controlId="exampleForm.ControlTextarea1">
-                                <Form.Control
+                            <InputGroup className="mb-3">
+                                <FormControl
                                     type="text"
                                     placeholder="Commentez ce rale"
                                     onChange={e =>
@@ -197,7 +262,15 @@ export default class Rale extends Component {
                                         })
                                     }
                                 />
-                            </Form.Group>
+                                <InputGroup.Prepend>
+                                    <Button
+                                        variant="dark"
+                                        onClick={this.submitForm}
+                                    >
+                                        OK
+                                    </Button>
+                                </InputGroup.Prepend>
+                            </InputGroup>
                         </Form>
                     </Card.Footer>
                 </Card>

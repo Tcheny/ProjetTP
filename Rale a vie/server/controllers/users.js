@@ -3,10 +3,12 @@ const SQL = require("sql-template-strings");
 const client = require("../database/connexion");
 const encryptPassword = require("./miscs/encryptPassword");
 
-const getUsers = async () => {
+const getUsersId = async () => {
     const query = SQL`
         SELECT
-            *
+            user_id,
+            user_firstname,
+            user_pseudo
         FROM
             users
     `;
@@ -17,22 +19,22 @@ const getUsers = async () => {
 };
 
 // Select * from users => /about
-const getUserId = async userId => {
-    const query = SQL`
-        SELECT
-            *
-        FROM users
-        WHERE user_id = ${userId}
-    `;
+// const getUserId = async userId => {
+//     const query = SQL`
+//         SELECT
+//             *
+//         FROM users
+//         WHERE user_id = ${userId}
+//     `;
 
-    const queryResult = await client.query(query);
-    if (!queryResult.rowCount) {
-        throw new Error("Pas de User avec id :", userId);
-    }
-    return queryResult.rows;
-};
+//     const queryResult = await client.query(query);
+//     if (!queryResult.rowCount) {
+//         throw new Error("Pas de User avec id :", userId);
+//     }
+//     return queryResult.rows;
+// };
 
-// Select * from users => /auth
+// Select * from users => /getUserToken
 const getOneUser = async userId => {
     const getOne = SQL`
         SELECT
@@ -117,22 +119,22 @@ const editUsers = async (id, userInfos) => {
     return editUserResult.rows[0];
 };
 
-const deleteUsers = async id => {
-    const deleteUser = SQL`
-        DELETE FROM users
-        WHERE user_id = ${id}
-        RETURNING *
-    `;
+// const deleteUsers = async id => {
+//     const deleteUser = SQL`
+//         DELETE FROM users
+//         WHERE user_id = ${id}
+//         RETURNING *
+//     `;
 
-    const deleteUserResult = await client.query(deleteUser);
-    return deleteUserResult;
-};
+//     const deleteUserResult = await client.query(deleteUser);
+//     return deleteUserResult;
+// };
 
 module.exports = {
-    getUsers,
+    getUsersId,
     addUsers,
     editUsers,
-    deleteUsers,
-    getOneUser,
-    getUserId
+    getOneUser
+    // deleteUsers
+    // getUserId
 };
