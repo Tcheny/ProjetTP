@@ -1,5 +1,4 @@
 import React, { Fragment, Component } from "react";
-import axios from "axios";
 import { Container, Row, Col } from "react-bootstrap";
 
 import NavbarApp from "../NavbarApp/index";
@@ -9,10 +8,6 @@ import Search from "../Search/index";
 import Header from "../Header/Header";
 
 export default class Home extends Component {
-    // state = {
-    //     postsId: []
-    // };
-
     myRef = React.createRef();
 
     scrolling = () => {
@@ -22,23 +17,13 @@ export default class Home extends Component {
         });
     };
 
-    // getAllPostsId = () => {
-    //     axios
-    //         .get("http://localhost:8081/posts/allId")
-    //         .then(res => {
-    //             this.setState({ postsId: res.data });
-    //         })
-    //         .catch(error => {
-    //             console.error(error);
-    //         });
-    // };
-
+    // display all Posts
     componentDidMount = () => {
         this.props.getAllPostsId();
     };
 
     render() {
-        const { isAuth, getAllPostsId, posts_id } = this.props;
+        const { isAuth, posts_id } = this.props;
 
         const allRales = posts_id.map((posts, index) => {
             return <DisplayRale key={index} posts={posts} />;
@@ -56,13 +41,8 @@ export default class Home extends Component {
                                 ref={r => (this.myRef = r)}
                             >
                                 <Search />
-                                {isAuth ? (
-                                    <Post getAllPostsId={getAllPostsId} />
-                                ) : (
-                                    ""
-                                )}
+                                {isAuth ? <Post /> : ""}
                                 {allRales}
-                                {/* <DisplayRale /> */}
                             </div>
                         </Col>
                     </Row>

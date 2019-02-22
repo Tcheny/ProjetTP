@@ -46,20 +46,20 @@ const insertComments = async commentInfos => {
     return insertCommentResult.rows[0];
 };
 
-const editComments = async (id, commentInfos) => {
-    const editComment = SQL`
-        UPDATE comments
-        SET user_id = ${commentInfos.user_id},
-            post_id = ${commentInfos.post_id},
-            comment = ${commentInfos.comment},
-            date_creation = ${commentInfos.date_creation}
-        WHERE comment_id = ${id}
-        RETURNING *
-    `;
+// const editComments = async (id, commentInfos) => {
+//     const editComment = SQL`
+//         UPDATE comments
+//         SET user_id = ${commentInfos.user_id},
+//             post_id = ${commentInfos.post_id},
+//             comment = ${commentInfos.comment},
+//             date_creation = ${commentInfos.date_creation}
+//         WHERE comment_id = ${id}
+//         RETURNING *
+//     `;
 
-    const editCommentResult = await client.query(editComment);
-    return editCommentResult;
-};
+//     const editCommentResult = await client.query(editComment);
+//     return editCommentResult;
+// };
 
 const deleteComments = async id => {
     const deleteComment = SQL`
@@ -76,6 +76,6 @@ module.exports = {
     getComments,
     getOneComment,
     insertComments,
-    editComments,
+    // editComments,
     deleteComments
 };

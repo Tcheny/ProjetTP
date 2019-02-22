@@ -28,9 +28,7 @@ class Login extends Component {
             })
             .catch(error => {
                 console.error(error.request.response);
-                toast.error(error.request.response.replace(/"/g, ""), {
-                    position: toast.POSITION.TOP_CENTER
-                });
+                toast.error(error.request.response.replace(/"/g, ""));
             });
     };
 

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import moment from "moment";
 import "moment/locale/fr";
 import axios from "axios";
+import { toast } from "react-toastify";
 import {
     InputGroup,
     ListGroup,
@@ -11,10 +12,12 @@ import {
     Button,
     Row
 } from "react-bootstrap";
+import { ModalConfirmation } from "../ModalConfirmation/ModalConfirmation";
 
 export default class Rale extends Component {
     state = {
         isToggle: false,
+        show: false,
         post: null,
         imgUrl: "",
         commentsToDisplay: []
@@ -40,6 +43,14 @@ export default class Rale extends Component {
                     commentsToDisplay: updatedCommentsToDisplay
                 });
             });
+    };
+
+    handleClose = () => {
+        this.setState({ show: false });
+    };
+
+    handleShow = () => {
+        this.setState({ show: true });
     };
 
     getPostInfosById = () => {
@@ -88,9 +99,12 @@ export default class Rale extends Component {
                 this.setState({
                     posts: this.props.posts.post_id !== id
                 });
+                this.handleClose();
+                toast.success("Rale supprimé");
             })
             .catch(error => {
                 console.error(error);
+                toast.error(error);
             });
     };
 
@@ -109,9 +123,12 @@ export default class Rale extends Component {
                 this.setState({
                     commentsToDisplay: updatedCommentsDeleted
                 });
+                this.handleClose();
+                toast.success("Commentaire supprimé");
             })
             .catch(error => {
                 console.error(error);
+                toast.error(error);
             });
     };
 
@@ -175,10 +192,17 @@ export default class Rale extends Component {
                         <div>
                             <i
                                 className="far fa-trash-alt"
+                                onClick={this.handleShow}
+                            />
+                            <ModalConfirmation
+                                show={this.state.show}
+                                handleClose={this.handleClose}
+                                message="Es tu sur de vouloir supprimer ce commentaire 🤔 ?"
                                 onClick={e =>
                                     this.deleteCommentById(comment.comment_id)
                                 }
                             />
+
                             <i className="far fa-heart" />
                         </div>
                     </Row>
@@ -196,6 +220,12 @@ export default class Rale extends Component {
                             </div>
                             <i
                                 className="far fa-trash-alt"
+                                onClick={this.handleShow}
+                            />
+                            <ModalConfirmation
+                                show={this.state.show}
+                                handleClose={this.handleClose}
+                                message="Es tu sur de vouloir supprimer ce rale 🤔 ?"
                                 onClick={e =>
                                     this.deletePostsById(
                                         this.props.posts.post_id
@@ -210,7 +240,6 @@ export default class Rale extends Component {
 
                         <div style={{ display: "flex" }}>
                             <div> 😂 (count) </div>
-                            <div> 😒 (count) </div>
                             <div> 😡 (count) </div>
                             <div> 😱 (count) </div>
                         </div>

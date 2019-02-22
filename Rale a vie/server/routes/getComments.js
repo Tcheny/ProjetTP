@@ -6,7 +6,7 @@ const {
     getComments,
     getOneComment,
     insertComments,
-    editComments,
+    // editComments,
     deleteComments
 } = require("../controllers/comments");
 
@@ -57,23 +57,23 @@ router.post("/add", async (req, res) => {
     return res.status(200).send(addedComment);
 });
 
-router.put("/edit/:id", async (req, res) => {
-    let editCommentsResult = null;
+// router.put("/edit/:id", async (req, res) => {
+//     let editCommentsResult = null;
 
-    try {
-        editCommentsResult = await editComments(req.params.id, {
-            user_id: req.body.user_id,
-            post_id: req.body.post_id,
-            comment: req.body.comment,
-            date_creation: req.body.date_creation
-        });
-    } catch (error) {
-        console.log(error);
-        res.status(500).send(new Error("Erreur dans Edit Comment", error));
-    }
+//     try {
+//         editCommentsResult = await editComments(req.params.id, {
+//             user_id: req.body.user_id,
+//             post_id: req.body.post_id,
+//             comment: req.body.comment,
+//             date_creation: req.body.date_creation
+//         });
+//     } catch (error) {
+//         console.log(error);
+//         res.status(500).send(new Error("Erreur dans Edit Comment", error));
+//     }
 
-    return res.status(200).send(editCommentsResult.rows);
-});
+//     return res.status(200).send(editCommentsResult.rows);
+// });
 
 router.delete("/delete", async (req, res) => {
     let deleteCommentResult = null;

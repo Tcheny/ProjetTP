@@ -108,6 +108,7 @@ export default class About extends Component {
                                                 <Card.Text className="description text-center">
                                                     {user.user_infos}
                                                 </Card.Text>
+
                                                 <Button
                                                     variant="primary"
                                                     onClick={this.handleShow}

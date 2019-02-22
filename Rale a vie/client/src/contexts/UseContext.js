@@ -63,9 +63,7 @@ export class UseProvider extends React.Component {
             })
             .catch(error => {
                 console.error(error);
-                toast.error("Error logout !", {
-                    position: toast.POSITION.TOP_CENTER
-                });
+                toast.error("Error logout !");
             });
     };
 

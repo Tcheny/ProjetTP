@@ -5,6 +5,7 @@ const posts = require("./getPosts");
 const comments = require("./getComments");
 const session = require("./getSession");
 const allComments = require("./getAllCommentsFromPosts");
+const like = require("./getInsertLike");
 
 // Toutes les routes sont définis ici et envoyé a 'server.js'
 const router = Router();
@@ -12,6 +13,7 @@ const router = Router();
 router.use("/users", users);
 router.use("/posts", posts);
 router.use("/comments", comments);
+router.use("/likes", like);
 router.use(allComments);
 router.use(session);
 
