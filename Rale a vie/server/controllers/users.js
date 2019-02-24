@@ -87,12 +87,12 @@ const addUsers = async newUser => {
 };
 
 // verify user_email exists
-const verifyUsernameExists = async username => {
+const verifyUsernameExists = async useremail => {
     const verify = SQL`
         SELECT
             *
         FROM users
-        WHERE user_email = ${username}
+        WHERE user_email = ${useremail}
     `;
     const retrievedUser = await client.query(verify);
     if (retrievedUser.rowCount) {

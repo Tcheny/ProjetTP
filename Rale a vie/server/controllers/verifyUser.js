@@ -3,8 +3,7 @@ const bcrypt = require("bcrypt");
 
 const client = require("../database/connexion");
 
-const verifyUser = async (username, password) => {
-    console.log(username);
+const verifyUser = async (useremail, password) => {
     const verify = SQL`
             SELECT
                 user_id,
@@ -15,13 +14,13 @@ const verifyUser = async (username, password) => {
                 user_pseudo,
                 user_type
             FROM users
-            WHERE user_email = ${username}
+            WHERE user_email = ${useremail}
         `;
 
     const retrievedUser = await client.query(verify);
 
     if (!retrievedUser.rowCount) {
-        throw new Error(`${username} ne correspond à aucun compte.`);
+        throw new Error(`${useremail} ne correspond à aucun compte.`);
     }
 
     const passwordRight = await bcrypt.compare(

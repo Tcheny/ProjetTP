@@ -20,7 +20,16 @@ export default class Rale extends Component {
         show: false,
         post: null,
         imgUrl: "",
-        commentsToDisplay: []
+        comment: "",
+        likeType: null,
+        commentsToDisplay: [],
+        likes: []
+    };
+
+    componentDidMount = () => {
+        this.props.getAllUsersById();
+        this.props.getAllPostsId();
+        this.getPostInfosById();
     };
 
     submitForm = event => {
@@ -39,8 +48,10 @@ export default class Rale extends Component {
                 const updatedCommentsToDisplay = this.state.commentsToDisplay.concat(
                     res.data
                 );
+                toast.success("Commentaire ajouté");
                 this.setState({
-                    commentsToDisplay: updatedCommentsToDisplay
+                    commentsToDisplay: updatedCommentsToDisplay,
+                    comment: ""
                 });
             });
     };
@@ -96,6 +107,7 @@ export default class Rale extends Component {
             })
             .then(res => {
                 console.log(res.data);
+                this.props.getAllPostsId();
                 this.setState({
                     posts: this.props.posts.post_id !== id
                 });
@@ -132,15 +144,27 @@ export default class Rale extends Component {
             });
     };
 
+    actionLike = () => {
+        const likes = {
+            user_id: this.props.currentUser && this.props.currentUser.user_id,
+            post_id: this.props.posts.post_id,
+            like_type_id: this.state.likeType
+        };
+
+        axios
+            .post("http://localhost:8081/likes/insertlike", { likes })
+            .then(res => {
+                this.setState({ likes: res.data }).catch(error => {
+                    console.error(error);
+                    toast.error(error);
+                });
+            });
+    };
+
     updateImgContent = () => {
         if (this.props.file) {
             this.setState({ imgUrl: imgUrl });
         }
-    };
-
-    componentDidMount = () => {
-        this.getPostInfosById();
-        this.props.getAllUsersById();
     };
 
     render() {
@@ -239,9 +263,9 @@ export default class Rale extends Component {
                         <Card.Text>{postText}</Card.Text>
 
                         <div style={{ display: "flex" }}>
-                            <div> 😂 (count) </div>
-                            <div> 😡 (count) </div>
-                            <div> 😱 (count) </div>
+                            <div value="1"> 😂 </div>
+                            <div value="2"> 😡 </div>
+                            <div value="3"> 😱 </div>
                         </div>
                     </Card.Body>
                     <Card.Footer className="text-muted">

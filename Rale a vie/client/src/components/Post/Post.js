@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import { Form, Card, Button, Row } from "react-bootstrap";
+import { toast } from "react-toastify";
 
 export default class Post extends Component {
     state = {
@@ -10,9 +11,8 @@ export default class Post extends Component {
 
     submitForm = () => {
         const formData = new FormData();
-        const inputPostValue = this.state.inputPost;
 
-        formData.append("post", inputPostValue);
+        formData.append("post", this.state.inputPost);
         formData.append("type_media", 1);
         formData.append("uploadFile", this.state.inputFile);
 
@@ -22,6 +22,7 @@ export default class Post extends Component {
             })
             .then(res => {
                 console.log(res.data);
+                toast.success("Rale exprimé");
                 this.props.getAllPostsId();
                 this.setState({ inputPost: "", inputFile: null });
             });

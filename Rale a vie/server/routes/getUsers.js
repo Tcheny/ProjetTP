@@ -50,6 +50,7 @@ router.post("/add", async (req, res) => {
         pseudo: req.body.user.pseudo,
         type: req.body.user.type
     };
+
     try {
         const addedUser = await addUsers(userInfos);
         const token = generateToken(addedUser.user_id);

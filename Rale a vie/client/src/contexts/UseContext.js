@@ -67,8 +67,8 @@ export class UseProvider extends React.Component {
             });
     };
 
-    getAllUsersById = () => {
-        axios
+    getAllUsersById = async () => {
+        await axios
             .get("http://localhost:8081/users/all")
             .then(res => {
                 this.setState({ users_id: res.data });
@@ -78,8 +78,8 @@ export class UseProvider extends React.Component {
             });
     };
 
-    getAllPostsId = () => {
-        axios
+    getAllPostsId = async () => {
+        await axios
             .get("http://localhost:8081/posts/allId")
             .then(res => {
                 this.setState({ posts_id: res.data });
@@ -97,7 +97,6 @@ export class UseProvider extends React.Component {
     };
 
     render() {
-        console.log("AUTH:", { ...this.state });
         return (
             <UseContext.Provider
                 value={{

@@ -18,8 +18,8 @@ export default class Home extends Component {
     };
 
     // display all Posts
-    componentDidMount = () => {
-        this.props.getAllPostsId();
+    componentDidMount = async () => {
+        await this.props.getAllPostsId();
     };
 
     render() {
@@ -41,7 +41,13 @@ export default class Home extends Component {
                                 ref={r => (this.myRef = r)}
                             >
                                 <Search />
-                                {isAuth ? <Post /> : ""}
+                                {isAuth ? (
+                                    <Post
+                                        getAllPostsId={this.props.getAllPostsId}
+                                    />
+                                ) : (
+                                    ""
+                                )}
                                 {allRales}
                             </div>
                         </Col>
