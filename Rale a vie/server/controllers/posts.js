@@ -25,6 +25,7 @@ const getPostInfosById = async id => {
         SELECT
             user_firstname,
             user_pseudo,
+            posts.user_id,
             post,
             type_media,
             path_media,

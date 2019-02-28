@@ -30,6 +30,7 @@ export class UseProvider extends React.Component {
     componentDidMount = async () => {
         await this.verifyCurrentUser();
         this.getAllUsersById();
+        this.getAllPostsId();
     };
 
     verifyCurrentUser = async () => {

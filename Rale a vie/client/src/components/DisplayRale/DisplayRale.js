@@ -168,11 +168,17 @@ export default class Rale extends Component {
     };
 
     render() {
+        const { isAuth, currentUser } = this.props;
+
+        const userId = currentUser && currentUser.user_id;
+        const userType = currentUser && currentUser.user_type;
+
         let date = "";
         let heure = "";
         let imgUrl = "";
         let postText = "";
         let author = "";
+        let trashPost = false;
 
         if (this.state.post) {
             date = moment.utc(this.state.post.date_creation).format("ll");
@@ -184,9 +190,21 @@ export default class Rale extends Component {
             imgUrl = this.state.imgUrl;
             author = this.state.post.user_pseudo;
             postText = this.state.post.post;
+            trashPost =
+                this.state.post.user_id === parseInt(userId)
+                    ? true
+                    : userType === "admin"
+                    ? true
+                    : false;
         }
 
         const commentsList = this.state.commentsToDisplay.map(comment => {
+            let trashComment =
+                comment.user_id === parseInt(userId)
+                    ? true
+                    : userType === "admin"
+                    ? true
+                    : false;
             let authorComment = "";
             let dateComment = moment.utc(comment.date_creation).format("ll");
             let heureComment = moment
@@ -214,10 +232,13 @@ export default class Rale extends Component {
                             <div> {comment.comment}</div>
                         </div>
                         <div>
-                            <i
-                                className="far fa-trash-alt"
-                                onClick={this.handleShow}
-                            />
+                            {trashComment && (
+                                <i
+                                    className="far fa-trash-alt"
+                                    onClick={this.handleShow}
+                                />
+                            )}
+
                             <ModalConfirmation
                                 show={this.state.show}
                                 handleClose={this.handleClose}
@@ -242,10 +263,12 @@ export default class Rale extends Component {
                             <div>
                                 Par {author}, le {date} à {heure}
                             </div>
-                            <i
-                                className="far fa-trash-alt"
-                                onClick={this.handleShow}
-                            />
+                            {trashPost && (
+                                <i
+                                    className="far fa-trash-alt"
+                                    onClick={this.handleShow}
+                                />
+                            )}
                             <ModalConfirmation
                                 show={this.state.show}
                                 handleClose={this.handleClose}
@@ -304,27 +327,29 @@ export default class Rale extends Component {
                             )}
                         </ListGroup>
 
-                        <Form onSubmit={this.submitForm}>
-                            <InputGroup className="mb-3">
-                                <FormControl
-                                    type="text"
-                                    placeholder="Commentez ce rale"
-                                    onChange={e =>
-                                        this.setState({
-                                            comment: e.target.value
-                                        })
-                                    }
-                                />
-                                <InputGroup.Prepend>
-                                    <Button
-                                        variant="dark"
-                                        onClick={this.submitForm}
-                                    >
-                                        OK
-                                    </Button>
-                                </InputGroup.Prepend>
-                            </InputGroup>
-                        </Form>
+                        {isAuth && (
+                            <Form onSubmit={this.submitForm}>
+                                <InputGroup className="mb-3">
+                                    <FormControl
+                                        type="text"
+                                        placeholder="Commentez ce rale"
+                                        onChange={e =>
+                                            this.setState({
+                                                comment: e.target.value
+                                            })
+                                        }
+                                    />
+                                    <InputGroup.Prepend>
+                                        <Button
+                                            variant="dark"
+                                            onClick={this.submitForm}
+                                        >
+                                            OK
+                                        </Button>
+                                    </InputGroup.Prepend>
+                                </InputGroup>
+                            </Form>
+                        )}
                     </Card.Footer>
                 </Card>
             </div>
