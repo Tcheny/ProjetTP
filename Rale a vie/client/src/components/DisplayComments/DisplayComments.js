@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import moment from 'moment';
 import 'moment/locale/fr';
-import axios from 'axios';
-import { toast } from 'react-toastify';
 
 import { ListGroup, Row } from 'react-bootstrap';
 import { ModalConfirmation } from '../ModalConfirmation/ModalConfirmation';
@@ -16,27 +14,6 @@ export default class DisplayComments extends Component {
 
     handleShow = () => {
         this.setState({ show: true });
-    };
-
-    deleteCommentById = async id => {
-        try {
-            await axios.delete('http://localhost:8081/comments/delete', {
-                params: { id: id }
-            });
-            const updatedCommentsDeleted = this.props.commentsList.filter(
-                comment => {
-                    return comment.comment_id !== id;
-                }
-            );
-            this.setState({
-                commentsList: updatedCommentsDeleted
-            });
-            this.handleClose();
-            toast.success('Commentaire supprimé avec succès');
-        } catch (error) {
-            console.error(error);
-            toast.error(error);
-        }
     };
 
     render() {
@@ -83,21 +60,12 @@ export default class DisplayComments extends Component {
                                 <i
                                     className='far fa-trash-alt'
                                     onClick={e =>
-                                        this.deleteCommentById(
+                                        this.props.deleteCommentById(
                                             comment.comment_id
                                         )
                                     }
                                 />
                             )}
-
-                            {/* <ModalConfirmation
-                                show={this.state.show}
-                                handleClose={this.handleClose}
-                                message='Es tu sur de vouloir supprimer ce commentaire 🤔 ?'
-                                onClick={e =>
-                                    this.deleteCommentById(comment.comment_id)
-                                }
-                            /> */}
                         </div>
                     </Row>
                 </ListGroup.Item>

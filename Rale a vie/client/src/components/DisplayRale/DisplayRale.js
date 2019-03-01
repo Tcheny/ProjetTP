@@ -322,20 +322,12 @@ export default class DisplayRale extends Component {
                         </InputGroup>
 
                         <hr />
-                        <ListGroup>
-                            {this.state.isToggle && (
-                                <div>
-                                    les commentaires:
-                                    {commentsList}
-                                    <hr />
-                                </div>
-                            )}
-                        </ListGroup>
-                        {/* <DisplayComments
+
+                        <DisplayComments
                             commentsList={this.state.commentsList}
                             isToggle={this.state.isToggle}
                             deleteCommentById={this.deleteCommentById}
-                        /> */}
+                        />
 
                         {isAuth && (
                             <Form onSubmit={this.submitForm}>
