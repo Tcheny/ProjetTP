@@ -1,19 +1,19 @@
-import React, { Component } from "react";
-import { Modal, Button } from "react-bootstrap";
+import React, { Component } from 'react';
+import { Modal, Button } from 'react-bootstrap';
 
 export class ModalConfirmation extends Component {
     render() {
         return (
             <Modal show={this.props.show} onHide={this.props.handleClose}>
                 <Modal.Body>{this.props.message}</Modal.Body>
-                <Modal.Footer className="justify-content-around">
+                <Modal.Footer className='justify-content-around'>
                     <Button
-                        variant="secondary"
+                        variant='secondary'
                         onClick={this.props.handleClose}
                     >
                         Non
                     </Button>
-                    <Button variant="primary" onClick={this.props.onClick}>
+                    <Button variant='primary' onClick={this.props.onClick}>
                         Oui
                     </Button>
                 </Modal.Footer>

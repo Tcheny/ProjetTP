@@ -1,7 +1,7 @@
-import React from "react";
-import axios from "axios";
-import { withRouter } from "react-router-dom";
-import { toast } from "react-toastify";
+import React from 'react';
+import axios from 'axios';
+import { withRouter } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 /**
  * `createContext` contient 2 propriétés :
@@ -20,74 +20,70 @@ const UseContext = React.createContext();
  */
 export class UseProvider extends React.Component {
     state = {
-        isNav: false,
+        // isNav: false,
         isAuth: false,
         currentUser: null,
+        loadingScreen: false,
         users_id: [],
         posts_id: []
     };
 
     componentDidMount = async () => {
-        await this.verifyCurrentUser();
-        this.getAllUsersById();
-        this.getAllPostsId();
+        try {
+            await this.verifyCurrentUser();
+            this.getAllUsersById();
+            this.getAllPostsId();
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     verifyCurrentUser = async () => {
-        await axios
-            .get("http://localhost:8081/auth")
-            .then(res => {
-                this.setState({
-                    isAuth: true,
-                    currentUser: res.data.user
-                });
-            })
-            .catch(error => {
-                console.error("plus rien ", error.response);
-                this.setState({
-                    currentUser: error.response.data.user
-                });
+        let authentication = null;
+
+        try {
+            authentication = await axios.get('http://localhost:8081/auth');
+            this.setState({
+                isAuth: true,
+                currentUser: authentication.data.user
             });
+        } catch (error) {
+            this.setState({ currentUser: error.response.data.user });
+            throw new Error(`Utilisateur non authentifié`);
+        }
     };
 
     logout = async () => {
-        await axios
-            .get("http://localhost:8081/logout")
-            .then(res => {
-                console.log("logout: ", res);
-                toast(`A bientôt ${this.state.currentUser.user_pseudo} !`);
-
-                this.setState({
-                    isAuth: false,
-                    currentUser: null
-                });
-            })
-            .catch(error => {
-                console.error(error);
-                toast.error("Error logout !");
-            });
+        try {
+            await axios.get('http://localhost:8081/logout');
+            toast(`A bientôt ${this.state.currentUser.user_pseudo} !`);
+            this.setState({ isAuth: false, currentUser: null });
+        } catch (error) {
+            console.error(error);
+            toast.error('Error logout !');
+        }
     };
 
     getAllUsersById = async () => {
-        await axios
-            .get("http://localhost:8081/users/all")
-            .then(res => {
-                this.setState({ users_id: res.data });
-            })
-            .catch(error => {
-                console.error(error);
-            });
+        let allUsersId = null;
+
+        try {
+            allUsersId = await axios.get('http://localhost:8081/users/all');
+            this.setState({ users_id: allUsersId.data });
+        } catch (error) {
+            console.error(error);
+        }
     };
 
     getAllPostsId = async () => {
-        await axios
-            .get("http://localhost:8081/posts/allId")
-            .then(res => {
-                this.setState({ posts_id: res.data });
-            })
-            .catch(error => {
-                console.error(error);
-            });
+        let allPostsId = null;
+
+        try {
+            allPostsId = await axios.get('http://localhost:8081/posts/allId');
+            this.setState({ posts_id: allPostsId.data });
+        } catch (error) {
+            console.error(error);
+        }
     };
 
     action = {

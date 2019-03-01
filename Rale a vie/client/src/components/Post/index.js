@@ -1,6 +1,6 @@
-import React from "react";
-import Post from "./Post";
-import { UseConsumer } from "../../contexts/UseContext";
+import React from 'react';
+import Post from './Post';
+import { UseConsumer } from '../../contexts/UseContext';
 
 export default props => (
     <UseConsumer>

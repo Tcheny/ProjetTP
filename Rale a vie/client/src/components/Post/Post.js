@@ -1,39 +1,39 @@
-import React, { Component } from "react";
-import axios from "axios";
-import { Form, Card, Button, Row } from "react-bootstrap";
-import { toast } from "react-toastify";
+import React, { Component } from 'react';
+import axios from 'axios';
+import { Form, Card, Button, Row } from 'react-bootstrap';
+import { toast } from 'react-toastify';
 
 export default class Post extends Component {
     state = {
-        inputPost: "",
+        inputPost: '',
         inputFile: null
     };
 
-    submitForm = () => {
+    submitForm = async () => {
+        let rale = null;
         const formData = new FormData();
 
-        formData.append("post", this.state.inputPost);
-        formData.append("type_media", 1);
-        formData.append("uploadFile", this.state.inputFile);
+        formData.append('post', this.state.inputPost);
+        formData.append('type_media', 1);
+        formData.append('uploadFile', this.state.inputFile);
 
-        axios
-            .post("http://localhost:8081/posts/add", formData, {
-                headers: { "Content-Type": "multipart/form-data" }
-            })
-            .then(res => {
-                console.log(res.data);
-                toast.success("Rale exprimé");
-                this.props.getAllPostsId();
-                this.setState({ inputPost: "", inputFile: null });
-            });
-    };
+        try {
+            rale = await axios.post(
+                'http://localhost:8081/posts/add',
+                formData,
+                { headers: { 'Content-Type': 'multipart/form-data' } }
+            );
+            debugger;
+            console.log(rale.data);
 
-    handleChange = event => {
-        this.setState({ inputPost: event.target.value });
-    };
-
-    handleChangeFile = event => {
-        this.setState({ inputFile: event.target.files[0] });
+            // TODO: mettre a jour le state de AllPostsId
+            this.props.getAllPostsId();
+            toast.success('Rale exprimé');
+            this.setState({ inputPost: '' });
+        } catch (error) {
+            console.error(error);
+            toast.error('Erreur dans le post Rale');
+        }
     };
 
     render() {
@@ -42,33 +42,38 @@ export default class Post extends Component {
                 <Card.Header>Créer un rale</Card.Header>
                 <Card.Body>
                     <Form>
-                        <Form.Group controlId="exampleForm.ControlTextarea1">
+                        <Form.Group controlId='exampleForm.ControlTextarea1'>
                             <Form.Control
-                                as="textarea"
-                                rows="5"
-                                placeholder="Ralez plus fort que jamais !"
+                                as='textarea'
+                                rows='5'
+                                placeholder='Ralez plus fort que jamais !'
                                 value={this.state.inputPost}
-                                onChange={this.handleChange}
+                                onChange={e =>
+                                    this.setState({ inputPost: e.target.value })
+                                }
                             />
                         </Form.Group>
                     </Form>
                 </Card.Body>
-                <Card.Footer className="text-muted">
-                    <Row className="justify-content-around">
+                <Card.Footer className='text-muted'>
+                    <Row className='justify-content-around'>
                         <Button
-                            as="input"
-                            type="file"
-                            variant="dark"
+                            as='input'
+                            type='file'
+                            variant='dark'
                             key={this.state.inputPost}
-                            name="mediaUpload"
+                            name='mediaUpload'
                             onChange={this.handleChangeFile}
+                            onChange={e =>
+                                this.setState({ inputFile: e.target.files[0] })
+                            }
                         />
 
                         <Button
-                            as="input"
-                            type="submit"
-                            variant="dark"
-                            value="Envoyer"
+                            as='input'
+                            type='submit'
+                            variant='dark'
+                            value='Envoyer'
                             onClick={this.submitForm}
                         />
                     </Row>

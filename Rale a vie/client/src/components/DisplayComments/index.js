@@ -1,14 +1,14 @@
-import React from "react";
-import DisplayComments from "./DisplayComments";
-import { UseConsumer } from "../../contexts/UseContext";
+import React from 'react';
+import DisplayComments from './DisplayComments';
+import { UseConsumer } from '../../contexts/UseContext';
 
 export default props => (
     <UseConsumer>
-        {({ currentUser, verifyCurrentUser }) => (
+        {({ currentUser, users_id }) => (
             <DisplayComments
                 {...props}
                 currentUser={currentUser}
-                verifyCurrentUser={verifyCurrentUser}
+                users_id={users_id}
             />
         )}
     </UseConsumer>

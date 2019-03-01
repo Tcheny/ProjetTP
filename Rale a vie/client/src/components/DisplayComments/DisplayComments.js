@@ -1,71 +1,119 @@
-import React, { Component } from "react";
-import moment from "moment";
-import axios from "axios";
-import { InputGroup, Row, Form, Card, Button } from "react-bootstrap";
+import React, { Component } from 'react';
+import moment from 'moment';
+import 'moment/locale/fr';
+import axios from 'axios';
+import { toast } from 'react-toastify';
 
-export default class submitForm extends Component {
-    state = {
-        commentsToDisplay: [],
-        comment: ""
+import { ListGroup, Row } from 'react-bootstrap';
+import { ModalConfirmation } from '../ModalConfirmation/ModalConfirmation';
+
+export default class DisplayComments extends Component {
+    state = { show: false, commentsDelete: [] };
+
+    handleClose = () => {
+        this.setState({ show: false });
     };
 
-    submitForm = event => {
-        event.preventDefault();
+    handleShow = () => {
+        this.setState({ show: true });
+    };
 
-        const comment = {
-            user_id: this.props.currentUser && this.props.currentUser.user_id,
-            post_id: this.props.postId.post_id,
-            comment: this.state.comment
-        };
-
-        axios
-            .post("http://localhost:8081/comments/add", { comment })
-            .then(res => {
-                console.log(res.data);
-                const updatedCommentsToDisplay = this.state.commentsToDisplay.concat(
-                    res.data
-                );
-                this.setState({
-                    comment: "",
-                    commentsToDisplay: updatedCommentsToDisplay
-                });
+    deleteCommentById = async id => {
+        try {
+            await axios.delete('http://localhost:8081/comments/delete', {
+                params: { id: id }
             });
+            const updatedCommentsDeleted = this.props.commentsList.filter(
+                comment => {
+                    return comment.comment_id !== id;
+                }
+            );
+            this.setState({
+                commentsList: updatedCommentsDeleted
+            });
+            this.handleClose();
+            toast.success('Commentaire supprimé avec succès');
+        } catch (error) {
+            console.error(error);
+            toast.error(error);
+        }
     };
 
     render() {
-        const commentsList = this.state.commentsToDisplay.map(comment => {
+        const { currentUser } = this.props;
+
+        const userId = currentUser && currentUser.user_id;
+        const userType = currentUser && currentUser.user_type;
+
+        const commentsList = this.props.commentsList.map(comment => {
+            let trashComment =
+                comment.user_id === parseInt(userId)
+                    ? true
+                    : userType === 'admin'
+                    ? true
+                    : false;
+            let authorComment = '';
+            let dateComment = moment.utc(comment.date_creation).format('ll');
+            let heureComment = moment
+                .utc(comment.date_creation)
+                .utcOffset('+0200')
+                .format('LT');
+
+            this.props.users_id.filter(user => {
+                if (parseInt(user.user_id) === comment.user_id) {
+                    authorComment = user.user_pseudo;
+                }
+            });
+
             return (
-                <div key={comment.comment_id}>
-                    <div> {comment.date_creation}</div>
-                    <div> {comment.comment}</div>
-                    <div> {comment.user_pseudo}</div>
-                </div>
+                <ListGroup.Item
+                    key={comment.comment_id}
+                    style={{
+                        margin: '5px 0',
+                        borderRadius: '30px'
+                    }}
+                >
+                    <Row className='justify-content-between align-items-center'>
+                        <div>
+                            {authorComment}, le {dateComment} à {heureComment}
+                            <div> {comment.comment}</div>
+                        </div>
+                        <div>
+                            {trashComment && (
+                                <i
+                                    className='far fa-trash-alt'
+                                    onClick={e =>
+                                        this.deleteCommentById(
+                                            comment.comment_id
+                                        )
+                                    }
+                                />
+                            )}
+
+                            {/* <ModalConfirmation
+                                show={this.state.show}
+                                handleClose={this.handleClose}
+                                message='Es tu sur de vouloir supprimer ce commentaire 🤔 ?'
+                                onClick={e =>
+                                    this.deleteCommentById(comment.comment_id)
+                                }
+                            /> */}
+                        </div>
+                    </Row>
+                </ListGroup.Item>
             );
         });
 
         return (
-            <div style={{ margin: "30px 0" }}>
-                <hr />
-                <div>
-                    <p>les commentaires:</p>
-                    <div>{commentsList}</div>
-                </div>
-
-                <hr />
-                <Form onSubmit={this.submitForm}>
-                    <Form.Group controlId="exampleForm.ControlTextarea1">
-                        <Form.Control
-                            type="text"
-                            placeholder="Commentez ce rale"
-                            onChange={e =>
-                                this.setState({
-                                    comment: e.target.value
-                                })
-                            }
-                        />
-                    </Form.Group>
-                </Form>
-            </div>
+            <ListGroup>
+                {this.props.isToggle && (
+                    <div>
+                        les commentaires:
+                        {commentsList}
+                        <hr />
+                    </div>
+                )}
+            </ListGroup>
         );
     }
 }
