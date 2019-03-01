@@ -303,11 +303,12 @@ body {
     position: relative;
     z-index: 3;
     top: 50%;
+    width: 50%;
 }
 
-.profile-page .profile {
+/* .profile-page .profile {
     text-align: center;
-}
+} */
 
 .profile-page .description {
     max-width: 600px;
@@ -316,8 +317,11 @@ body {
 }
 
 .profile-page .profile img {
-    width: 300px;
-    margin: 0 auto;
+    width: 200px;
+    transform: translate3d(0, -50%, 0);
+}
+
+.profile-content {
     transform: translate3d(0, -50%, 0);
 }
 

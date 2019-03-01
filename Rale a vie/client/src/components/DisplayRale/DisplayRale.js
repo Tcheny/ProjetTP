@@ -333,7 +333,8 @@ export default class DisplayRale extends Component {
                             <Form onSubmit={this.submitForm}>
                                 <InputGroup className='mb-3'>
                                     <FormControl
-                                        type='text'
+                                        as='textarea'
+                                        rows='3'
                                         placeholder='Commentez ce rale'
                                         onChange={e =>
                                             this.setState({
