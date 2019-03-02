@@ -23,22 +23,26 @@ export default class DisplayRale extends Component {
         comment: '',
         likeType: null,
         commentsList: [],
-        likes: [{
-            likeType: 1,
-            likeCount: 0,
-            isLikeByUser: false,
-            likeIcon: '😂'
-        },{
-            likeType: 2,
-            likeCount: 0,
-            isLikeByUser: false,
-            likeIcon: '😡'
-        },{
-            likeType: 3,
-            likeCount: 0,
-            isLikeByUser: false,
-            likeIcon: '😱'
-        }]
+        likes: [
+            {
+                likeType: 1,
+                likeCount: 0,
+                isLikeByUser: false,
+                likeIcon: '😂'
+            },
+            {
+                likeType: 2,
+                likeCount: 0,
+                isLikeByUser: false,
+                likeIcon: '😡'
+            },
+            {
+                likeType: 3,
+                likeCount: 0,
+                isLikeByUser: false,
+                likeIcon: '😱'
+            }
+        ]
     };
 
     componentDidMount = () => {
@@ -119,8 +123,6 @@ export default class DisplayRale extends Component {
                 params: { id: id }
             })
             .then(res => {
-                console.log(res.data);
-                // MAJ Rales
                 this.props.getAllPostsId();
                 toast.success('Rale supprimé');
                 this.handleClose();
@@ -155,7 +157,7 @@ export default class DisplayRale extends Component {
             });
     };
 
-    handleLike = (likeType) => {
+    handleLike = likeType => {
         const like = {
             user_id: this.props.currentUser && this.props.currentUser.user_id,
             post_id: this.props.postId.post_id,
@@ -168,15 +170,9 @@ export default class DisplayRale extends Component {
                 this.getPostInfosById();
             })
             .catch(error => {
-                    console.error(error);
-                    toast.error(error);
+                console.error(error);
+                toast.error(error);
             });
-    };
-
-    updateImgContent = () => {
-        if (this.props.file) {
-            this.setState({ imgUrl: imgUrl });
-        }
     };
 
     render() {
@@ -211,13 +207,21 @@ export default class DisplayRale extends Component {
         }
 
         const likesUser = this.state.likes.map((like, index) => {
-            return (<div key={index} value={like.likeType} onClick={e=> this.handleLike(e.target.value)}>
-                <InputGroup.Prepend className="likeIcon">                        
-                        <Button variant='dark'>{like.likeIcon}</Button>
-                    <InputGroup.Text>{like.likeCount}</InputGroup.Text>
-                </InputGroup.Prepend>
-            </div>)
-        })
+            return (
+                <div
+                    key={index}
+                    value={like.likeType}
+                    onClick={e => this.handleLike(e.target.value)}
+                >
+                    <InputGroup>
+                        <InputGroup.Prepend className='likeIcon'>
+                            <Button variant='dark'>{like.likeIcon}</Button>
+                            <InputGroup.Text>{like.likeCount}</InputGroup.Text>
+                        </InputGroup.Prepend>
+                    </InputGroup>
+                </div>
+            );
+        });
 
         return (
             <div style={{ margin: '30px 0' }}>
@@ -228,7 +232,8 @@ export default class DisplayRale extends Component {
                                 Par {author}, le {date} à {heure}
                             </div>
                             {trashPost && (
-                                <i className='far fa-trash-alt'
+                                <i
+                                    className='far fa-trash-alt'
                                     onClick={this.handleShow}
                                 />
                             )}
@@ -236,7 +241,11 @@ export default class DisplayRale extends Component {
                                 show={this.state.show}
                                 handleClose={this.handleClose}
                                 message='Es tu sur de vouloir supprimer ce rale 🤔 ?'
-                                onClick={e => this.deletePostsById( this.props.postId.post_id )}
+                                onClick={e =>
+                                    this.deletePostsById(
+                                        this.props.postId.post_id
+                                    )
+                                }
                             />
                         </Row>
                     </Card.Header>
@@ -244,11 +253,7 @@ export default class DisplayRale extends Component {
                     <Card.Body>
                         <Card.Text>{postText}</Card.Text>
 
-                        <div style={{ display: 'flex' }}>
-
-                            {likesUser}
-
-                        </div>
+                        <div style={{ display: 'flex' }}>{likesUser}</div>
                     </Card.Body>
                     <Card.Footer className='text-muted'>
                         <InputGroup className='justify-content-around'>
@@ -263,7 +268,8 @@ export default class DisplayRale extends Component {
                             </InputGroup.Prepend>
 
                             <InputGroup.Prepend>
-                                <Button variant='dark'
+                                <Button
+                                    variant='dark'
                                     onClick={this.getAllCommentsByRaleId}
                                 >
                                     💬
@@ -285,12 +291,17 @@ export default class DisplayRale extends Component {
                                 <InputGroup className='mb-3'>
                                     <FormControl
                                         as='textarea'
-                                        rows='3'
+                                        rows='2'
                                         placeholder='Commentez ce rale'
-                                        onChange={e => this.setState({ comment: e.target.value })}
+                                        onChange={e =>
+                                            this.setState({
+                                                comment: e.target.value
+                                            })
+                                        }
                                     />
                                     <InputGroup.Prepend>
-                                        <Button variant='dark'
+                                        <Button
+                                            variant='dark'
                                             onClick={this.submitForm}
                                         >
                                             OK

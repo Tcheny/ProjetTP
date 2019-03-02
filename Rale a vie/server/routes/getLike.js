@@ -1,9 +1,9 @@
-const { Router } = require("express");
-const { insertLike } = require("../controllers/likes/insertLike");
+const { Router } = require('express');
+const { insertLike } = require('../controllers/likes/insertLike');
 
 const router = Router();
 
-router.post("/insertlike", async (req, res) => {
+router.post('/insertlike', async (req, res) => {
     const likeInfos = {
         user_id: req.body.user_id,
         post_id: req.body.post_id,
@@ -19,7 +19,7 @@ router.post("/insertlike", async (req, res) => {
     return res.status(200).send(likeInfos);
 });
 
-router.delete("/deletelike", async (req, res) => {
+router.delete('/deletelike', async (req, res) => {
     let deleteLike = null;
 
     try {
@@ -28,7 +28,7 @@ router.delete("/deletelike", async (req, res) => {
         console.log(error);
         return res
             .status(500)
-            .send(new Error("Erreur dans Delete Like", error));
+            .send(new Error('Erreur dans Delete Like', error));
     }
 
     return res.status(200).send(deleteLike.rows[0]);

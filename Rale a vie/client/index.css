@@ -319,6 +319,9 @@ body {
 
 .profile-content {
     transform: translate3d(0, -50%, 0);
+    text-align: left;
+    display: flex;
+    align-items: center;
 }
 
 .img-raised {
@@ -348,4 +351,8 @@ body {
     cursor: pointer;
     font-size: 2.5em;
     margin-right: 0.5em;
+}
+
+.wrapper-profile {
+    width: 50%;
 }
