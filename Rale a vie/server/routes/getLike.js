@@ -19,4 +19,19 @@ router.post("/insertlike", async (req, res) => {
     return res.status(200).send(likeInfos);
 });
 
+router.delete("/deletelike", async (req, res) => {
+    let deleteLike = null;
+
+    try {
+        deleteLike = await deletePosts(req.query.id);
+    } catch (error) {
+        console.log(error);
+        return res
+            .status(500)
+            .send(new Error("Erreur dans Delete Like", error));
+    }
+
+    return res.status(200).send(deleteLike.rows[0]);
+});
+
 module.exports = router;

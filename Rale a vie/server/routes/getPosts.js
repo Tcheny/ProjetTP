@@ -40,11 +40,7 @@ router.get("/postInfos", async (req, res) => {
     try {
         infos = await getPostInfosById(req.query.id);
         // create the file path
-        const writePath = path.join(
-            __dirname,
-            "../mediaUploads",
-            infos.path_media
-        );
+        const writePath = path.join( __dirname, "../mediaUploads", infos.path_media);
         const file = await fs.promises.readFile(writePath);
         infos.file = file;
     } catch (error) {

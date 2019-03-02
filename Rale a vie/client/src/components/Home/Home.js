@@ -24,9 +24,9 @@ export default class Home extends Component {
 
     render() {
         const { isAuth, posts_id } = this.props;
-
-        const allRales = posts_id.map((posts, index) => {
-            return <DisplayRale key={index} posts={posts} />;
+        
+        const allRales = posts_id.map((postId) => {
+            return <DisplayRale key={postId.post_id} postId={postId} />;
         });
 
         return (

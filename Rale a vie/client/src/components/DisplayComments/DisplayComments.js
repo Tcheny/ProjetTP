@@ -59,6 +59,7 @@ export default class DisplayComments extends Component {
                             {trashComment && (
                                 <i
                                     className='far fa-trash-alt'
+                                    // onClick={this.handleShow}
                                     onClick={e =>
                                         this.props.deleteCommentById(
                                             comment.comment_id
@@ -66,6 +67,18 @@ export default class DisplayComments extends Component {
                                     }
                                 />
                             )}
+                            {/* 
+                            <ModalConfirmation
+                                 id={comment.comment_id}
+                                 show={this.state.show}
+                                 handleClose={this.handleClose}
+                                 message='Es tu sur de vouloir supprimer ce commentaire 🤔 ?'
+                                 onClick={e =>
+                                     this.props.deleteCommentById(
+                                            comment.comment_id
+                                        )
+                                 }
+                             /> */}
                         </div>
                     </Row>
                 </ListGroup.Item>

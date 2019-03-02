@@ -23,13 +23,14 @@ export default class Post extends Component {
                 formData,
                 { headers: { 'Content-Type': 'multipart/form-data' } }
             );
-            debugger;
             console.log(rale.data);
+            this.setState({ inputPost: '' },() => {
+                // TODO: mettre a jour le state de AllPostsId
+                this.props.getAllPostsId()
+                toast.success('Rale exprimé')
+            }
+            );
 
-            // TODO: mettre a jour le state de AllPostsId
-            this.props.getAllPostsId();
-            toast.success('Rale exprimé');
-            this.setState({ inputPost: '' });
         } catch (error) {
             console.error(error);
             toast.error('Erreur dans le post Rale');

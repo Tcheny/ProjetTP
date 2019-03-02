@@ -20,7 +20,6 @@ const UseContext = React.createContext();
  */
 export class UseProvider extends React.Component {
     state = {
-        // isNav: false,
         isAuth: false,
         currentUser: null,
         loadingScreen: false,
@@ -32,7 +31,6 @@ export class UseProvider extends React.Component {
         try {
             await this.verifyCurrentUser();
             this.getAllUsersById();
-            this.getAllPostsId();
         } catch (error) {
             console.log(error);
         }

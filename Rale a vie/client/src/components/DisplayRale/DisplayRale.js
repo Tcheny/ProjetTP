@@ -5,7 +5,6 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import {
     InputGroup,
-    ListGroup,
     Form,
     FormControl,
     Card,
@@ -24,12 +23,25 @@ export default class DisplayRale extends Component {
         comment: '',
         likeType: null,
         commentsList: [],
-        likes: []
+        likes: [{
+            likeType: 1,
+            likeCount: 0,
+            isLikeByUser: false,
+            likeIcon: '😂'
+        },{
+            likeType: 2,
+            likeCount: 0,
+            isLikeByUser: false,
+            likeIcon: '😡'
+        },{
+            likeType: 3,
+            likeCount: 0,
+            isLikeByUser: false,
+            likeIcon: '😱'
+        }]
     };
 
     componentDidMount = () => {
-        this.props.getAllUsersById();
-        this.props.getAllPostsId();
         this.getPostInfosById();
     };
 
@@ -38,7 +50,7 @@ export default class DisplayRale extends Component {
 
         const comment = {
             user_id: this.props.currentUser && this.props.currentUser.user_id,
-            post_id: this.props.posts.post_id,
+            post_id: this.props.postId.post_id,
             comment: this.state.comment
         };
 
@@ -68,7 +80,7 @@ export default class DisplayRale extends Component {
     getPostInfosById = () => {
         axios
             .get('http://localhost:8081/posts/postInfos', {
-                params: { id: this.props.posts.post_id }
+                params: { id: this.props.postId.post_id }
             })
             .then(res => {
                 // transform buffer to 8bits unsign
@@ -88,7 +100,7 @@ export default class DisplayRale extends Component {
     getAllCommentsByRaleId = () => {
         axios
             .get('http://localhost:8081/posts/comments', {
-                params: { id: this.props.posts.post_id }
+                params: { id: this.props.postId.post_id }
             })
             .then(res => {
                 this.setState(prevState => ({
@@ -108,11 +120,9 @@ export default class DisplayRale extends Component {
             })
             .then(res => {
                 console.log(res.data);
+                // MAJ Rales
                 this.props.getAllPostsId();
                 toast.success('Rale supprimé');
-                this.setState({
-                    posts: this.props.posts.post_id !== id
-                });
                 this.handleClose();
             })
             .catch(error => {
@@ -145,20 +155,21 @@ export default class DisplayRale extends Component {
             });
     };
 
-    actionLike = () => {
-        const likes = {
+    handleLike = (likeType) => {
+        const like = {
             user_id: this.props.currentUser && this.props.currentUser.user_id,
-            post_id: this.props.posts.post_id,
-            like_type_id: this.state.likeType
+            post_id: this.props.postId.post_id,
+            like_type_id: likeType
         };
 
         axios
-            .post('http://localhost:8081/likes/insertlike', { likes })
+            .post('http://localhost:8081/likes/insertlike', { like })
             .then(res => {
-                this.setState({ likes: res.data }).catch(error => {
+                this.getPostInfosById();
+            })
+            .catch(error => {
                     console.error(error);
                     toast.error(error);
-                });
             });
     };
 
@@ -199,68 +210,14 @@ export default class DisplayRale extends Component {
                     : false;
         }
 
-        const commentsList = this.state.commentsList.map(comment => {
-            let trashComment =
-                comment.user_id === parseInt(userId)
-                    ? true
-                    : userType === 'admin'
-                    ? true
-                    : false;
-            let authorComment = '';
-            let dateComment = moment.utc(comment.date_creation).format('ll');
-            let heureComment = moment
-                .utc(comment.date_creation)
-                .utcOffset('+0200')
-                .format('LT');
-
-            this.props.users_id.filter(user => {
-                if (parseInt(user.user_id) === comment.user_id) {
-                    authorComment = user.user_pseudo;
-                }
-            });
-
-            return (
-                <ListGroup.Item
-                    key={comment.comment_id}
-                    style={{
-                        margin: '5px 0',
-                        borderRadius: '30px'
-                    }}
-                >
-                    <Row className='justify-content-between align-items-center'>
-                        <div>
-                            {authorComment}, le {dateComment} à {heureComment}
-                            <div> {comment.comment}</div>
-                        </div>
-                        <div>
-                            {trashComment && (
-                                <i
-                                    className='far fa-trash-alt'
-                                    // onClick={this.handleShow}
-                                    onClick={e =>
-                                        this.deleteCommentById(
-                                            comment.comment_id
-                                        )
-                                    }
-                                />
-                            )}
-
-                            <ModalConfirmation
-                                id={comment.comment_id}
-                                show={this.state.show}
-                                handleClose={this.handleClose}
-                                message='Es tu sur de vouloir supprimer ce commentaire 🤔 ?'
-                                onClick={e =>
-                                    this.deleteCommentById(comment.comment_id)
-                                }
-                            />
-
-                            <i className='far fa-heart' />
-                        </div>
-                    </Row>
-                </ListGroup.Item>
-            );
-        });
+        const likesUser = this.state.likes.map((like, index) => {
+            return (<div key={index} value={like.likeType} onClick={e=> this.handleLike(e.target.value)}>
+                <InputGroup.Prepend className="likeIcon">                        
+                        <Button variant='dark'>{like.likeIcon}</Button>
+                    <InputGroup.Text>{like.likeCount}</InputGroup.Text>
+                </InputGroup.Prepend>
+            </div>)
+        })
 
         return (
             <div style={{ margin: '30px 0' }}>
@@ -271,8 +228,7 @@ export default class DisplayRale extends Component {
                                 Par {author}, le {date} à {heure}
                             </div>
                             {trashPost && (
-                                <i
-                                    className='far fa-trash-alt'
+                                <i className='far fa-trash-alt'
                                     onClick={this.handleShow}
                                 />
                             )}
@@ -280,11 +236,7 @@ export default class DisplayRale extends Component {
                                 show={this.state.show}
                                 handleClose={this.handleClose}
                                 message='Es tu sur de vouloir supprimer ce rale 🤔 ?'
-                                onClick={e =>
-                                    this.deletePostsById(
-                                        this.props.posts.post_id
-                                    )
-                                }
+                                onClick={e => this.deletePostsById( this.props.postId.post_id )}
                             />
                         </Row>
                     </Card.Header>
@@ -293,9 +245,9 @@ export default class DisplayRale extends Component {
                         <Card.Text>{postText}</Card.Text>
 
                         <div style={{ display: 'flex' }}>
-                            <div value='1'> 😂 </div>
-                            <div value='2'> 😡 </div>
-                            <div value='3'> 😱 </div>
+
+                            {likesUser}
+
                         </div>
                     </Card.Body>
                     <Card.Footer className='text-muted'>
@@ -311,8 +263,7 @@ export default class DisplayRale extends Component {
                             </InputGroup.Prepend>
 
                             <InputGroup.Prepend>
-                                <Button
-                                    variant='dark'
+                                <Button variant='dark'
                                     onClick={this.getAllCommentsByRaleId}
                                 >
                                     💬
@@ -336,15 +287,10 @@ export default class DisplayRale extends Component {
                                         as='textarea'
                                         rows='3'
                                         placeholder='Commentez ce rale'
-                                        onChange={e =>
-                                            this.setState({
-                                                comment: e.target.value
-                                            })
-                                        }
+                                        onChange={e => this.setState({ comment: e.target.value })}
                                     />
                                     <InputGroup.Prepend>
-                                        <Button
-                                            variant='dark'
+                                        <Button variant='dark'
                                             onClick={this.submitForm}
                                         >
                                             OK
