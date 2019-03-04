@@ -54,7 +54,7 @@ export class UseProvider extends React.Component {
     logout = async () => {
         try {
             await axios.get('http://localhost:8081/logout');
-            toast(`A bientôt ${this.state.currentUser.user_pseudo} !`);
+            toast.info(`A bientôt ${this.state.currentUser.user_pseudo} !`);
             this.setState({ isAuth: false, currentUser: null });
         } catch (error) {
             console.error(error);

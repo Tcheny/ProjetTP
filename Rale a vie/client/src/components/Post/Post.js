@@ -24,8 +24,7 @@ export default class Post extends Component {
                 { headers: { 'Content-Type': 'multipart/form-data' } }
             );
             console.log(rale.data);
-            this.setState({ inputPost: '' },() => {
-                // TODO: mettre a jour le state de AllPostsId
+            this.setState({ inputPost: '' }, () => {
                 this.props.getAllPostsId()
                 toast.success('Rale exprimé')
             }

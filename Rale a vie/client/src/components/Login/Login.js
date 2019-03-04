@@ -24,7 +24,7 @@ class Login extends Component {
             console.log('Login: ', login.data);
             this.props.verifyCurrentUser();
             this.props.history.push('/');
-            toast(`${login.data}!`);
+            toast.info(`${login.data}!`);
         } catch (error) {
             console.error(error);
             toast.error(error.request.response.replace(/"/g, ''));

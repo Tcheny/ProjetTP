@@ -6,7 +6,8 @@ const client = require("../database/connexion");
 const getAllPostsIds = async () => {
     const query = SQL`
         SELECT
-            post_id
+            post_id,
+            user_id
         FROM
             posts
         ORDER BY date_creation desc 
@@ -18,7 +19,7 @@ const getAllPostsIds = async () => {
 
 // requete des values nécessaires a un post
 // Select les valeurs from posts ou le user_id == post_id
-const getPostInfosById = async id => {
+const getPostInfosById = async (postId, userId)=> { 
     // INNER JOIN jointure users et posts pour le user_id en commun pour select user_firstname, user_pseudo
 
     const infos = SQL`
@@ -29,14 +30,63 @@ const getPostInfosById = async id => {
             post,
             type_media,
             path_media,
-            date_creation
+            date_creation,
+		JSON_AGG(likes.*) as likes
         FROM posts
         INNER JOIN users ON users.user_id = posts.user_id
-        WHERE post_id = ${id}
+		LEFT OUTER JOIN likes ON likes.post_id = posts.post_id
+        WHERE posts.post_id = ${postId}
+		GROUP BY posts.post_id, users.user_id
     `;
 
     const infosResult = await client.query(infos);
-    return infosResult.rows[0];
+    const post = infosResult.rows[0]
+
+    const likeState = [{ 
+        likeType: 1,
+        likeCount: 0,
+        isLikedByUser: false,
+        likeIcon: '😂'
+    },
+    {
+        likeType: 2,
+        likeCount: 0,
+        isLikedByUser: false,
+        likeIcon: '😡'
+    },
+    {
+        likeType: 3,
+        likeCount: 0,
+        isLikedByUser: false,
+        likeIcon: '😱'
+    }]
+
+    post.likes.forEach(like => {
+
+        if (like === null) {
+            return;
+        } 
+        const isFromUser = like.user_id == userId;
+
+        switch (like.like_type_id) {
+            case 1: 
+                likeState[0].likeCount = likeState[0].likeCount+1
+                likeState[0].isLikedByUser = isFromUser
+                break;
+            case 2:
+                likeState[1].likeCount = likeState[1].likeCount+1
+                likeState[1].isLikedByUser = isFromUser
+                break;
+            case 3:
+                likeState[2].likeCount = likeState[2].likeCount+1
+                likeState[2].isLikedByUser = isFromUser
+                break;
+        }
+    })
+
+    post.likeState = likeState;
+
+    return post;
 };
 
 // const getOnePost = async () => {

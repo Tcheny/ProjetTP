@@ -1,13 +1,19 @@
 const { Router } = require('express');
-const { insertLike } = require('../controllers/likes/insertLike');
+const insertLike = require('../controllers/likes/insertLike');
 
 const router = Router();
 
 router.post('/insertlike', async (req, res) => {
+
+    // if (req.body.didUserAlreadyLikedThePost) {
+    //     deletePrevLikeforthispost(req.body.like.post_id, req.session.userId)
+    // }
+    // si didUserAlreadyLikedThePost est true  on delete le like du user du post
+
     const likeInfos = {
-        user_id: req.body.user_id,
-        post_id: req.body.post_id,
-        like_type_id: req.body.like_type_id
+        user_id: req.session.userId,
+        post_id: req.body.like.post_id,
+        like_type_id: req.body.like.like_type_id
     };
     try {
         await insertLike(likeInfos);

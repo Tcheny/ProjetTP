@@ -27,19 +27,19 @@ export default class DisplayRale extends Component {
             {
                 likeType: 1,
                 likeCount: 0,
-                isLikeByUser: false,
+                isLikedByUser: false,
                 likeIcon: '😂'
             },
             {
                 likeType: 2,
                 likeCount: 0,
-                isLikeByUser: false,
+                isLikedByUser: false,
                 likeIcon: '😡'
             },
             {
                 likeType: 3,
                 likeCount: 0,
-                isLikeByUser: false,
+                isLikedByUser: false,
                 likeIcon: '😱'
             }
         ]
@@ -54,7 +54,7 @@ export default class DisplayRale extends Component {
 
         const comment = {
             user_id: this.props.currentUser && this.props.currentUser.user_id,
-            post_id: this.props.postId.post_id,
+            post_id: this.props.postId,
             comment: this.state.comment
         };
 
@@ -84,7 +84,10 @@ export default class DisplayRale extends Component {
     getPostInfosById = () => {
         axios
             .get('http://localhost:8081/posts/postInfos', {
-                params: { id: this.props.postId.post_id }
+                params: { 
+                    postId: this.props.postId, 
+                    userId: this.props.userId
+                }
             })
             .then(res => {
                 // transform buffer to 8bits unsign
@@ -94,7 +97,11 @@ export default class DisplayRale extends Component {
                     type: 'image/jpeg'
                 });
                 const imgUrl = URL.createObjectURL(imgBlob);
-                this.setState({ post: res.data, imgUrl: imgUrl });
+                this.setState({ 
+                    post: res.data,
+                    imgUrl: imgUrl,
+                    likes: res.data.likeState
+                });
             })
             .catch(error => {
                 console.error(error);
@@ -104,7 +111,7 @@ export default class DisplayRale extends Component {
     getAllCommentsByRaleId = () => {
         axios
             .get('http://localhost:8081/posts/comments', {
-                params: { id: this.props.postId.post_id }
+                params: { id: this.props.postId }
             })
             .then(res => {
                 this.setState(prevState => ({
@@ -158,10 +165,13 @@ export default class DisplayRale extends Component {
     };
 
     handleLike = likeType => {
+        // const didUserAlreadyLikedThePost => ( trouver si le likeisbyuser est true ) a envoyé au back
+
         const like = {
             user_id: this.props.currentUser && this.props.currentUser.user_id,
-            post_id: this.props.postId.post_id,
-            like_type_id: likeType
+            post_id: this.props.postId,
+            like_type_id: likeType,
+            // didUserAlreadyLikedThePost
         };
 
         axios
@@ -208,18 +218,13 @@ export default class DisplayRale extends Component {
 
         const likesUser = this.state.likes.map((like, index) => {
             return (
-                <div
+                <InputGroup.Prepend 
                     key={index}
-                    value={like.likeType}
-                    onClick={e => this.handleLike(e.target.value)}
-                >
-                    <InputGroup>
-                        <InputGroup.Prepend className='likeIcon'>
-                            <Button variant='dark'>{like.likeIcon}</Button>
-                            <InputGroup.Text>{like.likeCount}</InputGroup.Text>
-                        </InputGroup.Prepend>
-                    </InputGroup>
-                </div>
+                    onClick={e => this.handleLike(like.likeType)}
+                    className='likeIcon'>
+                    <Button variant='dark'>{like.likeIcon}</Button>
+                    <InputGroup.Text>{like.likeCount}</InputGroup.Text>
+                </InputGroup.Prepend>      
             );
         });
 
@@ -243,7 +248,7 @@ export default class DisplayRale extends Component {
                                 message='Es tu sur de vouloir supprimer ce rale 🤔 ?'
                                 onClick={e =>
                                     this.deletePostsById(
-                                        this.props.postId.post_id
+                                        this.props.postId
                                     )
                                 }
                             />
@@ -252,20 +257,11 @@ export default class DisplayRale extends Component {
                     <Card.Img variant='top' src={imgUrl} />
                     <Card.Body>
                         <Card.Text>{postText}</Card.Text>
-
-                        <div style={{ display: 'flex' }}>{likesUser}</div>
                     </Card.Body>
                     <Card.Footer className='text-muted'>
                         <InputGroup className='justify-content-around'>
-                            <InputGroup.Prepend>
-                                <Button variant='dark'>Tu as raison!</Button>
-                                <InputGroup.Text>count</InputGroup.Text>
-                            </InputGroup.Prepend>
-
-                            <InputGroup.Prepend>
-                                <Button variant='dark'>Mouais bof</Button>
-                                <InputGroup.Text>count</InputGroup.Text>
-                            </InputGroup.Prepend>
+                           
+                            {likesUser}
 
                             <InputGroup.Prepend>
                                 <Button
@@ -278,6 +274,7 @@ export default class DisplayRale extends Component {
                             </InputGroup.Prepend>
                         </InputGroup>
 
+
                         <hr />
 
                         <DisplayComments
@@ -285,7 +282,6 @@ export default class DisplayRale extends Component {
                             isToggle={this.state.isToggle}
                             deleteCommentById={this.deleteCommentById}
                         />
-
                         {isAuth && (
                             <Form onSubmit={this.submitForm}>
                                 <InputGroup className='mb-3'>
