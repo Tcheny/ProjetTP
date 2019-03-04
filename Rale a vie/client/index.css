@@ -42,13 +42,23 @@ body {
     text-shadow: #5e3c32 5px 5px 20px;
 }
 
-.fa-4x {
+.fa-arrow-circle-down {
     cursor: pointer;
     position: absolute;
     bottom: 5%;
     left: 50%;
     transform: translate(-50%, 0);
     color: #fff;
+    animation: 3s infinite flotting;
+    animation-timing-function: ease;
+}
+
+.fa-arrow-circle-up {
+    cursor: pointer;
+    position: fixed;
+    right: 1%;
+    bottom: 5%;
+    color: #23272B;
     animation: 3s infinite flotting;
     animation-timing-function: ease;
 }

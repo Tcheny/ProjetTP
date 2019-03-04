@@ -37,6 +37,7 @@ export default class Home extends Component {
             <Fragment>
                 <NavbarApp />
                 <Header scrolling={this.scrolling} />
+                <i class="fas fa-arrow-circle-up fa-3x" onClick={this.scrolling} />
                 <Container>
                     <Row>
                         <Col md={{ span: 6, offset: 3 }}>
@@ -51,6 +52,7 @@ export default class Home extends Component {
                         </Col>
                     </Row>
                 </Container>
+                
             </Fragment>
         );
     }
