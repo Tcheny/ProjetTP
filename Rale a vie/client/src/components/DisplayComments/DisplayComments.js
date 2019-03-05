@@ -3,7 +3,6 @@ import moment from 'moment';
 import 'moment/locale/fr';
 
 import { ListGroup, Row } from 'react-bootstrap';
-import { ModalConfirmation } from '../ModalConfirmation/ModalConfirmation';
 
 export default class DisplayComments extends Component {
     state = { show: false, commentsDelete: [] };
@@ -24,7 +23,7 @@ export default class DisplayComments extends Component {
 
         const commentsList = this.props.commentsList.map(comment => {
             let trashComment =
-                comment.user_id === parseInt(userId)
+                comment.user_id == userId
                     ? true
                     : userType === 'admin'
                     ? true
@@ -37,7 +36,7 @@ export default class DisplayComments extends Component {
                 .format('LT');
 
             this.props.users_id.filter(user => {
-                if (parseInt(user.user_id) === comment.user_id) {
+                if (user.user_id == comment.user_id) {
                     authorComment = user.user_pseudo;
                 }
             });
@@ -67,18 +66,6 @@ export default class DisplayComments extends Component {
                                     }
                                 />
                             )}
-                            {/* 
-                            <ModalConfirmation
-                                 id={comment.comment_id}
-                                 show={this.state.show}
-                                 handleClose={this.handleClose}
-                                 message='Es tu sur de vouloir supprimer ce commentaire 🤔 ?'
-                                 onClick={e =>
-                                     this.props.deleteCommentById(
-                                            comment.comment_id
-                                        )
-                                 }
-                             /> */}
                         </div>
                     </Row>
                 </ListGroup.Item>

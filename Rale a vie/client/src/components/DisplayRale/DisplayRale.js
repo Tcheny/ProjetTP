@@ -47,6 +47,7 @@ export default class DisplayRale extends Component {
 
     componentDidMount = () => {
         this.getPostInfosById();
+        this.getAllCommentsByRaleId();
     };
 
     submitForm = event => {
@@ -114,10 +115,7 @@ export default class DisplayRale extends Component {
                 params: { id: this.props.postId }
             })
             .then(res => {
-                this.setState(prevState => ({
-                    isToggle: !prevState.isToggle,
-                    commentsList: res.data
-                }));
+                this.setState({ commentsList: res.data });
             })
             .catch(error => {
                 console.error(error);
@@ -164,6 +162,13 @@ export default class DisplayRale extends Component {
             });
     };
 
+    handleComment = () => {
+        this.setState(prevState => ({
+            isToggle: !prevState.isToggle,
+        }));
+        this.getAllCommentsByRaleId()
+    }
+
     handleLike = likeType => {
         const like = {
             user_id: this.props.currentUser && this.props.currentUser.user_id,
@@ -195,6 +200,7 @@ export default class DisplayRale extends Component {
         let postText = '';
         let author = '';
         let trashPost = false;
+        let countComments = 0;
 
         if (this.state.post) {
             date = moment.utc(this.state.post.date_creation).format('ll');
@@ -207,11 +213,12 @@ export default class DisplayRale extends Component {
             author = this.state.post.user_pseudo;
             postText = this.state.post.post;
             trashPost =
-                this.state.post.user_id === parseInt(userId)
+                this.state.post.user_id == userId
                     ? true
                     : userType === 'admin'
                     ? true
                     : false;
+            countComments = this.state.commentsList.length;
         }
 
         const likesUser = this.state.likes.map((like, index) => {
@@ -264,11 +271,11 @@ export default class DisplayRale extends Component {
                             <InputGroup.Prepend>
                                 <Button
                                     variant='dark'
-                                    onClick={this.getAllCommentsByRaleId}
+                                    onClick={this.handleComment}
                                 >
                                     💬
                                 </Button>
-                                <InputGroup.Text>count</InputGroup.Text>
+                                <InputGroup.Text>{countComments}</InputGroup.Text>
                             </InputGroup.Prepend>
                         </InputGroup>
 
