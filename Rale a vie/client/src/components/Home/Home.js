@@ -8,6 +8,11 @@ import Search from '../Search/index';
 import Header from '../Header/Header';
 
 export default class Home extends Component {
+    state = {
+        prevScrollpos: window.pageYOffset,
+        visible: true
+    }
+
     myRef = React.createRef();
 
     scrolling = () => {
@@ -20,6 +25,23 @@ export default class Home extends Component {
     // display all Posts
     componentDidMount = () => {
         this.props.getAllPostsId();
+        window.addEventListener("scroll", this.handleScroll);
+    };
+
+    componentWillUnmount() {
+        window.removeEventListener("scroll", this.handleScroll);
+    }
+
+    handleScroll = () => {
+        const { prevScrollpos } = this.state;
+
+        const currentScrollPos = window.pageYOffset;
+        const visible = prevScrollpos < 300;
+
+        this.setState({
+            prevScrollpos: currentScrollPos,
+            visible
+        });
     };
 
     render() {
@@ -37,7 +59,7 @@ export default class Home extends Component {
             <Fragment>
                 <NavbarApp />
                 <Header scrolling={this.scrolling} />
-                <i class="fas fa-arrow-circle-up fa-3x" onClick={this.scrolling} />
+                {!this.state.visible && <i class="fas fa-arrow-circle-up fa-3x" onClick={this.scrolling} />}
                 <Container>
                     <Row>
                         <Col md={{ span: 6, offset: 3 }}>

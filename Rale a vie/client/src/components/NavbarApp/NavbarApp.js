@@ -1,14 +1,42 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { LinkContainer } from 'react-router-bootstrap';
+import $ from 'jquery';
+import classnames from "classnames";
+
 import { Navbar, Nav, NavDropdown } from 'react-bootstrap';
 
 class NavbarApp extends Component {
+    state= {
+        prevScrollpos: window.pageYOffset,
+        visible: true
+    }
+
     endSession = () => {
         this.props.logout();
         setTimeout(() => {
             this.props.history.push('/login');
         }, 1000);
+    };
+
+    componentDidMount = () => {
+        window.addEventListener("scroll", this.handleScroll);
+    }
+
+    componentWillUnmount = () => {
+        window.removeEventListener("scroll", this.handleScroll);
+    }
+
+    handleScroll = () => {
+        const { prevScrollpos } = this.state;
+
+        const currentScrollPos = window.pageYOffset;
+        const visible = prevScrollpos < 500;
+
+        this.setState({
+            prevScrollpos: currentScrollPos,
+            visible
+        });
     };
 
     render() {
@@ -36,8 +64,10 @@ class NavbarApp extends Component {
                 expand='lg'
                 bg='dark'
                 variant='dark'
-                className='navbar navbar-default'
                 fixed='top'
+                className={classnames("navbar-default", {
+                    "navbar-hidden": !this.state.visible
+                })}
             >
                 <Navbar.Brand href='/'>Rale à vie</Navbar.Brand>
                 <Navbar.Toggle aria-controls='responsive-navbar-nav' />
