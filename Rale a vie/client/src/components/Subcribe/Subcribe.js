@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { NavLink, withRouter } from 'react-router-dom';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 import { Card, Button, Form } from 'react-bootstrap';
 
 class Subcribe extends Component {
@@ -24,12 +25,14 @@ class Subcribe extends Component {
             password: this.state.password,
             pseudo: this.state.pseudo,
             type: 'user',
-            infos: ''
+            infos: `Bonjour, ici c'est ${this.state.pseudo} !`
         };
+
         try {
             await axios.post('http://localhost:8081/users/add', { user });
             this.props.verifyCurrentUser();
             this.props.history.push('/');
+            toast.info(`Bienvenue ${user.pseudo}!`);        
         } catch (error) {
             console.error(error);
         }

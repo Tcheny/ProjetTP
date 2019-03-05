@@ -8,7 +8,8 @@ const getUsersId = async () => {
         SELECT
             user_id,
             user_firstname,
-            user_pseudo
+            user_pseudo,
+            user_infos
         FROM
             users
     `;
@@ -17,22 +18,6 @@ const getUsersId = async () => {
     const queryResult = await client.query(query);
     return queryResult.rows;
 };
-
-// Select * from users => /about
-// const getUserId = async userId => {
-//     const query = SQL`
-//         SELECT
-//             *
-//         FROM users
-//         WHERE user_id = ${userId}
-//     `;
-
-//     const queryResult = await client.query(query);
-//     if (!queryResult.rowCount) {
-//         throw new Error("Pas de User avec id :", userId);
-//     }
-//     return queryResult.rows;
-// };
 
 // Select * from users => /getUserToken
 const getOneUser = async userId => {
@@ -71,14 +56,16 @@ const addUsers = async newUser => {
             user_email,
             user_password,
             user_pseudo,
-            user_type
+            user_type,
+            user_infos
         ) VALUES (
             ${newUser.firstname},
             ${newUser.lastname},
             ${newUser.email},
             ${encryptedPassword},
             ${newUser.pseudo},
-            ${newUser.type}
+            ${newUser.type},
+            ${newUser.infos}
         ) RETURNING *
     `;
 

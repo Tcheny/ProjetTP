@@ -28,7 +28,7 @@ export default class Home extends Component {
         window.addEventListener("scroll", this.handleScroll);
     };
 
-    componentWillUnmount() {
+    componentWillUnmount = () => {
         window.removeEventListener("scroll", this.handleScroll);
     }
 

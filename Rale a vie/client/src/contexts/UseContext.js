@@ -22,7 +22,6 @@ export class UseProvider extends React.Component {
     state = {
         isAuth: false,
         currentUser: null,
-        loadingScreen: false,
         users_id: [],
         posts_id: []
     };
