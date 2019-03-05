@@ -20,4 +20,18 @@ const insertLike = async likeInfos => {
     return queryResult.rows[0];
 };
 
-module.exports = insertLike;
+const deleteLikedPost = async (userId, postId) => {
+    const query = SQL`
+        DELETE FROM likes
+        WHERE
+            user_id = ${userId}
+            AND
+            post_id = ${postId}
+        RETURNING *
+    `;
+
+    const queryResult = await client.query(query);
+    return queryResult;
+};
+
+module.exports = { insertLike, deleteLikedPost };

@@ -2,12 +2,9 @@ const { Router } = require("express");
 
 const queries = require("../database/connexion");
 const {
-    // getUserId,
     getUsersId,
     addUsers,
     editUsers
-    // deleteUsers,
-    // getOneUser
 } = require("../controllers/users");
 const { generateToken } = require("../Authentication");
 
@@ -26,20 +23,6 @@ router.get("/all", async (req, res) => {
 
     return res.status(200).send(queryResult);
 });
-
-// probleme requete
-// router.get("/userInfos", async (req, res) => {
-//     let getOneResult = null;
-
-//     try {
-//         getOneResult = await getUserId(queries);
-//     } catch (error) {
-//         console.log(error);
-//         res.status(500).send(new Error("Erreur dans One User", error));
-//     }
-
-//     return res.status(200).send(getOneResult);
-// });
 
 router.post("/add", async (req, res) => {
     const userInfos = {
@@ -82,18 +65,5 @@ router.post("/edit", async (req, res) => {
 
     return res.status(200).send(editUsersResult);
 });
-
-// router.delete("/delete/:id", async (req, res) => {
-//     let deleteUserResult = null;
-
-//     try {
-//         deleteUserResult = await deleteUsers(req.params.id);
-//     } catch (error) {
-//         console.log(error);
-//         res.status(500).send(new Error("Erreur dans Delete User", error));
-//     }
-
-//     return res.status(200).send(deleteUserResult);
-// });
 
 module.exports = router;

@@ -89,17 +89,6 @@ const getPostInfosById = async (postId, userId)=> {
     return post;
 };
 
-// const getOnePost = async () => {
-//     const getOne = SQL`
-//         SELECT
-//             *
-//         FROM posts
-//     `;
-
-//     const getOneResult = await client.query(getOne);
-//     return getOneResult;
-// };
-
 // Insert un post
 const insertPosts = async postInfos => {
     const insertPost = SQL`

@@ -165,13 +165,11 @@ export default class DisplayRale extends Component {
     };
 
     handleLike = likeType => {
-        // const didUserAlreadyLikedThePost => ( trouver si le likeisbyuser est true ) a envoyé au back
-
         const like = {
             user_id: this.props.currentUser && this.props.currentUser.user_id,
             post_id: this.props.postId,
             like_type_id: likeType,
-            // didUserAlreadyLikedThePost
+            isLikedByUser: true 
         };
 
         axios
