@@ -1,7 +1,7 @@
-const SQL = require("sql-template-strings");
+const SQL = require('sql-template-strings');
 
-const client = require("../database/connexion");
-const encryptPassword = require("./miscs/encryptPassword");
+const client = require('../database/connexion');
+const encryptPassword = require('./miscs/encryptPassword');
 
 const getUsersId = async () => {
     const query = SQL`
@@ -37,7 +37,7 @@ const getOneUser = async userId => {
 
     const getOneResult = await client.query(getOne);
     if (!getOneResult.rowCount) {
-        throw new Error("Pas de User avec id :", userId);
+        throw new Error('Pas de User avec id :', userId);
     }
     return getOneResult.rows[0];
 };
@@ -45,7 +45,7 @@ const getOneUser = async userId => {
 // Insert new User avec encrypted password
 const addUsers = async newUser => {
     if (await verifyUsernameExists(newUser.email)) {
-        throw new Error("Email déjà utilisé");
+        throw new Error('Email déjà utilisé');
     }
     const encryptedPassword = await encryptPassword(newUser.password);
 
@@ -106,22 +106,9 @@ const editUsers = async (id, userInfos) => {
     return editUserResult.rows[0];
 };
 
-// const deleteUsers = async id => {
-//     const deleteUser = SQL`
-//         DELETE FROM users
-//         WHERE user_id = ${id}
-//         RETURNING *
-//     `;
-
-//     const deleteUserResult = await client.query(deleteUser);
-//     return deleteUserResult;
-// };
-
 module.exports = {
     getUsersId,
     addUsers,
     editUsers,
-    getOneUser
-    // deleteUsers
-    // getUserId
+    getOneUser,
 };

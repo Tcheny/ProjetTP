@@ -1,6 +1,6 @@
-const SQL = require("sql-template-strings");
+const SQL = require('sql-template-strings');
 
-const client = require("../database/connexion");
+const client = require('../database/connexion');
 
 // Select post_id from table posts
 const getAllPostsIds = async () => {
@@ -19,7 +19,7 @@ const getAllPostsIds = async () => {
 
 // requete des values nécessaires a un post
 // Select les valeurs from posts ou le user_id == post_id
-const getPostInfosById = async (postId, userId)=> { 
+const getPostInfosById = async (postId, userId) => {
     // INNER JOIN jointure users et posts pour le user_id en commun pour select user_firstname, user_pseudo
 
     const infos = SQL`
@@ -40,49 +40,50 @@ const getPostInfosById = async (postId, userId)=> {
     `;
 
     const infosResult = await client.query(infos);
-    const post = infosResult.rows[0]
+    const post = infosResult.rows[0];
 
-    const likeState = [{ 
-        likeType: 1,
-        likeCount: 0,
-        isLikedByUser: false,
-        likeIcon: '😂'
-    },
-    {
-        likeType: 2,
-        likeCount: 0,
-        isLikedByUser: false,
-        likeIcon: '😡'
-    },
-    {
-        likeType: 3,
-        likeCount: 0,
-        isLikedByUser: false,
-        likeIcon: '😱'
-    }]
+    const likeState = [
+        {
+            likeType: 1,
+            likeCount: 0,
+            isLikedByUser: false,
+            likeIcon: '😂',
+        },
+        {
+            likeType: 2,
+            likeCount: 0,
+            isLikedByUser: false,
+            likeIcon: '😡',
+        },
+        {
+            likeType: 3,
+            likeCount: 0,
+            isLikedByUser: false,
+            likeIcon: '😱',
+        },
+    ];
 
     post.likes.forEach(like => {
-
         if (like === null) {
             return;
-        } 
+        }
         const isFromUser = like.user_id == userId;
 
         switch (like.like_type_id) {
-            case 1: 
-                likeState[0].likeCount = likeState[0].likeCount+1
-                likeState[0].isLikedByUser = isFromUser
+            case 1:
+                likeState[0].likeCount = likeState[0].likeCount + 1;
+                likeState[0].isLikedByUser = isFromUser;
                 break;
             case 2:
-                likeState[1].likeCount = likeState[1].likeCount+1
-                likeState[1].isLikedByUser = isFromUser
+                likeState[1].likeCount = likeState[1].likeCount + 1;
+                likeState[1].isLikedByUser = isFromUser;
                 break;
             case 3:
-                likeState[2].likeCount = likeState[2].likeCount+1
-                likeState[2].isLikedByUser = isFromUser
+                likeState[2].likeCount = likeState[2].likeCount + 1;
+                likeState[2].isLikedByUser = isFromUser;
                 break;
         }
-    })
+    });
 
     post.likeState = likeState;
 
@@ -111,22 +112,6 @@ const insertPosts = async postInfos => {
     return insertPostResult.rows[0];
 };
 
-// const editPosts = async (id, postInfos) => {
-//     const editPost = SQL`
-//         UPDATE posts
-//         SET user_id = ${postInfos.user_id},
-//             post = ${postInfos.post},
-//             path_media = ${postInfos.path_media},
-//             type_media = ${postInfos.type_media},
-//             date_creation = ${postInfos.date_creation}
-//         WHERE post_id = ${id}
-//         RETURNING *
-//     `;
-
-//     const editPostResult = await client.query(editPost);
-//     return editPostResult;
-// };
-
 const deletePosts = async id => {
     const deletePost = SQL`
         DELETE FROM posts
@@ -142,7 +127,5 @@ module.exports = {
     getAllPostsIds,
     getPostInfosById,
     insertPosts,
-    // getOnePost,
-    // editPosts,
-    deletePosts
+    deletePosts,
 };

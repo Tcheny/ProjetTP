@@ -1,18 +1,18 @@
-const jwt = require("jsonwebtoken");
-const { getOneUser } = require("./users");
+const jwt = require('jsonwebtoken');
+const { getOneUser } = require('./users');
 
-const getUserFromToken = async jwtToken => {
+const getUserToken = async jwtToken => {
     if (!jwtToken) {
-        throw new Error("Pas de Token");
+        throw new Error('Pas de Token');
     }
 
     const verifiedToken = jwt.verify(jwtToken, process.env.JWT_SECRET);
     if (!verifiedToken) {
-        throw new Error("Décodage du token échoué");
+        throw new Error('Décodage du token échoué');
     }
 
     const user = await getOneUser(verifiedToken.userId);
     return user;
 };
 
-module.exports = getUserFromToken;
+module.exports = getUserToken;

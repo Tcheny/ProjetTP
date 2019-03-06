@@ -1,30 +1,26 @@
-const { Router } = require("express");
+const { Router } = require('express');
 
-const queries = require("../database/connexion");
-const {
-    getUsersId,
-    addUsers,
-    editUsers
-} = require("../controllers/users");
-const { generateToken } = require("../Authentication");
+const queries = require('../database/connexion');
+const { getUsersId, addUsers, editUsers } = require('../controllers/users');
+const { generateToken } = require('../Authentication');
 
 const router = Router();
 
 // Get all user Id
-router.get("/all", async (req, res) => {
+router.get('/all', async (req, res) => {
     let queryResult = null;
 
     try {
         queryResult = await getUsersId(queries);
     } catch (error) {
         console.log(error);
-        return res.status(500).send(new Error("Erreur dans Users", error));
+        return res.status(500).send(new Error('Erreur dans Users', error));
     }
 
     return res.status(200).send(queryResult);
 });
 
-router.post("/add", async (req, res) => {
+router.post('/add', async (req, res) => {
     const userInfos = {
         firstname: req.body.user.firstname,
         lastname: req.body.user.lastname,
@@ -32,13 +28,13 @@ router.post("/add", async (req, res) => {
         password: req.body.user.password,
         pseudo: req.body.user.pseudo,
         type: req.body.user.type,
-        infos: req.body.user.infos
+        infos: req.body.user.infos,
     };
 
     try {
         const addedUser = await addUsers(userInfos);
         const token = generateToken(addedUser.user_id);
-        res.cookie("token", token);
+        res.cookie('token', token);
     } catch (error) {
         console.log(error);
         return res.status(500).send(error.message);
@@ -47,7 +43,7 @@ router.post("/add", async (req, res) => {
     return res.status(200).send(userInfos);
 });
 
-router.post("/edit", async (req, res) => {
+router.post('/edit', async (req, res) => {
     let editUsersResult = null;
 
     try {
@@ -57,11 +53,11 @@ router.post("/edit", async (req, res) => {
             email: req.body.user.user_email,
             password: req.body.user.user_password,
             pseudo: req.body.user.user_pseudo,
-            infos: req.body.user.user_infos
+            infos: req.body.user.user_infos,
         });
     } catch (error) {
         console.log(error);
-        res.status(500).send(new Error("Erreur dans Edit User", error));
+        res.status(500).send(new Error('Erreur dans Edit User', error));
     }
 
     return res.status(200).send(editUsersResult);

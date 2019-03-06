@@ -1,6 +1,6 @@
-const SQL = require("sql-template-strings");
+const SQL = require('sql-template-strings');
 
-const client = require("../../database/connexion");
+const client = require('../database/connexion');
 
 // INSERT like
 const insertLike = async likeInfos => {
@@ -31,7 +31,7 @@ const deleteLikedPost = async (userId, postId) => {
     `;
 
     const queryResult = await client.query(query);
-    return queryResult;
+    return queryResult.rows[0];
 };
 
 module.exports = { insertLike, deleteLikedPost };
