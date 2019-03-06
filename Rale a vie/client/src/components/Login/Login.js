@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import { NavLink, withRouter } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import { Card, Button, Form } from 'react-bootstrap';
+import { Col, Card, Button, Form } from 'react-bootstrap';
 class Login extends Component {
     state = {
         email: '',
-        password: ''
+        password: '',
     };
 
     handleSubmit = event => {
@@ -19,7 +19,7 @@ class Login extends Component {
         try {
             login = await axios.post('http://localhost:8081/login', {
                 user_email: this.state.email,
-                user_password: this.state.password
+                user_password: this.state.password,
             });
             this.props.verifyCurrentUser();
             this.props.history.push('/');
@@ -34,7 +34,7 @@ class Login extends Component {
         return (
             <Card className='wrapper'>
                 <Card.Body className='fadeInDown'>
-                    <div className='formContent'>
+                    <Col md={8} className='formContent'>
                         <Card.Title className='fadeIn first'>
                             <h1 className='title'>Se Connecter</h1>
                         </Card.Title>
@@ -44,29 +44,18 @@ class Login extends Component {
                                 type='email'
                                 className='input-text fadeIn second'
                                 placeholder='e-mail'
-                                onChange={e =>
-                                    this.setState({ email: e.target.value })
-                                }
+                                onChange={e => this.setState({ email: e.target.value })}
                             />
                             <input
                                 type='password'
                                 className='input-text fadeIn third'
                                 placeholder='password'
-                                onChange={e =>
-                                    this.setState({ password: e.target.value })
-                                }
+                                onChange={e => this.setState({ password: e.target.value })}
                             />
-                            <Button
-                                type='submit'
-                                className='input-button fadeIn fourth'
-                                onSubmit={this.handleSubmit}
-                            >
+                            <Button type='submit' className='input-button fadeIn fourth' onSubmit={this.handleSubmit}>
                                 LET ME IN
                             </Button>
-                            <NavLink
-                                className='a input-button fadeIn fifth'
-                                to='/subcription'
-                            >
+                            <NavLink className='a input-button fadeIn fifth' to='/subcription'>
                                 S'inscrire
                             </NavLink>
                         </Form>
@@ -74,7 +63,7 @@ class Login extends Component {
                         <NavLink className='a underlineHover' to={'/'}>
                             <div className='formFooter'>Rale à vie</div>
                         </NavLink>
-                    </div>
+                    </Col>
                 </Card.Body>
             </Card>
         );

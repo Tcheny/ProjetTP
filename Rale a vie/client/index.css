@@ -29,7 +29,6 @@ body {
     margin: 10px;
 }
 
-
 /* HEADER */
 
 .main-background {
@@ -65,7 +64,7 @@ body {
     position: fixed;
     right: 2%;
     bottom: 3%;
-    color: #23272B;
+    color: #23272b;
     animation: 3s infinite flotting;
     animation-timing-function: ease;
 }
@@ -93,17 +92,12 @@ body {
     justify-content: center;
     width: 100%;
     height: 100%;
-    background: linear-gradient(
-            to bottom,
-            rgba(57, 173, 219, 0.25) 0%,
-            rgba(42, 60, 87, 0.4) 100%
-        ),
-        linear-gradient(135deg, #670d10 0%, #092756 100%);
+    border-radius: 0;
+    background: linear-gradient(to bottom, rgba(57, 173, 219, 0.25) 0%, rgba(42, 60, 87, 0.4) 100%), linear-gradient(135deg, #670d10 0%, #092756 100%);
 }
 
 .formContent {
     border-radius: 10px 10px 10px 10px;
-    width: 90%;
     max-width: 500px;
     padding: 0px;
     box-shadow: 0 30px 60px 0 rgba(0, 0, 0, 0.3);
@@ -159,13 +153,11 @@ body {
     transition: all 0.5s ease-in-out;
     border-radius: 4px;
     text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
-    box-shadow: inset 0 -5px 45px rgba(100, 100, 100, 0.2),
-        0 1px 1px rgba(255, 255, 255, 0.2);
+    box-shadow: inset 0 -5px 45px rgba(100, 100, 100, 0.2), 0 1px 1px rgba(255, 255, 255, 0.2);
 }
 
 .input-text:focus {
-    box-shadow: inset 0 -5px 45px rgba(100, 100, 100, 0.4),
-        0 1px 1px rgba(255, 255, 255, 0.2);
+    box-shadow: inset 0 -5px 45px rgba(100, 100, 100, 0.4), 0 1px 1px rgba(255, 255, 255, 0.2);
     border-bottom: 2px solid #5fbae9;
 }
 
@@ -320,7 +312,6 @@ body {
     position: relative;
     z-index: 3;
     top: 50%;
-    width: 50%;
 }
 
 .profile-page .description {
@@ -335,15 +326,12 @@ body {
 }
 
 .profile-content {
-    transform: translate3d(0, -50%, 0);
+    transform: translate3d(0, -30%, 0);
     text-align: left;
-    display: flex;
-    align-items: center;
 }
 
 .img-raised {
-    box-shadow: 0 5px 15px -8px rgba(0, 0, 0, 0.24),
-        0 8px 10px -5px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 5px 15px -8px rgba(0, 0, 0, 0.24), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
 }
 
 .rounded-circle {
@@ -367,9 +355,9 @@ body {
 .likeIcon {
     cursor: pointer;
     font-size: 2.5em;
-    margin-right: 0.5em;
+    margin: 5px;
 }
 
-.wrapper-profile {
-    width: 50%;
+.padding-xs {
+    padding: 10px;
 }

@@ -3,14 +3,7 @@ import moment from 'moment';
 import 'moment/locale/fr';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import {
-    InputGroup,
-    Form,
-    FormControl,
-    Card,
-    Button,
-    Row
-} from 'react-bootstrap';
+import { InputGroup, Form, FormControl, Card, Button, Row } from 'react-bootstrap';
 import { ModalConfirmation } from '../ModalConfirmation/ModalConfirmation';
 import DisplayComments from '../DisplayComments/index';
 
@@ -28,21 +21,21 @@ export default class DisplayRale extends Component {
                 likeType: 1,
                 likeCount: 0,
                 isLikedByUser: false,
-                likeIcon: '😂'
+                likeIcon: '😂',
             },
             {
                 likeType: 2,
                 likeCount: 0,
                 isLikedByUser: false,
-                likeIcon: '😡'
+                likeIcon: '😡',
             },
             {
                 likeType: 3,
                 likeCount: 0,
                 isLikedByUser: false,
-                likeIcon: '😱'
-            }
-        ]
+                likeIcon: '😱',
+            },
+        ],
     };
 
     componentDidMount = () => {
@@ -56,22 +49,18 @@ export default class DisplayRale extends Component {
         const comment = {
             user_id: this.props.currentUser && this.props.currentUser.user_id,
             post_id: this.props.postId,
-            comment: this.state.comment
+            comment: this.state.comment,
         };
 
-        axios
-            .post('http://localhost:8081/comments/add', { comment })
-            .then(res => {
-                console.log(res.data);
-                const updatedCommentsList = this.state.commentsList.concat(
-                    res.data
-                );
-                toast.success('Commentaire ajouté');
-                this.setState({
-                    commentsList: updatedCommentsList,
-                    comment: ''
-                });
+        axios.post('http://localhost:8081/comments/add', { comment }).then(res => {
+            console.log(res.data);
+            const updatedCommentsList = this.state.commentsList.concat(res.data);
+            toast.success('Commentaire ajouté');
+            this.setState({
+                commentsList: updatedCommentsList,
+                comment: '',
             });
+        });
     };
 
     handleClose = () => {
@@ -85,23 +74,23 @@ export default class DisplayRale extends Component {
     getPostInfosById = () => {
         axios
             .get('http://localhost:8081/posts/postInfos', {
-                params: { 
-                    postId: this.props.postId, 
-                    userId: this.props.userId
-                }
+                params: {
+                    postId: this.props.postId,
+                    userId: this.props.userId,
+                },
             })
             .then(res => {
                 // transform buffer to 8bits unsign
                 const arrayBufferView = new Uint8Array(res.data.file.data);
                 // new blob
                 const imgBlob = new Blob([arrayBufferView], {
-                    type: 'image/jpeg'
+                    type: 'image/jpeg',
                 });
                 const imgUrl = URL.createObjectURL(imgBlob);
-                this.setState({ 
+                this.setState({
                     post: res.data,
                     imgUrl: imgUrl,
-                    likes: res.data.likeState
+                    likes: res.data.likeState,
                 });
             })
             .catch(error => {
@@ -112,7 +101,7 @@ export default class DisplayRale extends Component {
     getAllCommentsByRaleId = () => {
         axios
             .get('http://localhost:8081/posts/comments', {
-                params: { id: this.props.postId }
+                params: { id: this.props.postId },
             })
             .then(res => {
                 this.setState({ commentsList: res.data });
@@ -125,7 +114,7 @@ export default class DisplayRale extends Component {
     deletePostsById = id => {
         axios
             .delete('http://localhost:8081/posts/delete', {
-                params: { id: id }
+                params: { id: id },
             })
             .then(res => {
                 this.props.getAllPostsId();
@@ -141,17 +130,15 @@ export default class DisplayRale extends Component {
     deleteCommentById = id => {
         axios
             .delete('http://localhost:8081/comments/delete', {
-                params: { id: id }
+                params: { id: id },
             })
             .then(res => {
                 console.log(res.data);
-                const updatedCommentsDeleted = this.state.commentsList.filter(
-                    comment => {
-                        return comment.comment_id !== id;
-                    }
-                );
+                const updatedCommentsDeleted = this.state.commentsList.filter(comment => {
+                    return comment.comment_id !== id;
+                });
                 this.setState({
-                    commentsList: updatedCommentsDeleted
+                    commentsList: updatedCommentsDeleted,
                 });
                 this.handleClose();
                 toast.success('Commentaire supprimé');
@@ -166,15 +153,15 @@ export default class DisplayRale extends Component {
         this.setState(prevState => ({
             isToggle: !prevState.isToggle,
         }));
-        this.getAllCommentsByRaleId()
-    }
+        this.getAllCommentsByRaleId();
+    };
 
     handleLike = likeType => {
         const like = {
             user_id: this.props.currentUser && this.props.currentUser.user_id,
             post_id: this.props.postId,
             like_type_id: likeType,
-            isLikedByUser: true 
+            isLikedByUser: true,
         };
 
         axios
@@ -212,24 +199,16 @@ export default class DisplayRale extends Component {
             imgUrl = this.state.imgUrl;
             author = this.state.post.user_pseudo;
             postText = this.state.post.post;
-            trashPost =
-                this.state.post.user_id == userId
-                    ? true
-                    : userType === 'admin'
-                    ? true
-                    : false;
+            trashPost = this.state.post.user_id == userId ? true : userType === 'admin' ? true : false;
             countComments = this.state.commentsList.length;
         }
 
         const likesUser = this.state.likes.map((like, index) => {
             return (
-                <InputGroup.Prepend 
-                    key={index}
-                    onClick={e => this.handleLike(like.likeType)}
-                    className='likeIcon'>
+                <InputGroup.Prepend key={index} onClick={e => this.handleLike(like.likeType)} className='likeIcon'>
                     <Button variant='dark'>{like.likeIcon}</Button>
                     <InputGroup.Text>{like.likeCount}</InputGroup.Text>
-                </InputGroup.Prepend>      
+                </InputGroup.Prepend>
             );
         });
 
@@ -241,21 +220,12 @@ export default class DisplayRale extends Component {
                             <div>
                                 Par {author}, le {date} à {heure}
                             </div>
-                            {trashPost && (
-                                <i
-                                    className='far fa-trash-alt'
-                                    onClick={this.handleShow}
-                                />
-                            )}
+                            {trashPost && <i className='far fa-trash-alt' onClick={this.handleShow} />}
                             <ModalConfirmation
                                 show={this.state.show}
                                 handleClose={this.handleClose}
                                 message='Es tu sur de vouloir supprimer ce rale 🤔 ?'
-                                onClick={e =>
-                                    this.deletePostsById(
-                                        this.props.postId
-                                    )
-                                }
+                                onClick={e => this.deletePostsById(this.props.postId)}
                             />
                         </Row>
                     </Card.Header>
@@ -265,20 +235,15 @@ export default class DisplayRale extends Component {
                     </Card.Body>
                     <Card.Footer className='text-muted'>
                         <InputGroup className='justify-content-around'>
-                           
                             {likesUser}
 
-                            <InputGroup.Prepend>
-                                <Button
-                                    variant='dark'
-                                    onClick={this.handleComment}
-                                >
+                            <InputGroup.Prepend className='likeIcon'>
+                                <Button variant='dark' onClick={this.handleComment}>
                                     💬
                                 </Button>
                                 <InputGroup.Text>{countComments}</InputGroup.Text>
                             </InputGroup.Prepend>
                         </InputGroup>
-
 
                         <hr />
 
@@ -296,15 +261,12 @@ export default class DisplayRale extends Component {
                                         placeholder='Commentez ce rale'
                                         onChange={e =>
                                             this.setState({
-                                                comment: e.target.value
+                                                comment: e.target.value,
                                             })
                                         }
                                     />
                                     <InputGroup.Prepend>
-                                        <Button
-                                            variant='dark'
-                                            onClick={this.submitForm}
-                                        >
+                                        <Button variant='dark' onClick={this.submitForm}>
                                             OK
                                         </Button>
                                     </InputGroup.Prepend>

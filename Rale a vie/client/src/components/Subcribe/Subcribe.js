@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { NavLink, withRouter } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import { Card, Button, Form } from 'react-bootstrap';
+import { Col, Card, Button, Form } from 'react-bootstrap';
 
 class Subcribe extends Component {
     state = {
@@ -11,8 +11,8 @@ class Subcribe extends Component {
             firstname: '',
             email: '',
             password: '',
-            pseudo: ''
-        }
+            pseudo: '',
+        },
     };
 
     handleSubmit = async event => {
@@ -25,14 +25,14 @@ class Subcribe extends Component {
             password: this.state.password,
             pseudo: this.state.pseudo,
             type: 'user',
-            infos: `Bonjour, ici c'est ${this.state.pseudo} !`
+            infos: `Bonjour, ici c'est ${this.state.pseudo} !`,
         };
 
         try {
             await axios.post('http://localhost:8081/users/add', { user });
             this.props.verifyCurrentUser();
             this.props.history.push('/');
-            toast.info(`Bienvenue ${user.pseudo}!`);        
+            toast.info(`Bienvenue ${user.pseudo}!`);
         } catch (error) {
             console.error(error);
         }
@@ -42,7 +42,7 @@ class Subcribe extends Component {
         return (
             <Card className='wrapper'>
                 <Card.Body className=' fadeInDown'>
-                    <div className='formContent'>
+                    <Col md={8} className='formContent'>
                         <Card.Title className='fadeIn first'>
                             <h1 className='title'>S'inscrire</h1>
                         </Card.Title>
@@ -52,47 +52,33 @@ class Subcribe extends Component {
                                 type='text'
                                 className='input-text fadeIn second'
                                 placeholder='Nom'
-                                onChange={e =>
-                                    this.setState({ lastname: e.target.value })
-                                }
+                                onChange={e => this.setState({ lastname: e.target.value })}
                             />
                             <input
                                 type='text'
                                 className='input-text fadeIn second'
                                 placeholder='Prénom'
-                                onChange={e =>
-                                    this.setState({ firstname: e.target.value })
-                                }
+                                onChange={e => this.setState({ firstname: e.target.value })}
                             />
                             <input
                                 type='email'
                                 className='input-text fadeIn third'
                                 placeholder='e-mail'
-                                onChange={e =>
-                                    this.setState({ email: e.target.value })
-                                }
+                                onChange={e => this.setState({ email: e.target.value })}
                             />
                             <input
                                 type='password'
                                 className='input-text fadeIn third'
                                 placeholder='password'
-                                onChange={e =>
-                                    this.setState({ password: e.target.value })
-                                }
+                                onChange={e => this.setState({ password: e.target.value })}
                             />
                             <input
                                 type='text'
                                 className='input-text fadeIn fourth'
                                 placeholder='Pseudo'
-                                onChange={e =>
-                                    this.setState({ pseudo: e.target.value })
-                                }
+                                onChange={e => this.setState({ pseudo: e.target.value })}
                             />
-                            <Button
-                                type='submit'
-                                className='input-button fadeIn fifth'
-                                onSubmit={this.handleSubmit}
-                            >
+                            <Button type='submit' className='input-button fadeIn fifth' onSubmit={this.handleSubmit}>
                                 SE CONNECTER
                             </Button>
                         </Form>
@@ -100,7 +86,7 @@ class Subcribe extends Component {
                         <NavLink className='a underlineHover' to={'/'}>
                             <div className='formFooter'>Rale à vie</div>
                         </NavLink>
-                    </div>
+                    </Col>
                 </Card.Body>
             </Card>
         );

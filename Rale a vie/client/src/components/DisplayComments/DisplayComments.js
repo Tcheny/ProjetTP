@@ -22,12 +22,7 @@ export default class DisplayComments extends Component {
         const userType = currentUser && currentUser.user_type;
 
         const commentsList = this.props.commentsList.map(comment => {
-            let trashComment =
-                comment.user_id == userId
-                    ? true
-                    : userType === 'admin'
-                    ? true
-                    : false;
+            let trashComment = comment.user_id == userId ? true : userType === 'admin' ? true : false;
             let authorComment = '';
             let dateComment = moment.utc(comment.date_creation).format('ll');
             let heureComment = moment
@@ -46,7 +41,7 @@ export default class DisplayComments extends Component {
                     key={comment.comment_id}
                     style={{
                         margin: '5px 0',
-                        borderRadius: '30px'
+                        borderRadius: '30px',
                     }}
                 >
                     <Row className='justify-content-between align-items-center'>
@@ -55,17 +50,7 @@ export default class DisplayComments extends Component {
                             <div> {comment.comment}</div>
                         </div>
                         <div>
-                            {trashComment && (
-                                <i
-                                    className='far fa-trash-alt'
-                                    // onClick={this.handleShow}
-                                    onClick={e =>
-                                        this.props.deleteCommentById(
-                                            comment.comment_id
-                                        )
-                                    }
-                                />
-                            )}
+                            {trashComment && <i className='far fa-trash-alt' onClick={e => this.props.deleteCommentById(comment.comment_id)} />}
                         </div>
                     </Row>
                 </ListGroup.Item>
