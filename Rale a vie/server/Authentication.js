@@ -22,6 +22,7 @@ const validateToken = async (req, res, next) => {
         req.path === '/users/add' ||
         req.path === '/login' ||
         req.path === '/posts/postInfos' ||
+        req.path === '/posts/comments' ||
         req.path === '/posts/allId' ||
         req.path === '/auth'
     ) {

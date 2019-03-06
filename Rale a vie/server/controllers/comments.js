@@ -1,11 +1,13 @@
-const SQL = require("sql-template-strings");
+const SQL = require('sql-template-strings');
 
-const client = require("../database/connexion");
+const client = require('../database/connexion');
 
 const getComments = async () => {
     const query = SQL`
         SELECT
-            *
+            comment_id,
+            post_id,
+            user_id
         FROM
         comments
     `;
@@ -77,5 +79,5 @@ module.exports = {
     getOneComment,
     insertComments,
     // editComments,
-    deleteComments
+    deleteComments,
 };

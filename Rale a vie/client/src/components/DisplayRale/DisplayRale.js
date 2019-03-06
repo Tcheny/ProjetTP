@@ -3,7 +3,7 @@ import moment from 'moment';
 import 'moment/locale/fr';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import { InputGroup, Form, FormControl, Card, Button, Row, Container } from 'react-bootstrap';
+import { InputGroup, Form, FormControl, Card, Button, Row } from 'react-bootstrap';
 import { ModalConfirmation } from '../ModalConfirmation/ModalConfirmation';
 import DisplayComments from '../DisplayComments/index';
 

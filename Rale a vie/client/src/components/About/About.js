@@ -202,20 +202,20 @@ export default class About extends Component {
                                                             </Col>
                                                         </Form.Group>
                                                         {/* <Form.Group as={Row}>
-                                                                    <Form.Label column sm='3'>
-                                                                        Mot de passe
-                                                                    </Form.Label>
-                                                                    <Col sm='9'>
-                                                                        <Form.Control
-                                                                            type='password'
-                                                                            defaultValue={ user.user_password }
-                                                                            onChange={e => {
-                                                                                this.handleChange({ user_passwordField: e.target.value });
-                                                                            }}
-                                                                            placeholder='Mot de passe'
-                                                                        />
-                                                                    </Col>
-                                                                </Form.Group> */}
+                                                            <Form.Label column sm='3'>
+                                                                Mot de passe
+                                                            </Form.Label>
+                                                            <Col sm='9'>
+                                                                <Form.Control
+                                                                    type='password'
+                                                                    defaultValue={user.user_password}
+                                                                    onChange={e => {
+                                                                        this.handleChange({ user_passwordField: e.target.value });
+                                                                    }}
+                                                                    placeholder='Mot de passe'
+                                                                />
+                                                            </Col>
+                                                        </Form.Group> */}
                                                         <Form.Group as={Row}>
                                                             <Form.Label column sm='3'>
                                                                 Pseudo

@@ -1,17 +1,10 @@
-import React from "react";
-import DisplayRale from "./DisplayRale";
-import { UseConsumer } from "../../contexts/UseContext";
+import React from 'react';
+import DisplayRale from './DisplayRale';
+import { UseConsumer } from '../../contexts/UseContext';
 
 export default props => (
     <UseConsumer>
-        {({
-            isAuth,
-            currentUser,
-            users_id,
-            getAllUsersById,
-            posts_id,
-            getAllPostsId
-        }) => (
+        {({ isAuth, currentUser, users_id, getAllUsersById, posts_id, getAllPostsId }) => (
             <DisplayRale
                 {...props}
                 isAuth={isAuth}

@@ -23,7 +23,7 @@ export class UseProvider extends React.Component {
         isAuth: false,
         currentUser: null,
         users_id: [],
-        posts_id: []
+        posts_id: [],
     };
 
     componentDidMount = async () => {
@@ -42,7 +42,7 @@ export class UseProvider extends React.Component {
             authentication = await axios.get('http://localhost:8081/auth');
             this.setState({
                 isAuth: true,
-                currentUser: authentication.data.user
+                currentUser: authentication.data.user,
             });
         } catch (error) {
             this.setState({ currentUser: error.response.data.user });
@@ -87,7 +87,7 @@ export class UseProvider extends React.Component {
         verifyCurrentUser: this.verifyCurrentUser,
         logout: this.logout,
         getAllUsersById: this.getAllUsersById,
-        getAllPostsId: this.getAllPostsId
+        getAllPostsId: this.getAllPostsId,
     };
 
     render() {
@@ -95,7 +95,7 @@ export class UseProvider extends React.Component {
             <UseContext.Provider
                 value={{
                     ...this.state,
-                    ...this.action
+                    ...this.action,
                 }}
             >
                 {this.props.children}
