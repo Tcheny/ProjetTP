@@ -361,3 +361,35 @@ body {
 .padding-xs {
     padding: 10px;
 }
+
+/* COMMENTS LIST */
+
+.wrapper-comment {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px 0;
+    border-radius: 30px;
+}
+
+.comment {
+    width: 95%;
+}
+
+.comment-trash {
+    width: 5%;
+    position: relative;
+    bottom: -25px;
+    right: -25px;
+    z-index: 0;
+}
+
+.trash-wrapper {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

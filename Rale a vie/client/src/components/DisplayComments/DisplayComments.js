@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import moment from 'moment';
 import 'moment/locale/fr';
-
-import { ListGroup, Row } from 'react-bootstrap';
+import { ListGroup, Row, Badge } from 'react-bootstrap';
 
 export default class DisplayComments extends Component {
     state = { show: false, commentsDelete: [] };
@@ -37,22 +36,18 @@ export default class DisplayComments extends Component {
             });
 
             return (
-                <ListGroup.Item
-                    key={comment.comment_id}
-                    style={{
-                        margin: '5px 0',
-                        borderRadius: '30px',
-                    }}
-                >
-                    <Row className='justify-content-between align-items-center'>
-                        <div>
-                            {authorComment}, le {dateComment} à {heureComment}
-                            <div> {comment.comment}</div>
-                        </div>
-                        <div>
-                            {trashComment && <i className='far fa-trash-alt' onClick={e => this.props.deleteCommentById(comment.comment_id)} />}
-                        </div>
-                    </Row>
+                <ListGroup.Item key={comment.comment_id} className='wrapper-comment'>
+                    <div className='comment'>
+                        {authorComment}, le {dateComment} à {heureComment}
+                        <div> {comment.comment}</div>
+                    </div>
+                    <div className='comment-trash'>
+                        {trashComment && (
+                            <Badge pill variant='dark' className='trash-wrapper'>
+                                <i className='far fa-trash-alt' onClick={e => this.props.deleteCommentById(comment.comment_id)} />
+                            </Badge>
+                        )}
+                    </div>
                 </ListGroup.Item>
             );
         });
@@ -62,6 +57,7 @@ export default class DisplayComments extends Component {
                 {this.props.isToggle && (
                     <div>
                         les commentaires:
+                        <br />
                         {commentsList}
                         <hr />
                     </div>
