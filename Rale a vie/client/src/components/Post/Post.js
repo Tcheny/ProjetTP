@@ -6,7 +6,7 @@ import { toast } from 'react-toastify';
 export default class Post extends Component {
     state = {
         inputPost: '',
-        inputFile: null
+        inputFile: null,
     };
 
     submitForm = async () => {
@@ -18,18 +18,13 @@ export default class Post extends Component {
         formData.append('uploadFile', this.state.inputFile);
 
         try {
-            rale = await axios.post(
-                'http://localhost:8081/posts/add',
-                formData,
-                { headers: { 'Content-Type': 'multipart/form-data' } }
-            );
-            console.log(rale.data);
+            rale = await axios.post('http://localhost:8081/posts/add', formData, {
+                headers: { 'Content-Type': 'multipart/form-data' },
+            });
             this.setState({ inputPost: '' }, () => {
-                this.props.getAllPostsId()
-                toast.success('Rale exprimé')
-            }
-            );
-
+                this.props.getAllPostsId();
+                toast.success('Rale exprimé');
+            });
         } catch (error) {
             console.error(error);
             toast.error('Erreur dans le post Rale');
@@ -39,7 +34,12 @@ export default class Post extends Component {
     render() {
         return (
             <Card>
-                <Card.Header>Créer un rale</Card.Header>
+                <Card.Header>
+                    <div className='padding-xs text-center'>
+                        <div className='post-title'>Bienvenue {this.props.currentUser.user_pseudo}!</div>
+                        Vous avez le devoir de vous plaindre! Encore oui! Encore!
+                    </div>
+                </Card.Header>
                 <Card.Body>
                     <Form>
                         <Form.Group controlId='exampleForm.ControlTextarea1'>
@@ -48,9 +48,7 @@ export default class Post extends Component {
                                 rows='5'
                                 placeholder='Ralez plus fort que jamais !'
                                 value={this.state.inputPost}
-                                onChange={e =>
-                                    this.setState({ inputPost: e.target.value })
-                                }
+                                onChange={e => this.setState({ inputPost: e.target.value })}
                             />
                         </Form.Group>
                     </Form>
@@ -64,18 +62,10 @@ export default class Post extends Component {
                             key={this.state.inputPost}
                             name='mediaUpload'
                             onChange={this.handleChangeFile}
-                            onChange={e =>
-                                this.setState({ inputFile: e.target.files[0] })
-                            }
+                            onChange={e => this.setState({ inputFile: e.target.files[0] })}
                         />
 
-                        <Button
-                            as='input'
-                            type='submit'
-                            variant='dark'
-                            value='Envoyer'
-                            onClick={this.submitForm}
-                        />
+                        <Button as='input' type='submit' variant='dark' value='Envoyer' onClick={this.submitForm} />
                     </Row>
                 </Card.Footer>
             </Card>

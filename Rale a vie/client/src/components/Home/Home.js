@@ -10,27 +10,27 @@ import Header from '../Header/Header';
 export default class Home extends Component {
     state = {
         prevScrollpos: window.pageYOffset,
-        visible: true
-    }
+        visible: true,
+    };
 
     myRef = React.createRef();
 
     scrolling = () => {
         this.myRef.scrollIntoView({
             behavior: 'smooth',
-            block: 'start'
+            block: 'start',
         });
     };
 
     // display all Posts
     componentDidMount = () => {
         this.props.getAllPostsId();
-        window.addEventListener("scroll", this.handleScroll);
+        window.addEventListener('scroll', this.handleScroll);
     };
 
     componentWillUnmount = () => {
-        window.removeEventListener("scroll", this.handleScroll);
-    }
+        window.removeEventListener('scroll', this.handleScroll);
+    };
 
     handleScroll = () => {
         const { prevScrollpos } = this.state;
@@ -40,41 +40,33 @@ export default class Home extends Component {
 
         this.setState({
             prevScrollpos: currentScrollPos,
-            visible
+            visible,
         });
     };
 
     render() {
         const { isAuth, posts_id } = this.props;
-        
-        const allRales = posts_id.map((postInfos) => {
-            return <DisplayRale 
-                key={postInfos.post_id}
-                userId={postInfos.user_id}
-                postId={postInfos.post_id}
-                />;
+
+        const allRales = posts_id.map(postInfos => {
+            return <DisplayRale key={postInfos.post_id} userId={postInfos.user_id} postId={postInfos.post_id} />;
         });
 
         return (
             <Fragment>
                 <NavbarApp />
                 <Header scrolling={this.scrolling} />
-                {!this.state.visible && <i class="fas fa-arrow-circle-up fa-3x" onClick={this.scrolling} />}
+                {!this.state.visible && <i class='fas fa-arrow-circle-up fa-3x' onClick={this.scrolling} />}
                 <Container>
-                    <Row>
-                        <Col md={{ span: 6, offset: 3 }}>
-                            <div
-                                style={{ margin: '100px 0' }}
-                                ref={r => (this.myRef = r)}
-                            >
-                                <Search />
+                    <Row className='justify-content-md-center'>
+                        <Col lg={6} md={8}>
+                            <div style={{ margin: '50px 0' }} ref={r => (this.myRef = r)}>
+                                {/* <Search /> */}
                                 {isAuth && <Post />}
                                 {allRales}
                             </div>
                         </Col>
                     </Row>
                 </Container>
-                
             </Fragment>
         );
     }

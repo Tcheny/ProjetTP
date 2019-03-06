@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import moment from 'moment';
 import 'moment/locale/fr';
-import { ListGroup, Row, Badge } from 'react-bootstrap';
+import { ListGroup, Badge } from 'react-bootstrap';
 
 export default class DisplayComments extends Component {
     state = { show: false, commentsDelete: [] };
@@ -38,13 +38,20 @@ export default class DisplayComments extends Component {
             return (
                 <ListGroup.Item key={comment.comment_id} className='wrapper-comment'>
                     <div className='comment'>
-                        {authorComment}, le {dateComment} à {heureComment}
-                        <div> {comment.comment}</div>
+                        <div className='comment-name'>
+                            {authorComment}, le {dateComment} à {heureComment}
+                        </div>
+                        <div className='comment-display'> {comment.comment}</div>
                     </div>
                     <div className='comment-trash'>
                         {trashComment && (
-                            <Badge pill variant='dark' className='trash-wrapper'>
-                                <i className='far fa-trash-alt' onClick={e => this.props.deleteCommentById(comment.comment_id)} />
+                            <Badge
+                                pill
+                                variant='dark'
+                                className='trash-wrapper'
+                                onClick={e => this.props.deleteCommentById(comment.comment_id)}
+                            >
+                                <i className='far fa-trash-alt' />
                             </Badge>
                         )}
                     </div>

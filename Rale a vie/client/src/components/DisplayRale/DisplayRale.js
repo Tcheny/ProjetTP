@@ -3,7 +3,7 @@ import moment from 'moment';
 import 'moment/locale/fr';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import { InputGroup, Form, FormControl, Card, Button, Row } from 'react-bootstrap';
+import { InputGroup, Form, FormControl, Card, Button, Row, Container } from 'react-bootstrap';
 import { ModalConfirmation } from '../ModalConfirmation/ModalConfirmation';
 import DisplayComments from '../DisplayComments/index';
 
@@ -216,7 +216,7 @@ export default class DisplayRale extends Component {
             <div style={{ margin: '30px 0' }}>
                 <Card>
                     <Card.Header>
-                        <Row className='justify-content-between align-items-center'>
+                        <Row className='justify-content-between align-items-center padding-xs'>
                             <div>
                                 Par {author}, le {date} à {heure}
                             </div>

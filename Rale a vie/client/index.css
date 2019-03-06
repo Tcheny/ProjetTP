@@ -68,6 +68,11 @@ body {
     animation: 3s infinite flotting;
     animation-timing-function: ease;
 }
+@media (max-width: 576px) {
+    .fa-arrow-circle-up {
+        display: none;
+    }
+}
 
 @keyframes flotting {
     0% {
@@ -93,7 +98,8 @@ body {
     width: 100%;
     height: 100%;
     border-radius: 0;
-    background: linear-gradient(to bottom, rgba(57, 173, 219, 0.25) 0%, rgba(42, 60, 87, 0.4) 100%), linear-gradient(135deg, #670d10 0%, #092756 100%);
+    background: linear-gradient(to bottom, rgba(57, 173, 219, 0.25) 0%, rgba(42, 60, 87, 0.4) 100%),
+        linear-gradient(135deg, #670d10 0%, #092756 100%);
 }
 
 .formContent {
@@ -249,26 +255,6 @@ body {
     color: #60a0ff;
 }
 
-/* OTHERS */
-
-*:focus {
-    outline: none;
-}
-
-.icon {
-    width: 30%;
-}
-
-.a {
-    color: #fff;
-    text-decoration: none;
-}
-
-.a:hover {
-    color: #fff;
-    text-decoration: none;
-}
-
 /* ABOUT */
 
 .profile-page .page-header {
@@ -326,7 +312,7 @@ body {
 }
 
 .profile-content {
-    transform: translate3d(0, -30%, 0);
+    transform: translate3d(0, -40%, 0);
     text-align: left;
 }
 
@@ -348,18 +334,10 @@ body {
     margin: 20px 10px;
 }
 
-.fa-trash-alt {
-    cursor: pointer;
-}
+/* POST */
 
-.likeIcon {
-    cursor: pointer;
-    font-size: 2.5em;
-    margin: 5px;
-}
-
-.padding-xs {
-    padding: 10px;
+.post-title {
+    font-size: x-large;
 }
 
 /* COMMENTS LIST */
@@ -377,11 +355,19 @@ body {
     width: 95%;
 }
 
+.comment-name {
+    font-size: smaller;
+}
+
+.comment-display {
+    color: #23272b;
+}
+
 .comment-trash {
     width: 5%;
     position: relative;
     bottom: -25px;
-    right: -25px;
+    right: -20px;
     z-index: 0;
 }
 
@@ -392,4 +378,38 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+/* OTHERS */
+
+*:focus {
+    outline: none;
+}
+
+.icon {
+    width: 30%;
+}
+
+.a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.a:hover {
+    color: #fff;
+    text-decoration: none;
+}
+
+.fa-trash-alt {
+    cursor: pointer;
+}
+
+.likeIcon {
+    cursor: pointer;
+    font-size: 2.5em;
+    margin: 5px;
+}
+
+.padding-xs {
+    padding: 10px;
 }
