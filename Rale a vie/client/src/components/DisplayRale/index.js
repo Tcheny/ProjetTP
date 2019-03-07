@@ -4,7 +4,7 @@ import { UseConsumer } from '../../contexts/UseContext';
 
 export default props => (
     <UseConsumer>
-        {({ isAuth, currentUser, users_id, getAllUsersById, posts_id, getAllPostsId }) => (
+        {({ isAuth, currentUser, users_id, getAllUsersById, posts_id, getAllRalesId }) => (
             <DisplayRale
                 {...props}
                 isAuth={isAuth}
@@ -12,7 +12,7 @@ export default props => (
                 users_id={users_id}
                 getAllUsersById={getAllUsersById}
                 posts_id={posts_id}
-                getAllPostsId={getAllPostsId}
+                getAllRalesId={getAllRalesId}
             />
         )}
     </UseConsumer>

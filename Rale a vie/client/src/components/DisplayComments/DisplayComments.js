@@ -15,12 +15,12 @@ export default class DisplayComments extends Component {
     };
 
     render() {
-        const { currentUser } = this.props;
+        const { currentUser, commentsList, users_id, isToggle, notComment } = this.props;
 
         const userId = currentUser && currentUser.user_id;
         const userType = currentUser && currentUser.user_type;
 
-        const commentsList = this.props.commentsList.map(comment => {
+        const displayCommentsList = commentsList.map(comment => {
             let trashComment = comment.user_id == userId ? true : userType === 'admin' ? true : false;
             let authorComment = '';
             let dateComment = moment.utc(comment.date_creation).format('ll');
@@ -29,7 +29,7 @@ export default class DisplayComments extends Component {
                 .utcOffset('+0200')
                 .format('LT');
 
-            this.props.users_id.filter(user => {
+            users_id.filter(user => {
                 if (user.user_id == comment.user_id) {
                     authorComment = user.user_pseudo;
                 }
@@ -61,11 +61,11 @@ export default class DisplayComments extends Component {
 
         return (
             <ListGroup>
-                {this.props.isToggle && (
+                {isToggle && (
                     <div>
                         les commentaires:
                         <br />
-                        {commentsList}
+                        {notComment ? 'Aucun commentaire' : displayCommentsList}
                         <hr />
                     </div>
                 )}

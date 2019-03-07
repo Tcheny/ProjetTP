@@ -117,7 +117,7 @@ export default class DisplayRale extends Component {
                 params: { id: id },
             })
             .then(res => {
-                this.props.getAllPostsId();
+                this.props.getAllRalesId();
                 toast.success('Rale supprimé');
                 this.handleClose();
             })
@@ -188,6 +188,7 @@ export default class DisplayRale extends Component {
         let author = '';
         let trashPost = false;
         let countComments = 0;
+        let notComment = false;
 
         if (this.state.post) {
             date = moment.utc(this.state.post.date_creation).format('ll');
@@ -201,6 +202,9 @@ export default class DisplayRale extends Component {
             postText = this.state.post.post;
             trashPost = this.state.post.user_id == userId ? true : userType === 'admin' ? true : false;
             countComments = this.state.commentsList.length;
+        }
+        if (this.state.commentsList.length === 0) {
+            notComment = true;
         }
 
         const likesUser = this.state.likes.map((like, index) => {
@@ -248,6 +252,7 @@ export default class DisplayRale extends Component {
                         <hr />
 
                         <DisplayComments
+                            notComment={notComment}
                             commentsList={this.state.commentsList}
                             isToggle={this.state.isToggle}
                             deleteCommentById={this.deleteCommentById}

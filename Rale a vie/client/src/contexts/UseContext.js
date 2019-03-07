@@ -72,7 +72,7 @@ export class UseProvider extends React.Component {
         }
     };
 
-    getAllPostsId = async () => {
+    getAllRalesId = async () => {
         let allPostsId = null;
 
         try {
@@ -87,7 +87,7 @@ export class UseProvider extends React.Component {
         verifyCurrentUser: this.verifyCurrentUser,
         logout: this.logout,
         getAllUsersById: this.getAllUsersById,
-        getAllPostsId: this.getAllPostsId,
+        getAllRalesId: this.getAllRalesId,
     };
 
     render() {

@@ -5,7 +5,7 @@ const moment = require('moment');
 const path = require('path');
 
 const queries = require('../database/connexion');
-const { getAllPostsIds, getPostInfosById, insertPosts, deletePosts } = require('../controllers/posts');
+const { getAllRalesIds, getPostInfosById, insertPosts, deletePosts } = require('../controllers/posts');
 
 const router = Router();
 // configuring Multer to use files directory for storing files
@@ -17,7 +17,7 @@ router.get('/allId', async (req, res) => {
     let queryResult = null;
 
     try {
-        queryResult = await getAllPostsIds(queries);
+        queryResult = await getAllRalesIds(queries);
     } catch (error) {
         console.log(error);
         return res.status(500).send(new Error('Erreur dans posts', error));

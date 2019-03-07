@@ -6,6 +6,7 @@ const getAllCommentsFromPosts = async id => {
     const query = SQL`
         SELECT
             comments.comment_id,
+            comments.post_id,
             comments.user_id,
             comments.comment,
             comments.date_creation

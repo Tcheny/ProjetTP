@@ -3,7 +3,7 @@ const SQL = require('sql-template-strings');
 const client = require('../database/connexion');
 
 // Select post_id from table posts
-const getAllPostsIds = async () => {
+const getAllRalesIds = async () => {
     const query = SQL`
         SELECT
             post_id,
@@ -27,6 +27,7 @@ const getPostInfosById = async (postId, userId) => {
             user_firstname,
             user_pseudo,
             posts.user_id,
+            posts.post_id,
             post,
             type_media,
             path_media,
@@ -124,7 +125,7 @@ const deletePosts = async id => {
 };
 
 module.exports = {
-    getAllPostsIds,
+    getAllRalesIds,
     getPostInfosById,
     insertPosts,
     deletePosts,

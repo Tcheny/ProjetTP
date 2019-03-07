@@ -5,12 +5,7 @@ import { UseConsumer } from '../../contexts/UseContext';
 export default props => (
     <UseConsumer>
         {({ isAuth, currentUser, getAllPostsId }) => (
-            <Post
-                {...props}
-                isAuth={isAuth}
-                currentUser={currentUser}
-                getAllPostsId={getAllPostsId}
-            />
+            <Post {...props} isAuth={isAuth} currentUser={currentUser} getAllPostsId={getAllPostsId} />
         )}
     </UseConsumer>
 );

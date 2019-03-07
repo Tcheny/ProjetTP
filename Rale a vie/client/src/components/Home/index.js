@@ -4,8 +4,8 @@ import { UseConsumer } from '../../contexts/UseContext';
 
 export default () => (
     <UseConsumer>
-        {({ isAuth, posts_id, getAllPostsId }) => (
-            <Home isAuth={isAuth} posts_id={posts_id} getAllPostsId={getAllPostsId} />
+        {({ isAuth, posts_id, getAllRalesId }) => (
+            <Home isAuth={isAuth} posts_id={posts_id} getAllRalesId={getAllRalesId} />
         )}
     </UseConsumer>
 );

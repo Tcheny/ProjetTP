@@ -22,7 +22,7 @@ export default class Post extends Component {
                 headers: { 'Content-Type': 'multipart/form-data' },
             });
             this.setState({ inputPost: '' }, () => {
-                this.props.getAllPostsId();
+                this.props.getAllRalesId();
                 toast.success('Rale exprimé');
             });
         } catch (error) {
