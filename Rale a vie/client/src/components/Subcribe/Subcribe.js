@@ -35,6 +35,7 @@ class Subcribe extends Component {
             toast.info(`Bienvenue ${user.pseudo}!`);
         } catch (error) {
             console.error(error);
+            toast.error(error.request.response.replace(/"/g, ''));
         }
     };
 
