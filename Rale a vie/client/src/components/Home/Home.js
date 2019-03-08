@@ -46,7 +46,13 @@ export default class Home extends Component {
         const { isAuth, posts_id } = this.props;
 
         const allRales = posts_id.map(postInfos => {
-            return <DisplayRale key={postInfos.post_id} userId={postInfos.user_id} postId={postInfos.post_id} />;
+            return (
+                <DisplayRale
+                    key={postInfos.post_id}
+                    userId={postInfos.user_id}
+                    postId={postInfos.post_id}
+                />
+            );
         });
 
         return (
@@ -55,7 +61,9 @@ export default class Home extends Component {
 
                 <Header scrolling={this.scrolling} />
 
-                {!this.state.visible && <i class='fas fa-arrow-circle-up fa-3x' onClick={this.scrolling} />}
+                {!this.state.visible && (
+                    <i class='fas fa-arrow-circle-up fa-3x' onClick={this.scrolling} />
+                )}
 
                 <Container>
                     <Row className='justify-content-md-center'>

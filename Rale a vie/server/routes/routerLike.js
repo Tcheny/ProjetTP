@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { insertLike, deleteLikedPost } = require('../controllers/getLike');
+const { insertLike, deleteLikedPost } = require('../controllers/like');
 
 const router = Router();
 
@@ -7,7 +7,6 @@ router.post('/insertlike', async (req, res) => {
     if (req.body.like.isLikedByUser) {
         deleteLikedPost(req.session.userId, req.body.like.post_id);
     }
-
     const likeInfos = {
         user_id: req.session.userId,
         post_id: req.body.like.post_id,

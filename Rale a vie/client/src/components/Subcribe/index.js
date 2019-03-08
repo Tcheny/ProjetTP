@@ -1,6 +1,6 @@
-import React from "react";
-import Subcribe from "./Subcribe";
-import { UseConsumer } from "../../contexts/UseContext";
+import React from 'react';
+import Subcribe from './Subcribe';
+import { UseConsumer } from '../../contexts/UseContext';
 
 export default props => (
     <UseConsumer>

@@ -118,12 +118,12 @@ export default class DisplayRale extends Component {
             })
             .then(res => {
                 this.props.getAllRalesId();
-                toast.success('Rale supprimé');
+                toast.success('Le rale est supprimé avec succès');
                 this.handleClose();
             })
             .catch(error => {
                 console.error(error);
-                toast.error(error);
+                toast.error("Le rale n'a pas été supprimé");
             });
     };
 
@@ -145,7 +145,7 @@ export default class DisplayRale extends Component {
             })
             .catch(error => {
                 console.error(error);
-                toast.error(error);
+                toast.error("Le commentaire n'a pas été supprimé");
             });
     };
 
@@ -171,7 +171,7 @@ export default class DisplayRale extends Component {
             })
             .catch(error => {
                 console.error(error);
-                toast.error(error);
+                toast.error(error.request.response);
             });
     };
 
@@ -200,7 +200,8 @@ export default class DisplayRale extends Component {
             imgUrl = this.state.imgUrl;
             author = this.state.post.user_pseudo;
             postText = this.state.post.post;
-            trashPost = this.state.post.user_id == userId ? true : userType === 'admin' ? true : false;
+            trashPost =
+                this.state.post.user_id == userId ? true : userType === 'admin' ? true : false;
             countComments = this.state.commentsList.length;
         }
         if (this.state.commentsList.length === 0) {
@@ -209,7 +210,11 @@ export default class DisplayRale extends Component {
 
         const likesUser = this.state.likes.map((like, index) => {
             return (
-                <InputGroup.Prepend key={index} onClick={e => this.handleLike(like.likeType)} className='likeIcon'>
+                <InputGroup.Prepend
+                    key={index}
+                    onClick={e => this.handleLike(like.likeType)}
+                    className='likeIcon'
+                >
                     <Button variant='dark'>{like.likeIcon}</Button>
                     <InputGroup.Text>{like.likeCount}</InputGroup.Text>
                 </InputGroup.Prepend>
@@ -224,7 +229,9 @@ export default class DisplayRale extends Component {
                             <div>
                                 Par {author}, le {date} à {heure}
                             </div>
-                            {trashPost && <i className='far fa-trash-alt' onClick={this.handleShow} />}
+                            {trashPost && (
+                                <i className='far fa-trash-alt' onClick={this.handleShow} />
+                            )}
                             <ModalConfirmation
                                 show={this.state.show}
                                 handleClose={this.handleClose}

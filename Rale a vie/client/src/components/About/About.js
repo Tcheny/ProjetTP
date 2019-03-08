@@ -31,12 +31,24 @@ export default class About extends Component {
     editProfil = () => {
         const user_id = this.props.currentUser && this.props.currentUser.user_id;
         const editUser = {
-            user_email: this.state.user_emailField ? this.state.user_emailField : this.state.user.user_email,
-            user_firstname: this.state.user_firstnameField ? this.state.user_firstnameField : this.state.user.user_firstname,
-            user_infos: this.state.user_infosField ? this.state.user_infosField : this.state.user.user_infos,
-            user_lastname: this.state.user_lastnameField ? this.state.user_lastnameField : this.state.user.user_lastname,
-            user_password: this.state.user_passwordField ? this.state.user_passwordField : this.state.user.user_password,
-            user_pseudo: this.state.user_pseudoField ? this.state.user_pseudoField : this.state.user.user_pseudo,
+            user_email: this.state.user_emailField
+                ? this.state.user_emailField
+                : this.state.user.user_email,
+            user_firstname: this.state.user_firstnameField
+                ? this.state.user_firstnameField
+                : this.state.user.user_firstname,
+            user_infos: this.state.user_infosField
+                ? this.state.user_infosField
+                : this.state.user.user_infos,
+            user_lastname: this.state.user_lastnameField
+                ? this.state.user_lastnameField
+                : this.state.user.user_lastname,
+            user_password: this.state.user_passwordField
+                ? this.state.user_passwordField
+                : this.state.user.user_password,
+            user_pseudo: this.state.user_pseudoField
+                ? this.state.user_pseudoField
+                : this.state.user.user_pseudo,
         };
 
         axios
@@ -157,10 +169,13 @@ export default class About extends Component {
                                                             <Col sm='9'>
                                                                 <Form.Control
                                                                     type='text'
-                                                                    defaultValue={user.user_firstname}
+                                                                    defaultValue={
+                                                                        user.user_firstname
+                                                                    }
                                                                     onChange={e => {
                                                                         this.handleChange({
-                                                                            user_firstnameField: e.target.value,
+                                                                            user_firstnameField:
+                                                                                e.target.value,
                                                                         });
                                                                     }}
                                                                     placeholder='Prénom'
@@ -174,10 +189,13 @@ export default class About extends Component {
                                                             <Col sm='9'>
                                                                 <Form.Control
                                                                     type='text'
-                                                                    defaultValue={user.user_lastname}
+                                                                    defaultValue={
+                                                                        user.user_lastname
+                                                                    }
                                                                     onChange={e => {
                                                                         this.handleChange({
-                                                                            user_lastnameField: e.target.value,
+                                                                            user_lastnameField:
+                                                                                e.target.value,
                                                                         });
                                                                     }}
                                                                     placeholder='Nom'
@@ -194,7 +212,8 @@ export default class About extends Component {
                                                                     defaultValue={user.user_email}
                                                                     onChange={e => {
                                                                         this.handleChange({
-                                                                            user_emailField: e.target.value,
+                                                                            user_emailField:
+                                                                                e.target.value,
                                                                         });
                                                                     }}
                                                                     placeholder='E-mail'
@@ -226,7 +245,8 @@ export default class About extends Component {
                                                                     defaultValue={user.user_pseudo}
                                                                     onChange={e => {
                                                                         this.handleChange({
-                                                                            user_pseudoField: e.target.value,
+                                                                            user_pseudoField:
+                                                                                e.target.value,
                                                                         });
                                                                     }}
                                                                     placeholder='Pseudo'
@@ -244,7 +264,8 @@ export default class About extends Component {
                                                                     defaultValue={user.user_infos}
                                                                     onChange={e => {
                                                                         this.handleChange({
-                                                                            user_infosField: e.target.value,
+                                                                            user_infosField:
+                                                                                e.target.value,
                                                                         });
                                                                     }}
                                                                     placeholder='Détails'
@@ -256,7 +277,10 @@ export default class About extends Component {
                                             </Modal.Body>
 
                                             <Modal.Footer>
-                                                <Button variant='secondary' onClick={this.handleClose}>
+                                                <Button
+                                                    variant='secondary'
+                                                    onClick={this.handleClose}
+                                                >
                                                     Fermer
                                                 </Button>
                                                 <Button variant='primary' onClick={this.editProfil}>

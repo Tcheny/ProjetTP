@@ -36,7 +36,9 @@ export default class Post extends Component {
             <Card>
                 <Card.Header>
                     <div className='padding-xs text-center'>
-                        <div className='post-title'>Bienvenue {this.props.currentUser.user_pseudo}!</div>
+                        <div className='post-title'>
+                            Bienvenue {this.props.currentUser.user_pseudo}!
+                        </div>
                         Vous avez le devoir de vous plaindre! Encore oui! Encore!
                     </div>
                 </Card.Header>
@@ -65,7 +67,13 @@ export default class Post extends Component {
                             onChange={e => this.setState({ inputFile: e.target.files[0] })}
                         />
 
-                        <Button as='input' type='submit' variant='dark' value='Envoyer' onClick={this.submitForm} />
+                        <Button
+                            as='input'
+                            type='submit'
+                            variant='dark'
+                            value='Envoyer'
+                            onClick={this.submitForm}
+                        />
                     </Row>
                 </Card.Footer>
             </Card>

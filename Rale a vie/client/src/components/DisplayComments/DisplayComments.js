@@ -21,7 +21,8 @@ export default class DisplayComments extends Component {
         const userType = currentUser && currentUser.user_type;
 
         const displayCommentsList = commentsList.map(comment => {
-            let trashComment = comment.user_id == userId ? true : userType === 'admin' ? true : false;
+            let trashComment =
+                comment.user_id == userId ? true : userType === 'admin' ? true : false;
             let authorComment = '';
             let dateComment = moment.utc(comment.date_creation).format('ll');
             let heureComment = moment

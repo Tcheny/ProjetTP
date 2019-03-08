@@ -79,7 +79,11 @@ class Subcribe extends Component {
                                 placeholder='Pseudo'
                                 onChange={e => this.setState({ pseudo: e.target.value })}
                             />
-                            <Button type='submit' className='input-button fadeIn fifth' onSubmit={this.handleSubmit}>
+                            <Button
+                                type='submit'
+                                className='input-button fadeIn fifth'
+                                onSubmit={this.handleSubmit}
+                            >
                                 SE CONNECTER
                             </Button>
                         </Form>
