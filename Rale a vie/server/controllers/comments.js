@@ -21,6 +21,19 @@ const insertComments = async commentInfos => {
     return insertCommentResult.rows[0];
 };
 
+const getOneComment = async id => {
+    const getOne = SQL`
+        SELECT
+            *
+        FROM comments
+        INNER JOIN users ON users.user_id = comments.user_id
+        WHERE comment_id = ${id}
+    `;
+
+    const getOneResult = await client.query(getOne);
+    return getOneResult.rows[0];
+};
+
 const deleteComments = async id => {
     const deleteComment = SQL`
         DELETE FROM comments
@@ -34,5 +47,6 @@ const deleteComments = async id => {
 
 module.exports = {
     insertComments,
+    getOneComment,
     deleteComments,
 };
