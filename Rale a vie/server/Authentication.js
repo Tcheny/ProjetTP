@@ -6,6 +6,8 @@ const generateToken = userId => {
         const payload = {
             userId,
         };
+
+        // Use JWT for access tokens
         const token = jwt.sign(payload, secret, {
             expiresIn: '30day',
         });
@@ -16,13 +18,12 @@ const generateToken = userId => {
 };
 
 const validateToken = async (req, res, next) => {
-    // User crée un compte ou se connecte sans token
+    // User can create account or logIn or can read "rales" and "comments" without token
     if (
-        // req.path !== "/logout"
         req.path === '/users/add' ||
         req.path === '/login' ||
         req.path === '/posts/postInfos' ||
-        req.path === '/posts/comments' ||
+        req.path === '/comments/posts' ||
         req.path === '/posts/allId' ||
         req.path === '/auth'
     ) {
@@ -34,7 +35,7 @@ const validateToken = async (req, res, next) => {
 
         const secret = process.env.JWT_SECRET;
         jwt.verify(token, secret, (err, decoded) => {
-            // Si le token n'est pas authentifié
+            // If token is not authenticated
             if (err) {
                 console.log('JWT invalide', req.path, err);
                 res.clearCookie();

@@ -8,7 +8,7 @@ const client = new Client({
     password: 'untrucpouri',
 });
 
-// initialiser une connexion a la bdd
+// initialize connection to the database
 (async () => {
     await client.connect();
 })();

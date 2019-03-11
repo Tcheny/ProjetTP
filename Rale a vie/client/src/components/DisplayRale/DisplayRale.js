@@ -100,7 +100,7 @@ export default class DisplayRale extends Component {
 
     getAllCommentsByRaleId = () => {
         axios
-            .get('http://localhost:8081/posts/comments', {
+            .get('http://localhost:8081/comments/posts', {
                 params: { id: this.props.postId },
             })
             .then(res => {

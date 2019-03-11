@@ -1,4 +1,5 @@
 const SQL = require('sql-template-strings');
+const bcrypt = require('bcrypt');
 
 const client = require('../database/connexion');
 const encryptPassword = require('./miscs/encryptPassword');
@@ -42,7 +43,7 @@ const getOneUser = async userId => {
     return getOneResult.rows[0];
 };
 
-// Insert new User avec encrypted password
+// Insert new User with encrypted password
 const addUsers = async newUser => {
     if (await verifyUsernameExists(newUser.email)) {
         throw new Error('Email déjà utilisé');
@@ -88,6 +89,35 @@ const verifyUsernameExists = async useremail => {
     return false;
 };
 
+const verifyUser = async (userEmail, password) => {
+    const verify = SQL`
+        SELECT
+            user_id,
+            user_firstname,
+            user_lastname,
+            user_email,
+            user_password,
+            user_pseudo,
+            user_type
+        FROM users
+        WHERE user_email = ${userEmail}
+    `;
+
+    const retrievedUser = await client.query(verify);
+
+    if (!retrievedUser.rowCount) {
+        throw new Error(`${userEmail} ne correspond à aucun compte.`);
+    }
+
+    const passwordRight = await bcrypt.compare(password, retrievedUser.rows[0].user_password);
+
+    if (!passwordRight) {
+        throw new Error('Le mot de passe est incorrect.');
+    }
+
+    return retrievedUser.rows[0];
+};
+
 const editUsers = async (id, userInfos) => {
     const encryptedPassword = await encryptPassword(userInfos.password);
     const editUser = SQL`
@@ -108,7 +138,8 @@ const editUsers = async (id, userInfos) => {
 
 module.exports = {
     getUsersId,
-    addUsers,
-    editUsers,
     getOneUser,
+    addUsers,
+    verifyUser,
+    editUsers,
 };

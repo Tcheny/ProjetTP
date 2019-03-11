@@ -17,10 +17,15 @@ const getAllRalesIds = async () => {
     return queryResult;
 };
 
-// requete des values nécessaires a un post
-// Select les valeurs from posts ou le user_id == post_id
+// Request values to get posts infos
 const getPostInfosById = async (postId, userId) => {
-    // INNER JOIN jointure users et posts pour le user_id en commun pour select user_firstname, user_pseudo
+    // SELECT  values 
+    // ASSEMBLE toutes les valeurs like sous la forme d'un tableau JSON 
+    // FROM la table posts 
+    // INNER JOIN jointure entre les tables users et posts pour le user_id en commun pour select user_firstname, user_pseudo
+    // LEFT OUTER JOIN lister résultats de la table likes pour récupérer les likes.post_id == posts.post_id
+    // WHERE post_id = postId (front)
+
 
     const infos = SQL`
         SELECT
@@ -91,7 +96,7 @@ const getPostInfosById = async (postId, userId) => {
     return post;
 };
 
-// Insert un post
+// Insert post
 const insertPosts = async postInfos => {
     const insertPost = SQL`
         INSERT INTO posts (

@@ -1,7 +1,7 @@
 const { Router } = require('express');
 const moment = require('moment');
 
-const { getOneComment, insertComments, deleteComments } = require('../controllers/comments');
+const { getOneComment, insertComments, getAllCommentsFromPosts, deleteComments } = require('../controllers/comments');
 
 const router = Router();
 
@@ -22,6 +22,21 @@ router.post('/add', async (req, res) => {
     }
 
     return res.status(200).send(addedComment);
+});
+
+router.get("/posts", async (req, res) => {
+    let getAllResult = null;
+
+    try {
+        getAllResult = await getAllCommentsFromPosts(req.query.id);
+    } catch (error) {
+        console.log(error);
+        res.status(500).send(
+            new Error("Erreur dans les commentaires du post", error)
+        );
+    }
+
+    return res.status(200).send(getAllResult.rows);
 });
 
 router.delete('/delete', async (req, res) => {
