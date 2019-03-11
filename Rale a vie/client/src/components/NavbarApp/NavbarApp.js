@@ -12,6 +12,7 @@ class NavbarApp extends Component {
 
     endSession = () => {
         this.props.logout();
+        
         setTimeout(() => {
             this.props.history.push('/login');
         }, 1000);

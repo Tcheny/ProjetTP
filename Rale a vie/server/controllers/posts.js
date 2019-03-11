@@ -19,14 +19,14 @@ const getAllRalesIds = async () => {
 
 // Request values to get posts infos
 const getPostInfosById = async (postId, userId) => {
-    // SELECT  values 
-    // ASSEMBLE toutes les valeurs like sous la forme d'un tableau JSON 
-    // FROM la table posts 
-    // INNER JOIN jointure entre les tables users et posts pour le user_id en commun pour select user_firstname, user_pseudo
-    // LEFT OUTER JOIN lister résultats de la table likes pour récupérer les likes.post_id == posts.post_id
+    // SELECT values 
+    // AGGREGATION get all like values ​​as a JSON array
+    // FROM  posts table
+    // INNER JOIN joins users and posts tables to have user_firstname, user_pseudo
+    // LEFT OUTER JOIN lists results of likes table that have the same likes.post_id == posts.post_id
     // WHERE post_id = postId (front)
-
-
+    // GROUP BY grouped by posts_id and user_id
+    
     const infos = SQL`
         SELECT
             user_firstname,

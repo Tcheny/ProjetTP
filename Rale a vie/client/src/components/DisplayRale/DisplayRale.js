@@ -43,6 +43,7 @@ export default class DisplayRale extends Component {
         this.getAllCommentsByRaleId();
     };
 
+    // Submit comment
     submitForm = event => {
         event.preventDefault();
 
@@ -52,15 +53,24 @@ export default class DisplayRale extends Component {
             comment: this.state.comment,
         };
 
-        axios.post('http://localhost:8081/comments/add', { comment }).then(res => {
-            console.log(res.data);
-            const updatedCommentsList = this.state.commentsList.concat(res.data);
-            toast.success('Commentaire ajouté');
-            this.setState({
-                commentsList: updatedCommentsList,
-                comment: '',
+        axios
+            .post('http://localhost:8081/comments/add', { comment })
+            .then(res => {
+                console.log(res.data);
+                const updatedCommentsList = this.state.commentsList.concat(res.data);
+
+                toast.success('Le commentaire a été ajouté avec succès');
+                
+                this.setState({
+                    commentsList: updatedCommentsList,
+                    comment: '',
+                });
+            })
+            .catch(error => {
+                console.error(error);
+                toast.error('Le commentaire n\'a pas été ajouté');
+
             });
-        });
     };
 
     handleClose = () => {
@@ -82,11 +92,15 @@ export default class DisplayRale extends Component {
             .then(res => {
                 // transform buffer to 8bits unsign
                 const arrayBufferView = new Uint8Array(res.data.file.data);
-                // new blob
+
+                // new blob (Binary Large OBject)
                 const imgBlob = new Blob([arrayBufferView], {
                     type: 'image/jpeg',
                 });
+
+                // creating a URL to a typed array using a blob
                 const imgUrl = URL.createObjectURL(imgBlob);
+
                 this.setState({
                     post: res.data,
                     imgUrl: imgUrl,
@@ -123,7 +137,7 @@ export default class DisplayRale extends Component {
             })
             .catch(error => {
                 console.error(error);
-                toast.error("Le rale n'a pas été supprimé");
+                toast.error('Le rale n\'a pas été supprimé');
             });
     };
 
@@ -141,11 +155,11 @@ export default class DisplayRale extends Component {
                     commentsList: updatedCommentsDeleted,
                 });
                 this.handleClose();
-                toast.success('Commentaire supprimé');
+                toast.success('Le commentaire a été supprimé avec succès');
             })
             .catch(error => {
                 console.error(error);
-                toast.error("Le commentaire n'a pas été supprimé");
+                toast.error('Le commentaire n\'a pas été supprimé');
             });
     };
 
@@ -271,11 +285,7 @@ export default class DisplayRale extends Component {
                                         as='textarea'
                                         rows='2'
                                         placeholder='Commentez ce rale'
-                                        onChange={e =>
-                                            this.setState({
-                                                comment: e.target.value,
-                                            })
-                                        }
+                                        onChange={e => this.setState({ comment: e.target.value })}
                                     />
                                     <InputGroup.Prepend>
                                         <Button variant='dark' onClick={this.submitForm}>

@@ -10,15 +10,15 @@ export default class Post extends Component {
     };
 
     submitForm = async () => {
-        let rale = null;
         const formData = new FormData();
 
+        // adding key/value pairs to this using FormData.append
         formData.append('post', this.state.inputPost);
         formData.append('type_media', 1);
         formData.append('uploadFile', this.state.inputFile);
 
         try {
-            rale = await axios.post('http://localhost:8081/posts/add', formData, {
+            await axios.post('http://localhost:8081/posts/add', formData, {
                 headers: { 'Content-Type': 'multipart/form-data' },
             });
             this.setState({ inputPost: '' }, () => {
@@ -32,12 +32,14 @@ export default class Post extends Component {
     };
 
     render() {
+        const { currentUser } = this.props;
+
         return (
             <Card>
                 <Card.Header>
                     <div className='padding-xs text-center'>
                         <div className='post-title'>
-                            Bienvenue {this.props.currentUser.user_pseudo}!
+                            Bienvenue {currentUser.user_pseudo}!
                         </div>
                         Vous avez le devoir de vous plaindre! Encore oui! Encore!
                     </div>

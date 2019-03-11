@@ -12,7 +12,7 @@ const router = Router();
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
-// Get all posts id
+// Get all post id
 router.get('/allId', async (req, res) => {
     let queryResult = null;
 
@@ -26,7 +26,7 @@ router.get('/allId', async (req, res) => {
     return res.status(200).send(queryResult.rows);
 });
 
-// chercher l'image dans l'infos du post
+// get infos from post id
 router.get('/postInfos', async (req, res) => {
     let infos = null;
 
@@ -34,7 +34,9 @@ router.get('/postInfos', async (req, res) => {
         infos = await getPostInfosById(req.query.postId, req.query.userId);
         // create the file path
         const writePath = path.join(__dirname, '../mediaUploads', infos.path_media);
+
         const file = await fs.promises.readFile(writePath);
+        
         infos.file = file;
     } catch (error) {
         console.log(error);
@@ -44,12 +46,12 @@ router.get('/postInfos', async (req, res) => {
     return res.status(200).send(infos);
 });
 
-// express route where we receive files from the client
+// express route where we receive files from the client with 'uploadFile'
 // passing multer middleware
 router.post('/add', upload.single('uploadFile'), async (req, res) => {
     let insertPostsResult = null;
 
-    // create the filename
+    // create filename
     const writePath = path.join(__dirname, '../mediaUploads', req.file.originalname);
 
     try {

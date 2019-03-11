@@ -1,24 +1,22 @@
-import React from 'react';
+import React, { Component } from 'react';
 import axios from 'axios';
-import { withRouter } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 /**
- * `createContext` contient 2 propriétés :
- * `Provider` et `Consumer`. Nous les rendons accessibles
- * via la constante `UseContext`, et on initialise le state.
- * On exporte ce contexte afin qu'il soit exploitable par
- * d'autres composants par la suite via le `Consumer`
+ * `createContext` contains 2 properties:
+ * `Provider` and` Consumer`. We make them accessible
+ * with `UseContext` constant, and we initialize the state.
+ * This context is exported,it can be exploited by
+ * other components later with `Consumer`
  */
 const UseContext = React.createContext();
 
 /**
- * la classe UseProvider fera office de... Provider (!)
- * en wrappant son enfant direct
- * dans le composant éponyme. De cette façon, ses values
- * seront accessible de manière globale via le `Consumer`
+ * Class UseProvider will act as Provider
+ * by wrapping his child component. In this way, his values
+ * will be accessible globally with the `Consumer`
  */
-export class UseProvider extends React.Component {
+export class UseProvider extends Component {
     state = {
         isAuth: false,
         currentUser: null,
@@ -105,9 +103,9 @@ export class UseProvider extends React.Component {
 }
 
 /**
- * Le Consumer expose le contenu de la propriété `value`
- * du Provider
+ * Consumer exposes the contents of the `value` property
+ * Provider
  */
 export const UseConsumer = UseContext.Consumer;
 
-export default withRouter(UseProvider);
+export default UseProvider;

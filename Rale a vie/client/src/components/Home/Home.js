@@ -20,7 +20,7 @@ export default class Home extends Component {
         });
     };
 
-    // Affiche tous les Rales
+    // Display all rales
     componentDidMount = () => {
         this.props.getAllRalesId();
         window.addEventListener('scroll', this.handleScroll);
