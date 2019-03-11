@@ -5,7 +5,8 @@ CREATE TABLE users (
     user_email VARCHAR(80) NOT NULL,
     user_password VARCHAR NOT NULL,
     user_pseudo VARCHAR(60) NOT NULL,
-    user_type VARCHAR NOT NULL
+    user_type VARCHAR NOT NULL,
+    user_infos VARCHAR
 )
 
 CREATE TABLE posts (
@@ -27,7 +28,7 @@ CREATE TABLE comments (
 
 CREATE TABLE likes (
     like_id SERIAL PRIMARY KEY,
+    like_type_id INTEGER NOT NULL,
     user_id INTEGER NOT NULL REFERENCES users ON DELETE CASCADE,
     post_id INTEGER NOT NULL REFERENCES posts ON DELETE CASCADE,
-    comment_id INTEGER NOT NULL REFERENCES comments ON DELETE CASCADE
 )
