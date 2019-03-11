@@ -1,13 +1,14 @@
-# Projet Titre pro
+# Projet Titre professionel
 
 ## Rale à vie
 
 Application web d'une plateforme afin de raler sur tout et n'importe quoi.
 
+-   S'inscrire
 -   Poster un rale
--   Upload une image
+-   Uploader une image
 -   Commenter un Post
--   Liker
+-   Liker le rale
 
 ### Techno utiliser
 
