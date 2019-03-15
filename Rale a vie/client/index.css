@@ -413,3 +413,7 @@ body {
 .padding-xs {
     padding: 10px;
 }
+
+.redText {
+    color: red;
+}

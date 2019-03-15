@@ -9,12 +9,14 @@ const getUserToken = require('./controllers/getUserToken');
 // create the server
 const app = express();
 
+// log all requests to the console
 app.use(logger('dev'));
 
-// Specify the root directory of input files
+// set static files location
 app.use(express.static(__dirname + './../client'));
-
+// parses Cookie header and populate req.cookies
 app.use(cookieParser());
+// parses incoming requests with JSON
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(validateToken);
@@ -38,4 +40,5 @@ app.get('/', (req, res) => {
     res.sendFile('index.html');
 });
 
+// START THE SERVER
 app.listen(config.port, () =>  console.log(`App listening on port ${config.port}!`));
